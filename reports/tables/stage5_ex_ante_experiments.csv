@@ -1,0 +1,8 @@
+﻿experiment_group,model_or_slice,n_eval,r2,adj_r2,rmse,mae,mape_pct,max_error
+ExAnte_Pricing,M7_ExAnte_All_Test,46573,0.9286,0.9285,2.4655,1.3679,9.15,44.131
+ExAnte_Pricing,M2_ExAnte_All_Test,46573,0.9193,0.9192,2.6208,1.5024,10.16,42.8524
+ExAnte_Pricing,M7_ExAnte_Uber_Test,28133,0.9465,0.9465,1.993,1.2087,8.23,30.5422
+ExAnte_Pricing,M7_ExAnte_Lyft_All_Test,18440,0.9073,0.9072,3.0484,1.6109,10.54,44.131
+ExAnte_Pricing,M7_ExAnte_Lyft_1x_Test,17242,0.9694,0.9694,1.6073,1.1888,9.58,10.8201
+ExAnte_Pricing,M7_ExAnte_Lyft_SurgeGt1x_Test,1198,0.4677,0.4573,10.2886,7.6852,24.43,44.131
+ExAnte_Pricing,M7_ExAnte_Lyft_MissingSurge_Holdout,38037,0.906,0.9059,3.0861,1.6196,10.55,45.5641

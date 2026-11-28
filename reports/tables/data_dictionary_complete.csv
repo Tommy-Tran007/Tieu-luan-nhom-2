@@ -1,0 +1,42 @@
+﻿column_name,source_stage,unit,dtype,n_missing,n_unique,known_at_booking,role,decision,rationale
+id,Stage 3 Master,Chuỗi UUID (Khóa chính),str,0,270898,True,Identifier/Key,Drop - Key/ID,"Mã định danh duy nhất của chuyến đi (UUID), không mang thông tin quy luật kinh tế."
+cab_type,Stage 3 Master,Danh mục (Uber / Lyft),category,0,2,True,Core Categorical,Keep in X,Nền tảng gọi xe (Uber vs Lyft); phân biệt cấu trúc biểu giá và cơ chế surge giữa hai hãng.
+name,Stage 3 Master,Danh mục (12 gói dịch vụ),category,0,12,True,Core Categorical,Keep in X,Phân khúc hạng xe (12 gói dịch vụ); quyết định trực tiếp giá mở cửa và đơn giá mỗi dặm (RQ2).
+product_id,Stage 3 Master,Mã chuỗi (Khóa ánh xạ 1-1),category,0,12,True,Redundant,Drop - Redundant,"Mã nội bộ ánh xạ tất định 1-1 với cặp (cab_type, name); giữ lại sẽ gây suy biến đa cộng tuyến hoàn hảo."
+source,Stage 3 Master,Danh mục (12 quận Boston),category,0,12,True,Core Categorical,Keep in X,Quận đón khách (12 địa bàn Boston); kiểm soát hiệu ứng cố định không gian điểm đi.
+destination,Stage 3 Master,Danh mục (12 quận Boston),category,0,12,True,Core Categorical,Keep in X,Quận trả khách (12 địa bàn Boston); kiểm soát hiệu ứng cố định không gian điểm đến.
+distance,Stage 3 Master,Dặm (miles),float32,22262,569,True,Core Numerical,Keep in X,Quãng đường lộ trình (dặm) biết trước khi đặt xe; nhân tố vật lý cốt lõi quyết định chi phí vận hành.
+surge_multiplier,Stage 3 Master,Hệ số nhân (1.0x - 3.0x; NaN nếu Lyft khuyết),float32,38037,7,True,Conditional Pricing Input,Keep in X (Conditional),Hệ số nhân giá động công bố đồng thời trên API (1.0x–3.0x với Lyft quan sát; cố định 1.0x trên API Uber; NaN nếu Lyft khuyết gốc). Biến đầu vào của nhánh Mô hình Giá có Điều kiện; được rút bỏ ở nhánh Ex-Ante.
+is_surge_original,Stage 3 Provenance Flag,"Nhị phân {0, 1}",int8,0,2,True,Provenance Flag,Drop - Audit Flag,"Cờ nguồn gốc hệ số Surge (1 = Lyft quan sát thực trong [1.0, 3.0] hoặc Uber API cố định 1.0x; 0 = Lyft khuyết/sentinel giữ NaN, không fillna(1.0))."
+price,Stage 3 Master,USD (Đô la Mỹ),float32,0,130,False,Target (y),Target y,"Biến mục tiêu cần dự báo (USD). Chỉ dùng làm nhãn y, cấm đưa vào X."
+time_stamp,Stage 3 Master,Unix Epoch (milliseconds),Int64,62864,97953,True,Identifier/Key,Drop - Key/ID,"Dấu thời gian nguyên thủy (epoch ms); thông tin chu kỳ đã trích xuất qua hour, day_of_week."
+is_timestamp_original,Stage 3 Provenance Flag,"Nhị phân {0, 1}",int8,0,2,True,Provenance Flag,Drop - Audit Flag,"Cờ nguồn gốc thời gian (1 = timestamp gốc từ API, 0 = khuyết trong dữ liệu thô, không suy đoán ffill)."
+datetime,Stage 3 Master,Thời gian Boston EST (YYYY-MM-DD HH:MM:SS),datetime64[us],62864,97953,True,Identifier/Key,Drop - Key/ID,Mốc thời gian chi tiết dùng để sắp xếp Temporal Split; không đưa trực tiếp vào ma trận X.
+date_hour,Stage 3 Master,Khung giờ Boston EST (làm tròn giờ),datetime64[us],62864,332,True,Identifier/Key,Drop - Key/ID,Khóa ghép nối thời gian theo giờ với bảng thời tiết; đã đại diện bởi các biến thời tiết & chu kỳ.
+location,Stage 3 Master,Danh mục (12 trạm khí tượng Boston),category,91618,12,True,Identifier/Key,Drop - Key/ID,Bản sao địa danh trạm thời tiết sau phép Left Join (trùng 100% với cột source).
+temp,Stage 3 Master,Độ Fahrenheit (°F),float32,91618,1986,True,Core Numerical,Keep in X,Nhiệt độ môi trường (°F) tại điểm đón; kiểm định tác động thời tiết đến giá báo API (RQ1).
+clouds,Stage 3 Master,Tỷ lệ che phủ [0.0 - 1.0],float32,91618,308,True,Core Numerical,Keep in X,Độ che phủ mây (0.0 - 1.0) tại khu vực đón khách.
+pressure,Stage 3 Master,Millibar / hPa,float32,91618,1295,True,Core Numerical,Keep in X,Áp suất khí quyển (mb/hPa) tại khu vực đón khách.
+rain,Stage 3 Master,Inch / giờ (in/h; NaN nếu sentinel mưa),float32,118855,240,True,Core Numerical,Keep in X,Lượng mưa (inch/giờ); biến khí tượng trọng tâm kiểm chứng giả thuyết mưa làm tăng giá.
+humidity,Stage 3 Master,Tỷ lệ độ ẩm [0.0 - 1.0],float32,91618,219,True,Core Numerical,Keep in X,Độ ẩm tương đối (0.0 - 1.0) tại khu vực đón khách.
+wind,Stage 3 Master,Dặm / giờ (mph),float32,91618,1531,True,Core Numerical,Keep in X,Tốc độ gió (mph) tại khu vực đón khách.
+weather_matched,Stage 3 Provenance Flag,"Nhị phân {0, 1}",int8,0,2,True,Provenance Flag,Drop - Audit Flag,"Cờ khớp thời tiết thực (1 = khớp bản tin trạm giờ trên timestamp gốc, 0 = không khớp/thiếu timestamp)."
+hour,Stage 3 Master,Giờ trong ngày EST (0 - 23),float32,62864,24,True,Core Numerical,Keep in X,Giờ khởi hành trong ngày (0 - 23); dùng cho mô hình cây và làm cơ sở tạo biến chu kỳ sin/cos.
+day_of_week,Stage 3 Master,Thứ trong tuần EST (0=T2 ... 6=CN),float32,62864,7,True,Core Numerical,Keep in X,Thứ trong tuần (0=Thứ Hai ... 6=Chủ Nhật).
+day_name,Stage 3 Master,Danh mục (Thứ trong tuần / Unknown),category,0,8,True,Redundant,Drop - Redundant,Tên thứ dạng chuỗi ánh xạ 1-1 với day_of_week; loại bỏ để tránh trùng lặp thông tin.
+is_weekend,Stage 3 Master,"Nhị phân {0, 1} (NaN nếu thiếu TS)",float32,62864,2,True,Core Numerical,Keep in X,"Biến giả cuối tuần (1 nếu Thứ Bảy/Chủ Nhật, 0 nếu ngày thường)."
+is_rush_hour,Stage 3 Master,"Nhị phân {0, 1} (NaN nếu thiếu TS)",float32,62864,2,True,Core Numerical,Keep in X,Biến giả khung giờ cao điểm ngày thường (07:00-09:00 và 16:00-19:00).
+time_of_day,Stage 3 Master,Danh mục (Morning/Afternoon/Evening/Night/Unknown),category,0,5,True,Core Categorical,Keep in X,"Buổi trong ngày (Morning, Afternoon, Evening, Night)."
+is_rain_sentinel,Stage 3 Provenance Flag,"Nhị phân {0, 1}",int8,0,2,True,Provenance Flag,Drop - Audit Flag,Cờ mã lính canh lượng mưa (1 = toàn bộ bản tin mưa trong ô quận × giờ khớp bị sentinel hỏng nên giữ rain/is_raining = NaN; 0 = bình thường).
+is_raining,Stage 3 Master,"Nhị phân {0, 1} (NaN nếu không khớp thời tiết)",float32,118855,2,True,Core Numerical,Keep in X,Biến chỉ báo trạng thái có mưa (rain > 0).
+distance_x_surge,Stage 3 & 4 Engineered,Dặm quy đổi (miles × multiplier),float32,57163,1291,True,Engineered Feature,Keep in X,Tích số distance * surge_multiplier; phản ánh quãng đường quy đổi theo hệ số nhân giá.
+price_per_mile,Stage 3 Master,USD / dặm (Cấm đưa vào X - Leakage),float32,22381,12113,False,Data Leakage,Drop - Leakage,RÒ RỈ MỤC TIÊU TRỰC TIẾP: được tính bằng price / distance. Đưa vào X sẽ làm mô hình gian lận.
+log_distance,Stage 4 Engineered,ln(1 + dặm) (không thứ nguyên),float32,22262,569,True,Engineered Feature,Keep in X,Biến đổi ln(1 + distance); nắm bắt độ cong cước sàn tối thiểu ở các cuốc xe dưới 1 dặm.
+is_lyft,Stage 4 Engineered,"Nhị phân {0, 1}",int8,0,2,True,Engineered Feature,Keep in X,"Chỉ báo nền tảng Lyft (1=Lyft, 0=Uber); tách biệt hiệu ứng nền tảng có áp dụng surge động."
+lyft_surge_excess,Stage 4 Engineered,Phần phụ trội hệ số nhân (>= 0.0),float32,38037,7,True,Engineered Feature,Keep in X,Phần phụ trội (surge_multiplier - 1.0) * is_lyft; khử đa cộng tuyến cấu trúc với hằng số 1.0 của Uber.
+distance_x_lyft_surge_excess,Stage 4 Engineered,Dặm phụ trội surge (miles × excess),float32,57163,829,True,Engineered Feature,Keep in X,Tương tác distance * (surge - 1.0) * is_lyft; đo phần tăng thêm trên mỗi dặm khi Lyft kích hoạt surge.
+hour_sin,Stage 4 Engineered,"Chu kỳ sin [-1, 1]",float32,62864,22,True,Engineered Feature,Keep in X,Thành phần sin(2*pi*hour/24); đảm bảo tính liên tục giữa 23:00 đêm và 00:00 sáng cho mô hình tuyến tính.
+hour_cos,Stage 4 Engineered,"Chu kỳ cos [-1, 1]",float32,62864,24,True,Engineered Feature,Keep in X,Thành phần cos(2*pi*hour/24); cặp trực giao với hour_sin biểu diễn vị trí trên vòng tròn 24 giờ.
+dow_sin,Stage 4 Engineered,"Chu kỳ sin [-1, 1]",float32,62864,7,True,Engineered Feature,Keep in X,Thành phần sin(2*pi*day_of_week/7); biểu diễn chu kỳ tuần liên tục.
+dow_cos,Stage 4 Engineered,"Chu kỳ cos [-1, 1]",float32,62864,6,True,Engineered Feature,Keep in X,Thành phần cos(2*pi*day_of_week/7); cặp trực giao với dow_sin.
+route_id,Stage 4 Engineered,Danh mục (72 tuyến source -> destination),category,0,72,True,Auxiliary Group Key,Aux Group Only,Chuỗi định danh 72 tuyến 'source -> destination' dùng để chia GroupShuffleSplit và lập bảng tra M0b.

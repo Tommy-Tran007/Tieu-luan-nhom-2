@@ -1,0 +1,2487 @@
+{
+  "schema_version": "v5.0-unified",
+  "elapsed_sec": 80.2,
+  "waterfall_and_selection_bias": {
+    "raw_cab_size_mib": 81.51,
+    "waterfall": [
+      {
+        "step": "0. Dữ liệu gốc (cab_rides.csv)",
+        "in_rows": 693071,
+        "dropped": 0,
+        "out_rows": 693071,
+        "share_raw_pct": 100.0
+      },
+      {
+        "step": "1. Khôi phục nhãn & chuẩn hóa chuỗi/lính canh/quy mô",
+        "in_rows": 693071,
+        "dropped": 0,
+        "out_rows": 693071,
+        "share_raw_pct": 100.0
+      },
+      {
+        "step": "2. Tách riêng Uber Taxi (MNAR — khuyết giá 100%)",
+        "in_rows": 693071,
+        "dropped": 55095,
+        "out_rows": 637976,
+        "share_raw_pct": 92.05
+      },
+      {
+        "step": "3. Loại bản ghi khuyết/mã lính canh biến mục tiêu price",
+        "in_rows": 637976,
+        "dropped": 208402,
+        "out_rows": 429574,
+        "share_raw_pct": 61.98
+      },
+      {
+        "step": "4. Loại bản ghi khuyết điểm đón (source)",
+        "in_rows": 429574,
+        "dropped": 79452,
+        "out_rows": 350122,
+        "share_raw_pct": 50.52
+      },
+      {
+        "step": "5. Loại bản ghi khuyết điểm trả (destination)",
+        "in_rows": 350122,
+        "dropped": 79224,
+        "out_rows": 270898,
+        "share_raw_pct": 39.09
+      },
+      {
+        "step": "6. Ghép nối thời tiết Left Join (0 fan-out)",
+        "in_rows": 270898,
+        "dropped": 0,
+        "out_rows": 270898,
+        "share_raw_pct": 39.09
+      }
+    ],
+    "total_dropped": 422173,
+    "master_provenance_breakdown": {
+      "total_master_rows": 270898,
+      "is_surge_original_1_total": 232861,
+      "uber_api_fixed_1x": 140477,
+      "lyft_total": 130421,
+      "lyft_surge_observed": 92384,
+      "lyft_surge_missing_nan": 38037,
+      "lyft_surge_missing_pct": 29.16,
+      "is_timestamp_original_1": 208034,
+      "weather_matched_1": 179280,
+      "weather_valid_rain_obs": 152043,
+      "weather_rain_sentinel_nan": 27237,
+      "weather_true_rain_rows": 24495
+    },
+    "selection_bias_audit": {
+      "kept_n": 270898,
+      "dropped_non_taxi_n": 367078,
+      "uber_share_kept_pct": 51.86,
+      "uber_share_dropped_pct": 51.78,
+      "lyft_surge_observed_kept_pct": 6.8,
+      "lyft_surge_observed_dropped_pct": 6.91,
+      "mean_dist_kept_mi": 2.197,
+      "mean_dist_dropped_mi": 2.196,
+      "mean_price_kept_usd": 16.58,
+      "mean_price_dropped_available_usd": 16.5
+    },
+    "scale_recovery_examples": [
+      {
+        "tier": "Lux Black",
+        "route": "North Station → Haymarket Square",
+        "raw_price_usd": 165.0,
+        "ref_median_usd": 16.5,
+        "adjusted_price_usd": 16.5,
+        "factor": 10
+      },
+      {
+        "tier": "UberX",
+        "route": "North Station → Fenway",
+        "raw_price_usd": 95.0,
+        "ref_median_usd": 10.5,
+        "adjusted_price_usd": 9.5,
+        "factor": 10
+      },
+      {
+        "tier": "Black SUV",
+        "route": "West End → South Station",
+        "raw_price_usd": 2950.0,
+        "ref_median_usd": 27.5,
+        "adjusted_price_usd": 29.5,
+        "factor": 100
+      },
+      {
+        "tier": "Shared",
+        "route": "Financial District → Northeastern University",
+        "raw_price_usd": 700.0,
+        "ref_median_usd": 7.0,
+        "adjusted_price_usd": 7.0,
+        "factor": 100
+      },
+      {
+        "tier": "UberX",
+        "route": "North Station → Fenway",
+        "raw_price_usd": 10500.0,
+        "ref_median_usd": 10.5,
+        "adjusted_price_usd": 10.5,
+        "factor": 1000
+      },
+      {
+        "tier": "Shared",
+        "route": "Theatre District → North End",
+        "raw_price_usd": 7000.0,
+        "ref_median_usd": 6.0,
+        "adjusted_price_usd": 7.0,
+        "factor": 1000
+      }
+    ]
+  },
+  "statistical_rigor_extensions": {
+    "n_valid_rain_obs": 152043,
+    "n_loc_hr_clusters_all": 2795,
+    "n_citywide_hour_clusters_all": 329,
+    "n_valid_rain_dist_obs": 139555,
+    "n_loc_hr_clusters_dist": 2794,
+    "n_citywide_hour_clusters_dist": 329,
+    "n_valid_rain_and_surge_obs": 130609,
+    "n_valid_rain_and_surge_dist_obs": 119903,
+    "n_loc_hr_clusters_obs": 2793,
+    "n_citywide_hour_clusters_obs": 329,
+    "weather_unadjusted_loc_hr": {
+      "n_obs": 152043,
+      "diff_usd": -0.0089,
+      "se_cluster": 0.1053,
+      "ci95_cluster": [
+        -0.2152,
+        0.1974
+      ],
+      "p_cluster": 0.9326,
+      "tost_025": {
+        "delta_usd": 0.25,
+        "t1": 2.291,
+        "t2": -2.46,
+        "p_tost": 0.011026,
+        "equivalent_at_5pct": true
+      }
+    },
+    "weather_unadjusted_citywide_hour": {
+      "n_obs": 152043,
+      "diff_usd": -0.0089,
+      "se_cluster": 0.0921,
+      "p_cluster": 0.923
+    },
+    "weather_controlled_loc_hr": {
+      "n_obs": 119903,
+      "beta_usd": 0.0021,
+      "se": 0.0193,
+      "ci95": [
+        -0.0357,
+        0.0399
+      ],
+      "p_value": 0.9119,
+      "tost_010": {
+        "delta_usd": 0.1,
+        "t1": 5.295,
+        "t2": -5.074,
+        "p_tost": 0.0,
+        "equivalent_at_5pct": true
+      },
+      "tost_025": {
+        "delta_usd": 0.25,
+        "t1": 13.072,
+        "t2": -12.85,
+        "p_tost": 0.0,
+        "equivalent_at_5pct": true
+      },
+      "n_loc_hr_clusters": 2793,
+      "n_hour_clusters": 329
+    },
+    "weather_controlled_citywide_hour": {
+      "n_obs": 119903,
+      "beta_usd": 0.0021,
+      "se": 0.0176,
+      "ci95": [
+        -0.0324,
+        0.0367
+      ],
+      "p_value": 0.9036,
+      "tost_010": {
+        "delta_usd": 0.1,
+        "t1": 5.796,
+        "t2": -5.553,
+        "p_tost": 0.0,
+        "equivalent_at_5pct": true
+      },
+      "tost_025": {
+        "delta_usd": 0.25,
+        "t1": 14.307,
+        "t2": -14.065,
+        "p_tost": 0.0,
+        "equivalent_at_5pct": true
+      },
+      "n_loc_hr_clusters": 2793,
+      "n_hour_clusters": 329
+    },
+    "weather_controlled_nosurge_full152k_hour": {
+      "n_obs": 139555,
+      "beta_usd": -0.0357,
+      "se": 0.0191,
+      "ci95": [
+        -0.0732,
+        0.0018
+      ],
+      "p_value": 0.0622,
+      "tost_010": {
+        "delta_usd": 0.1,
+        "t1": 3.362,
+        "t2": -7.092,
+        "p_tost": 0.000432,
+        "equivalent_at_5pct": true
+      },
+      "tost_025": {
+        "delta_usd": 0.25,
+        "t1": 11.203,
+        "t2": -14.932,
+        "p_tost": 0.0,
+        "equivalent_at_5pct": true
+      },
+      "n_loc_hr_clusters": 2794,
+      "n_hour_clusters": 329
+    },
+    "cluster_level_aggregated_test": {
+      "n_rain_clusters": 385,
+      "n_dry_clusters": 2410,
+      "mean_rain_cluster_usd": 16.5876,
+      "mean_dry_cluster_usd": 16.5946,
+      "welch_t": -0.0668,
+      "welch_p": 0.9467
+    },
+    "rain_intensity_strata": [
+      {
+        "stratum": "Khong_mua_0",
+        "n_obs": 127548,
+        "n_clusters": 2410,
+        "mean_price_usd": 16.5948,
+        "median_price_usd": 13.5,
+        "n_lyft_surge_obs": 43601,
+        "lyft_surge_rate_pct": 6.94
+      },
+      {
+        "stratum": "Mua_nhe_0_0.05",
+        "n_obs": 19115,
+        "n_clusters": 316,
+        "mean_price_usd": 16.5286,
+        "median_price_usd": 13.5,
+        "n_lyft_surge_obs": 6630,
+        "lyft_surge_rate_pct": 6.03
+      },
+      {
+        "stratum": "Mua_vua_0.05_0.10",
+        "n_obs": 1577,
+        "n_clusters": 22,
+        "mean_price_usd": 16.4987,
+        "median_price_usd": 13.5,
+        "n_lyft_surge_obs": 525,
+        "lyft_surge_rate_pct": 7.24
+      },
+      {
+        "stratum": "Mua_lon_ge_0.10",
+        "n_obs": 3803,
+        "n_clusters": 47,
+        "mean_price_usd": 16.9098,
+        "median_price_usd": 14.0,
+        "n_lyft_surge_obs": 1289,
+        "lyft_surge_rate_pct": 6.75
+      }
+    ],
+    "heavy_rain_vs_dry": {
+      "n_heavy_obs": 3021,
+      "n_heavy_loc_hr_clusters": 47,
+      "n_heavy_citywide_hours": 8,
+      "ctrl_beta_usd": -0.0075,
+      "ctrl_se_loc_hr": 0.0479,
+      "ctrl_p_loc_hr": 0.8751,
+      "ctrl_se_hour": 0.0527,
+      "ctrl_p_hour": 0.8863,
+      "exact_wcr_loc_hr_B1999": {
+        "n_obs": 103608,
+        "n_total_clusters": 2455,
+        "beta_obs_usd": -0.0075,
+        "t_obs": -0.1572,
+        "B": 1999,
+        "exact_MZ_reprojection": true,
+        "full_dof_correction": true,
+        "p_wild": 0.859,
+        "mc_se": 0.0078
+      },
+      "exact_wcr_citywide_hour_B1999": {
+        "n_obs": 103608,
+        "n_total_clusters": 320,
+        "beta_obs_usd": -0.0075,
+        "t_obs": -0.1429,
+        "B": 1999,
+        "exact_MZ_reprojection": true,
+        "full_dof_correction": true,
+        "p_wild": 0.885,
+        "mc_se": 0.0071
+      }
+    },
+    "h3b_lyft_surge_rain_cluster": {
+      "n_lyft_obs": 52045,
+      "n_loc_hr_clusters": 2780,
+      "n_hour_clusters": 329,
+      "surge_rate_rain_pct": 6.22,
+      "surge_rate_dry_pct": 6.94,
+      "diff_pp": -0.72,
+      "p_naive_iid": 0.0162,
+      "se_loc_hr_pp": 0.396,
+      "p_loc_hr_cluster": 0.0688,
+      "se_hour_pp": 0.411,
+      "p_hour_cluster": 0.0793
+    },
+    "weather_sentinel_strict_sensitivity": {
+      "weather_raw_total_sentinels": 1331,
+      "n_obs_excl_any_sentinel_cell": 87733,
+      "n_loc_hr_clusters": 2131,
+      "n_hour_clusters": 325,
+      "beta_usd": 0.0072,
+      "se_loc_hr": 0.023,
+      "p_loc_hr": 0.7544,
+      "se_hour": 0.0206,
+      "p_hour": 0.7277,
+      "p_tost_010_hour": 5e-06
+    },
+    "time_of_day_cluster_f_test": {
+      "n_obs": 208034,
+      "n_clusters": 3980,
+      "f_stat_cluster": 0.2829,
+      "p_cluster": 0.8378,
+      "max_min_gap_usd": 0.0753
+    },
+    "multiple_testing_13": [
+      {
+        "hypothesis_id": "H1a_All_Rides",
+        "raw_p": 0.891453,
+        "p_holm": 1.0,
+        "q_bh": 0.96574075,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H1b_Uber_Only",
+        "raw_p": 0.97128,
+        "p_holm": 1.0,
+        "q_bh": 0.97128,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H1c_Lyft_Only",
+        "raw_p": 0.83449,
+        "p_holm": 1.0,
+        "q_bh": 0.96574075,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H2a_Surge_All",
+        "raw_p": 0.705461,
+        "p_holm": 1.0,
+        "q_bh": 0.96574075,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H2b_Surge_Lyft",
+        "raw_p": 0.516383,
+        "p_holm": 1.0,
+        "q_bh": 0.9135945,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H2c_Price_All",
+        "raw_p": 0.562212,
+        "p_holm": 1.0,
+        "q_bh": 0.9135945,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H3a_Surge_x_CabType",
+        "raw_p": 0.0,
+        "p_holm": 0.0,
+        "q_bh": 0.0,
+        "reject_holm_05": true,
+        "reject_bh_05": true
+      },
+      {
+        "hypothesis_id": "H3b_Surge_x_Rain_Lyft",
+        "raw_p": 0.017309,
+        "p_holm": 0.18971699999999997,
+        "q_bh": 0.05625425,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H3c_Surge_x_TimeOfDay_Lyft",
+        "raw_p": 0.766646,
+        "p_holm": 1.0,
+        "q_bh": 0.96574075,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H3d_Surge_x_RushHour_Lyft",
+        "raw_p": 0.451249,
+        "p_holm": 1.0,
+        "q_bh": 0.9135945,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H4a_Wald_UberX_vs_Lyft_Slope",
+        "raw_p": 0.0,
+        "p_holm": 0.0,
+        "q_bh": 0.0,
+        "reject_holm_05": true,
+        "reject_bh_05": true
+      },
+      {
+        "hypothesis_id": "H4b_Wald_UberPool_vs_Shared",
+        "raw_p": 0.017247,
+        "p_holm": 0.18971699999999997,
+        "q_bh": 0.05625425,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      },
+      {
+        "hypothesis_id": "H4c_Wald_Joint_Weather_Multivariate",
+        "raw_p": 0.378904,
+        "p_holm": 1.0,
+        "q_bh": 0.9135945,
+        "reject_holm_05": false,
+        "reject_bh_05": false
+      }
+    ]
+  },
+  "crossing_distances_5_pairs": [
+    {
+      "segment": "1. Đi ghép",
+      "uber_tier": "UberPool",
+      "lyft_tier": "Shared",
+      "spec_a_train80": {
+        "in_domain": false,
+        "hc3": {
+          "n": 28410,
+          "b0_uber": 6.14,
+          "b1_uber": 1.1862,
+          "b0_lyft": 3.3439,
+          "b1_lyft": 1.2377,
+          "d_star": 54.286,
+          "se": 22.025,
+          "ci95": [
+            11.12,
+            97.45
+          ]
+        },
+        "cluster": {
+          "n": 28410,
+          "b0_uber": 6.14,
+          "b1_uber": 1.1862,
+          "b0_lyft": 3.3439,
+          "b1_lyft": 1.2377,
+          "d_star": 54.286,
+          "se": 27.38,
+          "ci95": [
+            0.62,
+            107.95
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null,
+        "all_train_share_shorter_pct": null,
+        "all_train_share_longer_pct": null
+      },
+      "spec_b_train80_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 28410,
+          "b0_uber": 6.14,
+          "b1_uber": 1.1862,
+          "b0_lyft": 3.3439,
+          "b1_lyft": 1.2377,
+          "d_star": 54.286,
+          "se": 22.025,
+          "ci95": [
+            11.12,
+            97.45
+          ]
+        },
+        "cluster": {
+          "n": 28410,
+          "b0_uber": 6.14,
+          "b1_uber": 1.1862,
+          "b0_lyft": 3.3439,
+          "b1_lyft": 1.2377,
+          "d_star": 54.286,
+          "se": 27.38,
+          "ci95": [
+            0.62,
+            107.95
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null,
+        "all_train_share_shorter_pct": null,
+        "all_train_share_longer_pct": null
+      },
+      "spec_b_full_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 35492,
+          "b0_uber": 6.1579,
+          "b1_uber": 1.1811,
+          "b0_lyft": 3.335,
+          "b1_lyft": 1.238,
+          "d_star": 49.632,
+          "se": 16.054,
+          "ci95": [
+            18.17,
+            81.1
+          ]
+        },
+        "cluster": {
+          "n": 35492,
+          "b0_uber": 6.1579,
+          "b1_uber": 1.1811,
+          "b0_lyft": 3.335,
+          "b1_lyft": 1.238,
+          "d_star": 49.632,
+          "se": 20.032,
+          "ci95": [
+            10.37,
+            88.89
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null
+      },
+      "above_floor_check": {
+        "n_ge_1mi": 31053,
+        "b0_uber_ge_1mi": 6.3451,
+        "b1_uber_ge_1mi": 1.1204,
+        "b0_lyft_ge_1mi": 3.3703,
+        "b1_lyft_ge_1mi": 1.2267,
+        "d_star_ge_1mi": 27.994,
+        "ci95_ge_1mi": [
+          16.98,
+          39.01
+        ],
+        "ci95_cluster_ge_1mi": [
+          14.69,
+          41.3
+        ],
+        "in_domain_ge_1mi": false
+      }
+    },
+    {
+      "segment": "2. Phổ thông 4 chỗ",
+      "uber_tier": "UberX",
+      "lyft_tier": "Lyft",
+      "spec_a_train80": {
+        "in_domain": true,
+        "hc3": {
+          "n": 28683,
+          "b0_uber": 6.4653,
+          "b1_uber": 1.5081,
+          "b0_lyft": 5.4039,
+          "b1_lyft": 1.8387,
+          "d_star": 3.21,
+          "se": 0.095,
+          "ci95": [
+            3.02,
+            3.4
+          ]
+        },
+        "cluster": {
+          "n": 28683,
+          "b0_uber": 6.4653,
+          "b1_uber": 1.5081,
+          "b0_lyft": 5.4039,
+          "b1_lyft": 1.8387,
+          "d_star": 3.21,
+          "se": 0.127,
+          "ci95": [
+            2.96,
+            3.46
+          ]
+        },
+        "share_shorter_pct": 85.0,
+        "share_longer_pct": 14.8,
+        "all_train_share_shorter_pct": 84.9,
+        "all_train_share_longer_pct": 14.8
+      },
+      "spec_b_train80_nonsurge": {
+        "in_domain": true,
+        "hc3": {
+          "n": 27749,
+          "b0_uber": 6.4653,
+          "b1_uber": 1.5081,
+          "b0_lyft": 5.6448,
+          "b1_lyft": 1.6668,
+          "d_star": 5.17,
+          "se": 0.403,
+          "ci95": [
+            4.38,
+            5.96
+          ]
+        },
+        "cluster": {
+          "n": 27749,
+          "b0_uber": 6.4653,
+          "b1_uber": 1.5081,
+          "b0_lyft": 5.6448,
+          "b1_lyft": 1.6668,
+          "d_star": 5.17,
+          "se": 0.514,
+          "ci95": [
+            4.16,
+            6.18
+          ]
+        },
+        "share_shorter_pct": 98.2,
+        "share_longer_pct": 1.7,
+        "all_train_share_shorter_pct": 98.3,
+        "all_train_share_longer_pct": 1.7
+      },
+      "spec_b_full_nonsurge": {
+        "in_domain": true,
+        "hc3": {
+          "n": 34595,
+          "b0_uber": 6.4503,
+          "b1_uber": 1.5084,
+          "b0_lyft": 5.6321,
+          "b1_lyft": 1.6722,
+          "d_star": 4.994,
+          "se": 0.334,
+          "ci95": [
+            4.34,
+            5.65
+          ]
+        },
+        "cluster": {
+          "n": 34595,
+          "b0_uber": 6.4503,
+          "b1_uber": 1.5084,
+          "b0_lyft": 5.6321,
+          "b1_lyft": 1.6722,
+          "d_star": 4.994,
+          "se": 0.438,
+          "ci95": [
+            4.14,
+            5.85
+          ]
+        },
+        "share_shorter_pct": 98.2,
+        "share_longer_pct": 1.8
+      },
+      "above_floor_check": {
+        "n_ge_1mi": 30343,
+        "b0_uber_ge_1mi": 6.4293,
+        "b1_uber_ge_1mi": 1.516,
+        "b0_lyft_ge_1mi": 5.4702,
+        "b1_lyft_ge_1mi": 1.7276,
+        "d_star_ge_1mi": 4.533,
+        "ci95_ge_1mi": [
+          4.05,
+          5.02
+        ],
+        "ci95_cluster_ge_1mi": [
+          3.88,
+          5.18
+        ],
+        "in_domain_ge_1mi": true
+      }
+    },
+    {
+      "segment": "3. Gia đình 6 chỗ",
+      "uber_tier": "UberXL",
+      "lyft_tier": "Lyft XL",
+      "spec_a_train80": {
+        "in_domain": true,
+        "hc3": {
+          "n": 28258,
+          "b0_uber": 9.1907,
+          "b1_uber": 2.9585,
+          "b0_lyft": 7.4918,
+          "b1_lyft": 3.4114,
+          "d_star": 3.75,
+          "se": 0.168,
+          "ci95": [
+            3.42,
+            4.08
+          ]
+        },
+        "cluster": {
+          "n": 28258,
+          "b0_uber": 9.1907,
+          "b1_uber": 2.9585,
+          "b0_lyft": 7.4918,
+          "b1_lyft": 3.4114,
+          "d_star": 3.75,
+          "se": 0.197,
+          "ci95": [
+            3.36,
+            4.14
+          ]
+        },
+        "share_shorter_pct": 92.3,
+        "share_longer_pct": 7.6,
+        "all_train_share_shorter_pct": 92.3,
+        "all_train_share_longer_pct": 7.7
+      },
+      "spec_b_train80_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 27344,
+          "b0_uber": 9.1907,
+          "b1_uber": 2.9585,
+          "b0_lyft": 7.9323,
+          "b1_lyft": 3.1098,
+          "d_star": 8.315,
+          "se": 1.475,
+          "ci95": [
+            5.42,
+            11.21
+          ]
+        },
+        "cluster": {
+          "n": 27344,
+          "b0_uber": 9.1907,
+          "b1_uber": 2.9585,
+          "b0_lyft": 7.9323,
+          "b1_lyft": 3.1098,
+          "d_star": 8.315,
+          "se": 1.699,
+          "ci95": [
+            4.98,
+            11.65
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null,
+        "all_train_share_shorter_pct": null,
+        "all_train_share_longer_pct": null
+      },
+      "spec_b_full_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 34433,
+          "b0_uber": 9.1813,
+          "b1_uber": 2.9696,
+          "b0_lyft": 7.9317,
+          "b1_lyft": 3.1125,
+          "d_star": 8.75,
+          "se": 1.495,
+          "ci95": [
+            5.82,
+            11.68
+          ]
+        },
+        "cluster": {
+          "n": 34433,
+          "b0_uber": 9.1813,
+          "b1_uber": 2.9696,
+          "b0_lyft": 7.9317,
+          "b1_lyft": 3.1125,
+          "d_star": 8.75,
+          "se": 1.829,
+          "ci95": [
+            5.16,
+            12.34
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null
+      },
+      "above_floor_check": {
+        "n_ge_1mi": 30083,
+        "b0_uber_ge_1mi": 9.4899,
+        "b1_uber_ge_1mi": 2.8694,
+        "b0_lyft_ge_1mi": 8.0557,
+        "b1_lyft_ge_1mi": 3.0708,
+        "d_star_ge_1mi": 7.122,
+        "ci95_ge_1mi": [
+          5.27,
+          8.98
+        ],
+        "ci95_cluster_ge_1mi": [
+          4.9,
+          9.35
+        ],
+        "in_domain_ge_1mi": true
+      }
+    },
+    {
+      "segment": "4. Hạng sang Sedan",
+      "uber_tier": "Black",
+      "lyft_tier": "Lux Black",
+      "spec_a_train80": {
+        "in_domain": true,
+        "hc3": {
+          "n": 28787,
+          "b0_uber": 12.2294,
+          "b1_uber": 3.7735,
+          "b0_lyft": 11.7449,
+          "b1_lyft": 4.9637,
+          "d_star": 0.407,
+          "se": 0.062,
+          "ci95": [
+            0.29,
+            0.53
+          ]
+        },
+        "cluster": {
+          "n": 28787,
+          "b0_uber": 12.2294,
+          "b1_uber": 3.7735,
+          "b0_lyft": 11.7449,
+          "b1_lyft": 4.9637,
+          "d_star": 0.407,
+          "se": 0.075,
+          "ci95": [
+            0.26,
+            0.55
+          ]
+        },
+        "share_shorter_pct": 1.0,
+        "share_longer_pct": 99.0,
+        "all_train_share_shorter_pct": 1.0,
+        "all_train_share_longer_pct": 99.0
+      },
+      "spec_b_train80_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 27832,
+          "b0_uber": 12.2294,
+          "b1_uber": 3.7735,
+          "b0_lyft": 12.5044,
+          "b1_lyft": 4.4331,
+          "d_star": -0.417,
+          "se": 0.137,
+          "ci95": [
+            -0.69,
+            -0.15
+          ]
+        },
+        "cluster": {
+          "n": 27832,
+          "b0_uber": 12.2294,
+          "b1_uber": 3.7735,
+          "b0_lyft": 12.5044,
+          "b1_lyft": 4.4331,
+          "d_star": -0.417,
+          "se": 0.157,
+          "ci95": [
+            -0.73,
+            -0.11
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null,
+        "all_train_share_shorter_pct": null,
+        "all_train_share_longer_pct": null
+      },
+      "spec_b_full_nonsurge": {
+        "in_domain": false,
+        "hc3": {
+          "n": 34729,
+          "b0_uber": 12.1922,
+          "b1_uber": 3.7919,
+          "b0_lyft": 12.4893,
+          "b1_lyft": 4.4439,
+          "d_star": -0.456,
+          "se": 0.122,
+          "ci95": [
+            -0.7,
+            -0.22
+          ]
+        },
+        "cluster": {
+          "n": 34729,
+          "b0_uber": 12.1922,
+          "b1_uber": 3.7919,
+          "b0_lyft": 12.4893,
+          "b1_lyft": 4.4439,
+          "d_star": -0.456,
+          "se": 0.148,
+          "ci95": [
+            -0.74,
+            -0.17
+          ]
+        },
+        "share_shorter_pct": null,
+        "share_longer_pct": null
+      },
+      "above_floor_check": {
+        "n_ge_1mi": 30313,
+        "b0_uber_ge_1mi": 11.452,
+        "b1_uber_ge_1mi": 4.034,
+        "b0_lyft_ge_1mi": 11.7497,
+        "b1_lyft_ge_1mi": 4.6972,
+        "d_star_ge_1mi": -0.449,
+        "ci95_ge_1mi": [
+          -0.77,
+          -0.13
+        ],
+        "ci95_cluster_ge_1mi": [
+          -0.85,
+          -0.05
+        ],
+        "in_domain_ge_1mi": false
+      }
+    },
+    {
+      "segment": "5. Hạng sang SUV",
+      "uber_tier": "Black SUV",
+      "lyft_tier": "Lux Black XL",
+      "spec_a_train80": {
+        "in_domain": true,
+        "hc3": {
+          "n": 28524,
+          "b0_uber": 22.6336,
+          "b1_uber": 3.4653,
+          "b0_lyft": 20.7326,
+          "b1_lyft": 5.0902,
+          "d_star": 1.17,
+          "se": 0.037,
+          "ci95": [
+            1.1,
+            1.24
+          ]
+        },
+        "cluster": {
+          "n": 28524,
+          "b0_uber": 22.6336,
+          "b1_uber": 3.4653,
+          "b0_lyft": 20.7326,
+          "b1_lyft": 5.0902,
+          "d_star": 1.17,
+          "se": 0.046,
+          "ci95": [
+            1.08,
+            1.26
+          ]
+        },
+        "share_shorter_pct": 19.7,
+        "share_longer_pct": 80.1,
+        "all_train_share_shorter_pct": 19.9,
+        "all_train_share_longer_pct": 80.0
+      },
+      "spec_b_train80_nonsurge": {
+        "in_domain": true,
+        "hc3": {
+          "n": 27582,
+          "b0_uber": 22.6336,
+          "b1_uber": 3.4653,
+          "b0_lyft": 22.0335,
+          "b1_lyft": 4.1669,
+          "d_star": 0.855,
+          "se": 0.072,
+          "ci95": [
+            0.71,
+            1.0
+          ]
+        },
+        "cluster": {
+          "n": 27582,
+          "b0_uber": 22.6336,
+          "b1_uber": 3.4653,
+          "b0_lyft": 22.0335,
+          "b1_lyft": 4.1669,
+          "d_star": 0.855,
+          "se": 0.081,
+          "ci95": [
+            0.7,
+            1.01
+          ]
+        },
+        "share_shorter_pct": 9.7,
+        "share_longer_pct": 90.3,
+        "all_train_share_shorter_pct": 9.9,
+        "all_train_share_longer_pct": 90.1
+      },
+      "spec_b_full_nonsurge": {
+        "in_domain": true,
+        "hc3": {
+          "n": 34533,
+          "b0_uber": 22.6383,
+          "b1_uber": 3.4641,
+          "b0_lyft": 22.0418,
+          "b1_lyft": 4.1597,
+          "d_star": 0.858,
+          "se": 0.064,
+          "ci95": [
+            0.73,
+            0.98
+          ]
+        },
+        "cluster": {
+          "n": 34533,
+          "b0_uber": 22.6383,
+          "b1_uber": 3.4641,
+          "b0_lyft": 22.0418,
+          "b1_lyft": 4.1597,
+          "d_star": 0.858,
+          "se": 0.076,
+          "ci95": [
+            0.71,
+            1.01
+          ]
+        },
+        "share_shorter_pct": 9.8,
+        "share_longer_pct": 90.2
+      },
+      "above_floor_check": {
+        "n_ge_1mi": 30208,
+        "b0_uber_ge_1mi": 21.1827,
+        "b1_uber_ge_1mi": 3.9378,
+        "b0_lyft_ge_1mi": 20.7947,
+        "b1_lyft_ge_1mi": 4.5789,
+        "d_star_ge_1mi": 0.605,
+        "ci95_ge_1mi": [
+          0.39,
+          0.82
+        ],
+        "ci95_cluster_ge_1mi": [
+          0.35,
+          0.86
+        ],
+        "in_domain_ge_1mi": false
+      }
+    }
+  ],
+  "model_diagnostics_and_cqr": {
+    "m7_vs_m6_paired_5fold": {
+      "m7_folds_rmse": [
+        1.7892,
+        1.792,
+        1.7585,
+        1.7382,
+        1.7502
+      ],
+      "m6_folds_rmse": [
+        1.8222,
+        1.8574,
+        1.8009,
+        1.7899,
+        1.79
+      ],
+      "mean_diff_m7_minus_m6_usd": -0.0465,
+      "sd_diff_usd": 0.0125,
+      "m7_better_folds_count": 5,
+      "paired_t_stat": -8.2899,
+      "paired_p_value": 0.0012,
+      "bootstrap_95ci_diff_usd": [
+        -0.0562,
+        -0.0376
+      ]
+    },
+    "m0b_vs_m7_by_surge_regime": {
+      "non_surge_m0b": {
+        "n": 45375,
+        "r2": 0.9467,
+        "rmse": 2.0432,
+        "mae": 1.1179,
+        "mape_pct": 7.82
+      },
+      "non_surge_m7": {
+        "n": 45375,
+        "r2": 0.96,
+        "rmse": 1.7695,
+        "mae": 1.1209,
+        "mape_pct": 8.25
+      },
+      "surge_gt1_m0b": {
+        "n": 1198,
+        "r2": 0.3759,
+        "rmse": 11.14,
+        "mae": 8.4887,
+        "mape_pct": 27.34
+      },
+      "surge_gt1_m7": {
+        "n": 1198,
+        "r2": 0.9748,
+        "rmse": 2.2374,
+        "mae": 1.6231,
+        "mape_pct": 6.17
+      }
+    },
+    "clean_monotonic_cqr": {
+      "categorical_encoding": "native_pandas_category_from_dtype",
+      "n_fit": 158344,
+      "n_cal": 27944,
+      "n_test": 46573,
+      "overall_base85_raw_strict_picp_pct": 80.05,
+      "overall_base85_raw_tol1e6_picp_pct": 80.13,
+      "overall_base85_raw_mpiw_usd": 3.565,
+      "overall_cqr_picp_pct": 79.89,
+      "overall_cqr_mpiw_usd": 3.562,
+      "min_tier_cqr_picp_pct": 78.62,
+      "max_tier_cqr_picp_pct": 81.99,
+      "pre_repair_crossings": 7,
+      "post_repair_crossings": 0,
+      "by_tier": [
+        {
+          "cab_type": "Uber",
+          "service_tier": "Black",
+          "n_cal": 2838,
+          "n_test": 4712,
+          "mean_actual_usd": 20.68,
+          "base85_raw_strict_picp_pct": 79.27,
+          "base85_raw_tol1e6_picp_pct": 79.86,
+          "base85_raw_mpiw_usd": 4.046,
+          "q_hat_usd_6dec": 0.0,
+          "cqr_picp_pct": 79.86,
+          "cqr_mpiw_usd": 4.046,
+          "delta_mpiw_usd": 0.0
+        },
+        {
+          "cab_type": "Uber",
+          "service_tier": "Black SUV",
+          "n_cal": 2817,
+          "n_test": 4705,
+          "mean_actual_usd": 30.31,
+          "base85_raw_strict_picp_pct": 77.58,
+          "base85_raw_tol1e6_picp_pct": 77.58,
+          "base85_raw_mpiw_usd": 4.114,
+          "q_hat_usd_6dec": 1.5e-05,
+          "cqr_picp_pct": 78.62,
+          "cqr_mpiw_usd": 4.114,
+          "delta_mpiw_usd": 0.0
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Lux",
+          "n_cal": 1842,
+          "n_test": 3021,
+          "mean_actual_usd": 17.83,
+          "base85_raw_strict_picp_pct": 80.11,
+          "base85_raw_tol1e6_picp_pct": 80.11,
+          "base85_raw_mpiw_usd": 3.624,
+          "q_hat_usd_6dec": 0.001254,
+          "cqr_picp_pct": 81.99,
+          "cqr_mpiw_usd": 3.627,
+          "delta_mpiw_usd": 0.0025
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Lux Black",
+          "n_cal": 1863,
+          "n_test": 3028,
+          "mean_actual_usd": 22.88,
+          "base85_raw_strict_picp_pct": 82.0,
+          "base85_raw_tol1e6_picp_pct": 82.0,
+          "base85_raw_mpiw_usd": 3.838,
+          "q_hat_usd_6dec": -0.001547,
+          "cqr_picp_pct": 80.25,
+          "cqr_mpiw_usd": 3.835,
+          "delta_mpiw_usd": -0.0031
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Lux Black XL",
+          "n_cal": 1839,
+          "n_test": 3125,
+          "mean_actual_usd": 32.33,
+          "base85_raw_strict_picp_pct": 80.64,
+          "base85_raw_tol1e6_picp_pct": 80.96,
+          "base85_raw_mpiw_usd": 5.263,
+          "q_hat_usd_6dec": 5e-06,
+          "cqr_picp_pct": 81.86,
+          "cqr_mpiw_usd": 5.263,
+          "delta_mpiw_usd": 0.0
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Lyft",
+          "n_cal": 1855,
+          "n_test": 3091,
+          "mean_actual_usd": 9.63,
+          "base85_raw_strict_picp_pct": 81.11,
+          "base85_raw_tol1e6_picp_pct": 81.11,
+          "base85_raw_mpiw_usd": 1.782,
+          "q_hat_usd_6dec": -0.001817,
+          "cqr_picp_pct": 80.1,
+          "cqr_mpiw_usd": 1.778,
+          "delta_mpiw_usd": -0.0036
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Lyft XL",
+          "n_cal": 1838,
+          "n_test": 3146,
+          "mean_actual_usd": 15.32,
+          "base85_raw_strict_picp_pct": 80.96,
+          "base85_raw_tol1e6_picp_pct": 80.96,
+          "base85_raw_mpiw_usd": 3.266,
+          "q_hat_usd_6dec": -8e-05,
+          "cqr_picp_pct": 80.51,
+          "cqr_mpiw_usd": 3.266,
+          "delta_mpiw_usd": -0.0002
+        },
+        {
+          "cab_type": "Lyft",
+          "service_tier": "Shared",
+          "n_cal": 1855,
+          "n_test": 3029,
+          "mean_actual_usd": 6.03,
+          "base85_raw_strict_picp_pct": 80.79,
+          "base85_raw_tol1e6_picp_pct": 80.79,
+          "base85_raw_mpiw_usd": 4.072,
+          "q_hat_usd_6dec": -0.005607,
+          "cqr_picp_pct": 79.89,
+          "cqr_mpiw_usd": 4.06,
+          "delta_mpiw_usd": -0.0115
+        },
+        {
+          "cab_type": "Uber",
+          "service_tier": "UberPool",
+          "n_cal": 2780,
+          "n_test": 4667,
+          "mean_actual_usd": 8.77,
+          "base85_raw_strict_picp_pct": 79.39,
+          "base85_raw_tol1e6_picp_pct": 79.39,
+          "base85_raw_mpiw_usd": 2.895,
+          "q_hat_usd_6dec": -0.004667,
+          "cqr_picp_pct": 79.07,
+          "cqr_mpiw_usd": 2.886,
+          "delta_mpiw_usd": -0.0093
+        },
+        {
+          "cab_type": "Uber",
+          "service_tier": "UberX",
+          "n_cal": 2840,
+          "n_test": 4613,
+          "mean_actual_usd": 9.72,
+          "base85_raw_strict_picp_pct": 80.82,
+          "base85_raw_tol1e6_picp_pct": 80.82,
+          "base85_raw_mpiw_usd": 2.816,
+          "q_hat_usd_6dec": -1.5e-05,
+          "cqr_picp_pct": 79.95,
+          "cqr_mpiw_usd": 2.816,
+          "delta_mpiw_usd": -0.0
+        },
+        {
+          "cab_type": "Uber",
+          "service_tier": "UberXL",
+          "n_cal": 2781,
+          "n_test": 4797,
+          "mean_actual_usd": 15.73,
+          "base85_raw_strict_picp_pct": 80.01,
+          "base85_raw_tol1e6_picp_pct": 80.01,
+          "base85_raw_mpiw_usd": 4.385,
+          "q_hat_usd_6dec": -0.00241,
+          "cqr_picp_pct": 79.7,
+          "cqr_mpiw_usd": 4.381,
+          "delta_mpiw_usd": -0.0048
+        },
+        {
+          "cab_type": "Uber",
+          "service_tier": "WAV",
+          "n_cal": 2796,
+          "n_test": 4639,
+          "mean_actual_usd": 9.79,
+          "base85_raw_strict_picp_pct": 79.76,
+          "base85_raw_tol1e6_picp_pct": 79.76,
+          "base85_raw_mpiw_usd": 2.786,
+          "q_hat_usd_6dec": -0.000119,
+          "cqr_picp_pct": 78.66,
+          "cqr_mpiw_usd": 2.786,
+          "delta_mpiw_usd": -0.0002
+        }
+      ],
+      "stage6_100pct_boundary_audit": {
+        "overall_strict_pct": 78.44,
+        "overall_tol1e6_pct": 80.28,
+        "lux_black_xl_strict_pct": 77.31,
+        "lux_black_xl_tol1e6_pct": 80.38,
+        "black_suv_strict_pct": 76.13,
+        "black_suv_tol1e6_pct": 80.62
+      }
+    },
+    "missingness_sensitivity": {
+      "M7_full_test": {
+        "n": 46573,
+        "r2": 0.9626,
+        "rmse": 1.783,
+        "mae": 1.1338,
+        "mape_pct": 8.19
+      },
+      "M7_complete_weather_valid_rain": {
+        "n": 26109,
+        "r2": 0.9636,
+        "rmse": 1.7587,
+        "mae": 1.1268,
+        "mape_pct": 8.11
+      },
+      "M7_unmatched_weather_0": {
+        "n": 15852,
+        "r2": 0.9612,
+        "rmse": 1.8125,
+        "mae": 1.1465,
+        "mape_pct": 8.35
+      },
+      "M2_full_test": {
+        "n": 46573,
+        "r2": 0.9539,
+        "rmse": 1.9802,
+        "mae": 1.2888,
+        "mape_pct": 9.33
+      },
+      "M2_complete_weather_valid_rain": {
+        "n": 26109,
+        "r2": 0.954,
+        "rmse": 1.9771,
+        "mae": 1.2884,
+        "mape_pct": 9.29
+      },
+      "M2_unmatched_weather_0": {
+        "n": 15852,
+        "r2": 0.9539,
+        "rmse": 1.9767,
+        "mae": 1.2949,
+        "mape_pct": 9.46
+      },
+      "M7_original_ts_1": {
+        "n": 35746,
+        "r2": 0.9629,
+        "rmse": 1.7798,
+        "mae": 1.1297,
+        "mape_pct": 8.12
+      },
+      "M7_missing_ts_0": {
+        "n": 10827,
+        "r2": 0.9619,
+        "rmse": 1.7935,
+        "mae": 1.1473,
+        "mape_pct": 8.42
+      }
+    },
+    "grouped_permutation_importance": [
+      {
+        "group": "1. Phân khúc dịch vụ (name)",
+        "n_cols": 1,
+        "cols": "name",
+        "m7_delta_rmse": 9.9529,
+        "m7_delta_std": 0.045,
+        "m2_delta_rmse": 9.851,
+        "m2_delta_std": 0.0477,
+        "m7_rel_share_pct": 69.23,
+        "m2_rel_share_pct": 70.94
+      },
+      {
+        "group": "2. Cụm Cự ly & Surge gộp (chống đa cộng tuyến)",
+        "n_cols": 6,
+        "cols": "distance, log_distance, surge_multiplier, lyft_surge_excess, distance_x_surge, distance_x_lyft_surge_excess",
+        "m7_delta_rmse": 3.3602,
+        "m7_delta_std": 0.0185,
+        "m2_delta_rmse": 3.5775,
+        "m2_delta_std": 0.0291,
+        "m7_rel_share_pct": 23.37,
+        "m2_rel_share_pct": 25.76
+      },
+      {
+        "group": "3. Tuyến không gian (source, destination)",
+        "n_cols": 2,
+        "cols": "source, destination",
+        "m7_delta_rmse": 1.0479,
+        "m7_delta_std": 0.0263,
+        "m2_delta_rmse": 0.4582,
+        "m2_delta_std": 0.0202,
+        "m7_rel_share_pct": 7.29,
+        "m2_rel_share_pct": 3.3
+      },
+      {
+        "group": "4. Hãng xe (cab_type, is_lyft)",
+        "n_cols": 2,
+        "cols": "cab_type, is_lyft",
+        "m7_delta_rmse": 0.0132,
+        "m7_delta_std": 0.001,
+        "m2_delta_rmse": 0.0,
+        "m2_delta_std": 0.0,
+        "m7_rel_share_pct": 0.09,
+        "m2_rel_share_pct": 0.0
+      },
+      {
+        "group": "5. Toàn bộ 7 biến Thời tiết",
+        "n_cols": 7,
+        "cols": "temp, rain, humidity, wind, clouds, pressure, is_raining",
+        "m7_delta_rmse": 0.0014,
+        "m7_delta_std": 0.0009,
+        "m2_delta_rmse": -0.0002,
+        "m2_delta_std": 0.0001,
+        "m7_rel_share_pct": 0.01,
+        "m2_rel_share_pct": 0.0
+      },
+      {
+        "group": "6. Toàn bộ 9 biến Thời gian Boston EST",
+        "n_cols": 9,
+        "cols": "hour, day_of_week, is_weekend, is_rush_hour, time_of_day, hour_sin, hour_cos, dow_sin, dow_cos",
+        "m7_delta_rmse": 0.0009,
+        "m7_delta_std": 0.0007,
+        "m2_delta_rmse": -0.0002,
+        "m2_delta_std": 0.0002,
+        "m7_rel_share_pct": 0.01,
+        "m2_rel_share_pct": 0.0
+      }
+    ],
+    "complete_case_weather_delta_rmse_m7": 0.00322,
+    "api_batch_group_split": {
+      "n_train": 186420,
+      "n_test": 46441,
+      "sibling_overlap_random_pct": 29.29,
+      "m7": {
+        "n": 46441,
+        "r2": 0.9639,
+        "rmse": 1.7608,
+        "mae": 1.1341,
+        "mape_pct": 8.2
+      },
+      "m2": {
+        "n": 46441,
+        "r2": 0.9538,
+        "rmse": 1.9928,
+        "mae": 1.2869,
+        "mape_pct": 9.32
+      }
+    },
+    "strict_train_only_cleaning": {
+      "n_train": 186288,
+      "n_test": 46573,
+      "train_price_scale_fixed_count": 2750,
+      "test_price_scale_fixed_count": 711,
+      "train_price_rows_differing_vs_global": 0,
+      "test_price_rows_differing_vs_global": 0,
+      "train_dist_rows_differing_vs_global": 274,
+      "test_dist_rows_differing_vs_global": 68,
+      "test_dist_max_abs_diff_mi": 6.714,
+      "m7_strict_train_only": {
+        "n": 46573,
+        "r2": 0.963,
+        "rmse": 1.7746,
+        "mae": 1.1268,
+        "mape_pct": 8.13
+      },
+      "m2_strict_train_only": {
+        "n": 46573,
+        "r2": 0.957,
+        "rmse": 1.9121,
+        "mae": 1.2624,
+        "mape_pct": 9.1
+      },
+      "m7_strict_unmodified_raw": {
+        "n": 41376,
+        "r2": 0.9639,
+        "rmse": 1.7554,
+        "mae": 1.1181,
+        "mape_pct": 8.11
+      },
+      "route_group_split": {
+        "n_train": 184664,
+        "n_test": 48197,
+        "train_price_scale_fixed_count": 2775,
+        "test_price_scale_fixed_count": 686,
+        "train_price_rows_differing_vs_global": 0,
+        "test_price_rows_differing_vs_global": 0,
+        "train_dist_rows_differing_vs_global": 325,
+        "test_dist_rows_differing_vs_global": 1,
+        "test_dist_max_abs_diff_mi": 6.273,
+        "m7_strict_train_only": {
+          "n": 48197,
+          "r2": 0.9379,
+          "rmse": 2.2067,
+          "mae": 1.4387,
+          "mape_pct": 10.67
+        },
+        "m2_strict_train_only": {
+          "n": 48197,
+          "r2": 0.9296,
+          "rmse": 2.3484,
+          "mae": 1.5741,
+          "mape_pct": 11.64
+        },
+        "m7_strict_unmodified_raw": {
+          "n": 42823,
+          "r2": 0.9538,
+          "rmse": 1.9031,
+          "mae": 1.2602,
+          "mape_pct": 9.37
+        }
+      }
+    },
+    "log10_ratio_threshold_sensitivity": [
+      {
+        "ratio_threshold": 3.0,
+        "n_price_flagged_in_master": 4021,
+        "pct_of_master": 1.48
+      },
+      {
+        "ratio_threshold": 3.55,
+        "n_price_flagged_in_master": 4009,
+        "pct_of_master": 1.48
+      },
+      {
+        "ratio_threshold": 4.0,
+        "n_price_flagged_in_master": 4008,
+        "pct_of_master": 1.48
+      }
+    ]
+  },
+  "spatial_fairness_and_surge_eda": {
+    "spatial_fairness_12_districts": [
+      {
+        "district": "Back Bay",
+        "n_test": 3835,
+        "mean_price_usd": 16.04,
+        "mean_signed_residual_usd": -0.006,
+        "mae_usd": 1.25,
+        "mape_pct": 8.95
+      },
+      {
+        "district": "Beacon Hill",
+        "n_test": 3883,
+        "mean_price_usd": 15.57,
+        "mean_signed_residual_usd": -0.0098,
+        "mae_usd": 1.09,
+        "mape_pct": 8.4
+      },
+      {
+        "district": "Boston University",
+        "n_test": 3983,
+        "mean_price_usd": 18.9,
+        "mean_signed_residual_usd": -0.0124,
+        "mae_usd": 1.18,
+        "mape_pct": 7.51
+      },
+      {
+        "district": "Fenway",
+        "n_test": 3904,
+        "mean_price_usd": 18.33,
+        "mean_signed_residual_usd": -0.0096,
+        "mae_usd": 1.34,
+        "mape_pct": 8.76
+      },
+      {
+        "district": "Financial District",
+        "n_test": 3944,
+        "mean_price_usd": 18.19,
+        "mean_signed_residual_usd": 0.09,
+        "mae_usd": 1.21,
+        "mape_pct": 7.85
+      },
+      {
+        "district": "Haymarket Square",
+        "n_test": 3832,
+        "mean_price_usd": 13.61,
+        "mean_signed_residual_usd": 0.0293,
+        "mae_usd": 0.81,
+        "mape_pct": 7.49
+      },
+      {
+        "district": "North End",
+        "n_test": 3867,
+        "mean_price_usd": 14.68,
+        "mean_signed_residual_usd": 0.0471,
+        "mae_usd": 0.98,
+        "mape_pct": 8.17
+      },
+      {
+        "district": "North Station",
+        "n_test": 3852,
+        "mean_price_usd": 16.24,
+        "mean_signed_residual_usd": 0.0626,
+        "mae_usd": 1.06,
+        "mape_pct": 7.4
+      },
+      {
+        "district": "Northeastern University",
+        "n_test": 3797,
+        "mean_price_usd": 17.83,
+        "mean_signed_residual_usd": -0.0174,
+        "mae_usd": 1.37,
+        "mape_pct": 8.98
+      },
+      {
+        "district": "South Station",
+        "n_test": 3928,
+        "mean_price_usd": 15.56,
+        "mean_signed_residual_usd": -0.0151,
+        "mae_usd": 1.12,
+        "mape_pct": 8.69
+      },
+      {
+        "district": "Theatre District",
+        "n_test": 3894,
+        "mean_price_usd": 16.32,
+        "mean_signed_residual_usd": 0.0027,
+        "mae_usd": 1.2,
+        "mape_pct": 8.8
+      },
+      {
+        "district": "West End",
+        "n_test": 3854,
+        "mean_price_usd": 16.26,
+        "mean_signed_residual_usd": -0.0218,
+        "mae_usd": 1.0,
+        "mape_pct": 7.33
+      }
+    ],
+    "max_abs_district_bias_usd": 0.09,
+    "district_mape_range_pct": [
+      7.33,
+      8.98
+    ],
+    "lyft_overall_observed_n": 92384,
+    "lyft_overall_surge_count": 6280,
+    "lyft_overall_surge_rate_pct": 6.8,
+    "lyft_spatial_surge_all12": [
+      {
+        "source": "Back Bay",
+        "n_lyft_obs": 7662,
+        "surge_count": 856,
+        "surge_rate_pct": 11.17,
+        "rank": 1
+      },
+      {
+        "source": "Fenway",
+        "n_lyft_obs": 7680,
+        "surge_count": 812,
+        "surge_rate_pct": 10.57,
+        "rank": 2
+      },
+      {
+        "source": "Northeastern University",
+        "n_lyft_obs": 7636,
+        "surge_count": 771,
+        "surge_rate_pct": 10.1,
+        "rank": 3
+      },
+      {
+        "source": "Theatre District",
+        "n_lyft_obs": 7714,
+        "surge_count": 739,
+        "surge_rate_pct": 9.58,
+        "rank": 4
+      },
+      {
+        "source": "Boston University",
+        "n_lyft_obs": 7720,
+        "surge_count": 739,
+        "surge_rate_pct": 9.57,
+        "rank": 5
+      },
+      {
+        "source": "Beacon Hill",
+        "n_lyft_obs": 7722,
+        "surge_count": 610,
+        "surge_rate_pct": 7.9,
+        "rank": 6
+      },
+      {
+        "source": "South Station",
+        "n_lyft_obs": 7623,
+        "surge_count": 495,
+        "surge_rate_pct": 6.49,
+        "rank": 7
+      },
+      {
+        "source": "Financial District",
+        "n_lyft_obs": 7974,
+        "surge_count": 493,
+        "surge_rate_pct": 6.18,
+        "rank": 8
+      },
+      {
+        "source": "West End",
+        "n_lyft_obs": 7674,
+        "surge_count": 301,
+        "surge_rate_pct": 3.92,
+        "rank": 9
+      },
+      {
+        "source": "North Station",
+        "n_lyft_obs": 7780,
+        "surge_count": 250,
+        "surge_rate_pct": 3.21,
+        "rank": 10
+      },
+      {
+        "source": "Haymarket Square",
+        "n_lyft_obs": 7554,
+        "surge_count": 112,
+        "surge_rate_pct": 1.48,
+        "rank": 11
+      },
+      {
+        "source": "North End",
+        "n_lyft_obs": 7645,
+        "surge_count": 102,
+        "surge_rate_pct": 1.33,
+        "rank": 12
+      }
+    ],
+    "surge_clustering_in_loc_hour": {
+      "total_lyft_loc_hours": 3962,
+      "active_surge_loc_hours": 2233,
+      "pct_loc_hours_with_surge": 56.36,
+      "mean_surge_quotes_per_active_loc_hour": 2.16,
+      "max_surge_quotes_in_single_loc_hour": 11
+    }
+  },
+  "policy_rq4_supply_power_and_io": {
+    "lyft_observed_baseline_quote_proxy_usd": 1603696.2,
+    "lyft_observed_n_quotes": 92384,
+    "surge_cap_supply_constrained_table": [
+      {
+        "surge_cap": 3.0,
+        "n_affected": 0,
+        "affected_lyft_pct": 0.0,
+        "mean_saving_usd": 0.0,
+        "mean_saving_pct": 0.0,
+        "m2_ols_mean_saving_usd": 0.0,
+        "total_consumer_savings_usd": 0.0,
+        "proxy_static_pct": 0.0,
+        "proxy_supply_drop5_pct": 0.0,
+        "proxy_supply_drop10_pct": 0.0,
+        "proxy_elastic_upper_eps050_pct": 0.0,
+        "proxy_elastic_upper_eps080_pct": 0.0,
+        "unfulfilled_quotes_drop5": 0.0,
+        "unfulfilled_quotes_drop10": 0.0
+      },
+      {
+        "surge_cap": 2.0,
+        "n_affected": 53,
+        "affected_lyft_pct": 0.06,
+        "mean_saving_usd": 5.53,
+        "mean_saving_pct": 18.84,
+        "m2_ols_mean_saving_usd": 5.88,
+        "total_consumer_savings_usd": 293.29,
+        "proxy_static_pct": -0.018,
+        "proxy_supply_drop5_pct": -0.023,
+        "proxy_supply_drop10_pct": -0.027,
+        "proxy_elastic_upper_eps050_pct": -0.011,
+        "proxy_elastic_upper_eps080_pct": -0.007,
+        "unfulfilled_quotes_drop5": 8.0,
+        "unfulfilled_quotes_drop10": 11.0
+      },
+      {
+        "surge_cap": 1.75,
+        "n_affected": 704,
+        "affected_lyft_pct": 0.76,
+        "mean_saving_usd": 4.61,
+        "mean_saving_pct": 11.64,
+        "m2_ols_mean_saving_usd": 5.14,
+        "total_consumer_savings_usd": 3247.75,
+        "proxy_static_pct": -0.203,
+        "proxy_supply_drop5_pct": -0.255,
+        "proxy_supply_drop10_pct": -0.307,
+        "proxy_elastic_upper_eps050_pct": -0.116,
+        "proxy_elastic_upper_eps080_pct": -0.064,
+        "unfulfilled_quotes_drop5": 65.5,
+        "unfulfilled_quotes_drop10": 90.1
+      },
+      {
+        "surge_cap": 1.5,
+        "n_affected": 1437,
+        "affected_lyft_pct": 1.56,
+        "mean_saving_usd": 7.33,
+        "mean_saving_pct": 19.32,
+        "m2_ols_mean_saving_usd": 7.26,
+        "total_consumer_savings_usd": 10529.46,
+        "proxy_static_pct": -0.657,
+        "proxy_supply_drop5_pct": -0.81,
+        "proxy_supply_drop10_pct": -0.963,
+        "proxy_elastic_upper_eps050_pct": -0.401,
+        "proxy_elastic_upper_eps080_pct": -0.248,
+        "unfulfilled_quotes_drop5": 222.1,
+        "unfulfilled_quotes_drop10": 305.3
+      },
+      {
+        "surge_cap": 1.25,
+        "n_affected": 2949,
+        "affected_lyft_pct": 3.19,
+        "mean_saving_usd": 8.06,
+        "mean_saving_pct": 22.82,
+        "m2_ols_mean_saving_usd": 8.23,
+        "total_consumer_savings_usd": 23769.52,
+        "proxy_static_pct": -1.482,
+        "proxy_supply_drop5_pct": -1.8,
+        "proxy_supply_drop10_pct": -2.117,
+        "proxy_elastic_upper_eps050_pct": -0.953,
+        "proxy_elastic_upper_eps080_pct": -0.635,
+        "unfulfilled_quotes_drop5": 538.5,
+        "unfulfilled_quotes_drop10": 740.4
+      },
+      {
+        "surge_cap": 1.0,
+        "n_affected": 6280,
+        "affected_lyft_pct": 6.8,
+        "mean_saving_usd": 8.44,
+        "mean_saving_pct": 27.51,
+        "m2_ols_mean_saving_usd": 8.5,
+        "total_consumer_savings_usd": 52986.34,
+        "proxy_static_pct": -3.304,
+        "proxy_supply_drop5_pct": -3.951,
+        "proxy_supply_drop10_pct": -4.599,
+        "proxy_elastic_upper_eps050_pct": -2.225,
+        "proxy_elastic_upper_eps080_pct": -1.578,
+        "unfulfilled_quotes_drop5": 1382.3,
+        "unfulfilled_quotes_drop10": 1900.7
+      }
+    ],
+    "constrained_policy_matrix": [
+      {
+        "max_proxy_drop_tau_pct": 0.05,
+        "static_supply_0pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.018
+        },
+        "supply_drop_5pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.023
+        },
+        "supply_drop_10pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.027
+        },
+        "elastic_upper_eps050": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.011
+        }
+      },
+      {
+        "max_proxy_drop_tau_pct": 0.1,
+        "static_supply_0pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.018
+        },
+        "supply_drop_5pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.023
+        },
+        "supply_drop_10pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.027
+        },
+        "elastic_upper_eps050": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.011
+        }
+      },
+      {
+        "max_proxy_drop_tau_pct": 0.3,
+        "static_supply_0pct": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.203
+        },
+        "supply_drop_5pct": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.255
+        },
+        "supply_drop_10pct": {
+          "selected_cap": "2.00x",
+          "protected_quotes": 53,
+          "proxy_change_pct": -0.027
+        },
+        "elastic_upper_eps050": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.116
+        }
+      },
+      {
+        "max_proxy_drop_tau_pct": 0.5,
+        "static_supply_0pct": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.203
+        },
+        "supply_drop_5pct": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.255
+        },
+        "supply_drop_10pct": {
+          "selected_cap": "1.75x",
+          "protected_quotes": 704,
+          "proxy_change_pct": -0.307
+        },
+        "elastic_upper_eps050": {
+          "selected_cap": "1.50x",
+          "protected_quotes": 1437,
+          "proxy_change_pct": -0.401
+        }
+      }
+    ],
+    "arithmetic_surge_benchmark": [
+      {
+        "surge_cap": 3.0,
+        "n_affected": 0,
+        "arith_mean_saving_usd": 0.0,
+        "arith_saving_pct": 0.0,
+        "arith_static_proxy_change_pct": 0.0,
+        "arith_supply_drop5_pct": 0.0,
+        "arith_supply_drop10_pct": 0.0
+      },
+      {
+        "surge_cap": 2.0,
+        "n_affected": 53,
+        "arith_mean_saving_usd": 6.2,
+        "arith_saving_pct": 20.25,
+        "arith_static_proxy_change_pct": -0.02,
+        "arith_supply_drop5_pct": -0.025,
+        "arith_supply_drop10_pct": -0.029
+      },
+      {
+        "surge_cap": 1.75,
+        "n_affected": 704,
+        "arith_mean_saving_usd": 5.28,
+        "arith_saving_pct": 13.83,
+        "arith_static_proxy_change_pct": -0.232,
+        "arith_supply_drop5_pct": -0.306,
+        "arith_supply_drop10_pct": -0.38
+      },
+      {
+        "surge_cap": 1.5,
+        "n_affected": 1437,
+        "arith_mean_saving_usd": 7.45,
+        "arith_saving_pct": 20.09,
+        "arith_static_proxy_change_pct": -0.668,
+        "arith_supply_drop5_pct": -0.798,
+        "arith_supply_drop10_pct": -0.929
+      },
+      {
+        "surge_cap": 1.25,
+        "n_affected": 2949,
+        "arith_mean_saving_usd": 8.46,
+        "arith_saving_pct": 24.83,
+        "arith_static_proxy_change_pct": -1.555,
+        "arith_supply_drop5_pct": -1.777,
+        "arith_supply_drop10_pct": -1.999
+      },
+      {
+        "surge_cap": 1.0,
+        "n_affected": 6280,
+        "arith_mean_saving_usd": 8.78,
+        "arith_saving_pct": 29.33,
+        "arith_static_proxy_change_pct": -3.438,
+        "arith_supply_drop5_pct": -3.815,
+        "arith_supply_drop10_pct": -4.192
+      }
+    ],
+    "oos_surge_cap_test_only": {
+      "cap_2.00x": {
+        "n_lyft_test": 18440,
+        "n_affected": 16,
+        "mean_saving_usd": 5.56,
+        "mean_saving_pct": 17.82,
+        "static_proxy_change_pct": -0.028,
+        "supply_drop5_proxy_change_pct": -0.035,
+        "supply_drop10_proxy_change_pct": -0.041,
+        "elastic_upper_eps050_pct": -0.016
+      },
+      "cap_1.75x": {
+        "n_lyft_test": 18440,
+        "n_affected": 136,
+        "mean_saving_usd": 4.96,
+        "mean_saving_pct": 12.54,
+        "static_proxy_change_pct": -0.211,
+        "supply_drop5_proxy_change_pct": -0.264,
+        "supply_drop10_proxy_change_pct": -0.318,
+        "elastic_upper_eps050_pct": -0.121
+      }
+    },
+    "switchback_power_analysis": {
+      "methodology": "Triggered / Exposed-Only Switchback Power Analysis (alpha=0.05, power=80%, p0=50%, ICC=0.05) với DEFF_{k×} = 1 + (k·m_0 - 1)·ICC phụ thuộc quy mô cụm thực tế tại lưu lượng 1×/25×/50×, so sánh phạm vi toàn 12 quận và 5 quận điểm nóng.",
+      "observed_span_days": 18,
+      "observed_active_days": 18,
+      "observed_calendar_span_days": 22.65,
+      "top5_hotspot_districts_list": [
+        "Back Bay",
+        "Fenway",
+        "Northeastern University",
+        "Theatre District",
+        "Boston University"
+      ],
+      "cap_1.75x": {
+        "scope": "all_12_districts",
+        "cap_threshold": 1.75,
+        "n_lyft_quotes_with_ts": 70971,
+        "empirical_trigger_rate_pct": 0.758,
+        "observed_triggered_quotes_with_ts": 538,
+        "share_of_citywide_triggered_pct": 100.0,
+        "total_lyft_loc_hr_blocks": 3962,
+        "active_triggered_loc_hr_blocks": 401,
+        "mean_triggered_per_all_loc_hr": 0.1358,
+        "mean_triggered_per_active_loc_hr": 1.34,
+        "deff_on_active_blocks_icc005": 1.017,
+        "deff_1x": 1.017,
+        "deff_25x": 2.627,
+        "deff_50x": 4.304,
+        "m_active_25x": 33.54,
+        "m_active_50x": 67.08,
+        "observed_triggered_per_day_scrape": 29.89,
+        "mde_scenarios": [
+          {
+            "mde_pp": 2.0,
+            "triggered_quotes_per_arm": 9979,
+            "triggered_quotes_both_arms": 19958,
+            "active_triggered_blocks_both_arms": 14876,
+            "days_needed_at_api_scrape_rate_1x": 667.7,
+            "triggered_quotes_per_arm_25x": 25775,
+            "triggered_quotes_both_arms_25x": 51550,
+            "active_triggered_blocks_both_arms_25x": 1537,
+            "days_needed_at_prod_traffic_25x": 69.0,
+            "triggered_quotes_per_arm_50x": 42229,
+            "triggered_quotes_both_arms_50x": 84458,
+            "active_triggered_blocks_both_arms_50x": 1260,
+            "days_needed_at_prod_traffic_50x": 56.5,
+            "itt_diluted_mde_pp": 0.0152,
+            "itt_unfeasible_requests_per_arm": 170733825
+          },
+          {
+            "mde_pp": 3.0,
+            "triggered_quotes_per_arm": 4436,
+            "triggered_quotes_both_arms": 8872,
+            "active_triggered_blocks_both_arms": 6613,
+            "days_needed_at_api_scrape_rate_1x": 296.8,
+            "triggered_quotes_per_arm_25x": 11456,
+            "triggered_quotes_both_arms_25x": 22912,
+            "active_triggered_blocks_both_arms_25x": 684,
+            "days_needed_at_prod_traffic_25x": 30.7,
+            "triggered_quotes_per_arm_50x": 18769,
+            "triggered_quotes_both_arms_50x": 37538,
+            "active_triggered_blocks_both_arms_50x": 560,
+            "days_needed_at_prod_traffic_50x": 25.1,
+            "itt_diluted_mde_pp": 0.0227,
+            "itt_unfeasible_requests_per_arm": 75881700
+          },
+          {
+            "mde_pp": 5.0,
+            "triggered_quotes_per_arm": 1597,
+            "triggered_quotes_both_arms": 3194,
+            "active_triggered_blocks_both_arms": 2381,
+            "days_needed_at_api_scrape_rate_1x": 106.9,
+            "triggered_quotes_per_arm_25x": 4124,
+            "triggered_quotes_both_arms_25x": 8248,
+            "active_triggered_blocks_both_arms_25x": 246,
+            "days_needed_at_prod_traffic_25x": 11.0,
+            "triggered_quotes_per_arm_50x": 6757,
+            "triggered_quotes_both_arms_50x": 13514,
+            "active_triggered_blocks_both_arms_50x": 202,
+            "days_needed_at_prod_traffic_50x": 9.0,
+            "itt_diluted_mde_pp": 0.0379,
+            "itt_unfeasible_requests_per_arm": 27317412
+          }
+        ]
+      },
+      "cap_2.00x": {
+        "scope": "all_12_districts",
+        "cap_threshold": 2.0,
+        "n_lyft_quotes_with_ts": 70971,
+        "empirical_trigger_rate_pct": 0.056,
+        "observed_triggered_quotes_with_ts": 40,
+        "share_of_citywide_triggered_pct": 100.0,
+        "total_lyft_loc_hr_blocks": 3962,
+        "active_triggered_loc_hr_blocks": 38,
+        "mean_triggered_per_all_loc_hr": 0.0101,
+        "mean_triggered_per_active_loc_hr": 1.05,
+        "deff_on_active_blocks_icc005": 1.003,
+        "deff_1x": 1.003,
+        "deff_25x": 2.266,
+        "deff_50x": 3.582,
+        "m_active_25x": 26.32,
+        "m_active_50x": 52.63,
+        "observed_triggered_per_day_scrape": 2.22,
+        "mde_scenarios": [
+          {
+            "mde_pp": 2.0,
+            "triggered_quotes_per_arm": 9838,
+            "triggered_quotes_both_arms": 19676,
+            "active_triggered_blocks_both_arms": 18693,
+            "days_needed_at_api_scrape_rate_1x": 8854.2,
+            "triggered_quotes_per_arm_25x": 22231,
+            "triggered_quotes_both_arms_25x": 44462,
+            "active_triggered_blocks_both_arms_25x": 1690,
+            "days_needed_at_prod_traffic_25x": 800.3,
+            "triggered_quotes_per_arm_50x": 35140,
+            "triggered_quotes_both_arms_50x": 70280,
+            "active_triggered_blocks_both_arms_50x": 1336,
+            "days_needed_at_prod_traffic_50x": 632.5,
+            "itt_diluted_mde_pp": 0.0011,
+            "itt_unfeasible_requests_per_arm": 30886175655
+          },
+          {
+            "mde_pp": 3.0,
+            "triggered_quotes_per_arm": 4373,
+            "triggered_quotes_both_arms": 8746,
+            "active_triggered_blocks_both_arms": 8309,
+            "days_needed_at_api_scrape_rate_1x": 3935.7,
+            "triggered_quotes_per_arm_25x": 9881,
+            "triggered_quotes_both_arms_25x": 19762,
+            "active_triggered_blocks_both_arms_25x": 751,
+            "days_needed_at_prod_traffic_25x": 355.7,
+            "triggered_quotes_per_arm_50x": 15618,
+            "triggered_quotes_both_arms_50x": 31236,
+            "active_triggered_blocks_both_arms_50x": 594,
+            "days_needed_at_prod_traffic_50x": 281.1,
+            "itt_diluted_mde_pp": 0.0017,
+            "itt_unfeasible_requests_per_arm": 13727189180
+          },
+          {
+            "mde_pp": 5.0,
+            "triggered_quotes_per_arm": 1574,
+            "triggered_quotes_both_arms": 3148,
+            "active_triggered_blocks_both_arms": 2991,
+            "days_needed_at_api_scrape_rate_1x": 1416.6,
+            "triggered_quotes_per_arm_25x": 3557,
+            "triggered_quotes_both_arms_25x": 7114,
+            "active_triggered_blocks_both_arms_25x": 271,
+            "days_needed_at_prod_traffic_25x": 128.1,
+            "triggered_quotes_per_arm_50x": 5623,
+            "triggered_quotes_both_arms_50x": 11246,
+            "active_triggered_blocks_both_arms_50x": 214,
+            "days_needed_at_prod_traffic_50x": 101.2,
+            "itt_diluted_mde_pp": 0.0028,
+            "itt_unfeasible_requests_per_arm": 4941788105
+          }
+        ]
+      },
+      "scopes": {
+        "all_12_districts": {
+          "cap_1.75x": {
+            "scope": "all_12_districts",
+            "cap_threshold": 1.75,
+            "n_lyft_quotes_with_ts": 70971,
+            "empirical_trigger_rate_pct": 0.758,
+            "observed_triggered_quotes_with_ts": 538,
+            "share_of_citywide_triggered_pct": 100.0,
+            "total_lyft_loc_hr_blocks": 3962,
+            "active_triggered_loc_hr_blocks": 401,
+            "mean_triggered_per_all_loc_hr": 0.1358,
+            "mean_triggered_per_active_loc_hr": 1.34,
+            "deff_on_active_blocks_icc005": 1.017,
+            "deff_1x": 1.017,
+            "deff_25x": 2.627,
+            "deff_50x": 4.304,
+            "m_active_25x": 33.54,
+            "m_active_50x": 67.08,
+            "observed_triggered_per_day_scrape": 29.89,
+            "mde_scenarios": [
+              {
+                "mde_pp": 2.0,
+                "triggered_quotes_per_arm": 9979,
+                "triggered_quotes_both_arms": 19958,
+                "active_triggered_blocks_both_arms": 14876,
+                "days_needed_at_api_scrape_rate_1x": 667.7,
+                "triggered_quotes_per_arm_25x": 25775,
+                "triggered_quotes_both_arms_25x": 51550,
+                "active_triggered_blocks_both_arms_25x": 1537,
+                "days_needed_at_prod_traffic_25x": 69.0,
+                "triggered_quotes_per_arm_50x": 42229,
+                "triggered_quotes_both_arms_50x": 84458,
+                "active_triggered_blocks_both_arms_50x": 1260,
+                "days_needed_at_prod_traffic_50x": 56.5,
+                "itt_diluted_mde_pp": 0.0152,
+                "itt_unfeasible_requests_per_arm": 170733825
+              },
+              {
+                "mde_pp": 3.0,
+                "triggered_quotes_per_arm": 4436,
+                "triggered_quotes_both_arms": 8872,
+                "active_triggered_blocks_both_arms": 6613,
+                "days_needed_at_api_scrape_rate_1x": 296.8,
+                "triggered_quotes_per_arm_25x": 11456,
+                "triggered_quotes_both_arms_25x": 22912,
+                "active_triggered_blocks_both_arms_25x": 684,
+                "days_needed_at_prod_traffic_25x": 30.7,
+                "triggered_quotes_per_arm_50x": 18769,
+                "triggered_quotes_both_arms_50x": 37538,
+                "active_triggered_blocks_both_arms_50x": 560,
+                "days_needed_at_prod_traffic_50x": 25.1,
+                "itt_diluted_mde_pp": 0.0227,
+                "itt_unfeasible_requests_per_arm": 75881700
+              },
+              {
+                "mde_pp": 5.0,
+                "triggered_quotes_per_arm": 1597,
+                "triggered_quotes_both_arms": 3194,
+                "active_triggered_blocks_both_arms": 2381,
+                "days_needed_at_api_scrape_rate_1x": 106.9,
+                "triggered_quotes_per_arm_25x": 4124,
+                "triggered_quotes_both_arms_25x": 8248,
+                "active_triggered_blocks_both_arms_25x": 246,
+                "days_needed_at_prod_traffic_25x": 11.0,
+                "triggered_quotes_per_arm_50x": 6757,
+                "triggered_quotes_both_arms_50x": 13514,
+                "active_triggered_blocks_both_arms_50x": 202,
+                "days_needed_at_prod_traffic_50x": 9.0,
+                "itt_diluted_mde_pp": 0.0379,
+                "itt_unfeasible_requests_per_arm": 27317412
+              }
+            ]
+          },
+          "cap_2.00x": {
+            "scope": "all_12_districts",
+            "cap_threshold": 2.0,
+            "n_lyft_quotes_with_ts": 70971,
+            "empirical_trigger_rate_pct": 0.056,
+            "observed_triggered_quotes_with_ts": 40,
+            "share_of_citywide_triggered_pct": 100.0,
+            "total_lyft_loc_hr_blocks": 3962,
+            "active_triggered_loc_hr_blocks": 38,
+            "mean_triggered_per_all_loc_hr": 0.0101,
+            "mean_triggered_per_active_loc_hr": 1.05,
+            "deff_on_active_blocks_icc005": 1.003,
+            "deff_1x": 1.003,
+            "deff_25x": 2.266,
+            "deff_50x": 3.582,
+            "m_active_25x": 26.32,
+            "m_active_50x": 52.63,
+            "observed_triggered_per_day_scrape": 2.22,
+            "mde_scenarios": [
+              {
+                "mde_pp": 2.0,
+                "triggered_quotes_per_arm": 9838,
+                "triggered_quotes_both_arms": 19676,
+                "active_triggered_blocks_both_arms": 18693,
+                "days_needed_at_api_scrape_rate_1x": 8854.2,
+                "triggered_quotes_per_arm_25x": 22231,
+                "triggered_quotes_both_arms_25x": 44462,
+                "active_triggered_blocks_both_arms_25x": 1690,
+                "days_needed_at_prod_traffic_25x": 800.3,
+                "triggered_quotes_per_arm_50x": 35140,
+                "triggered_quotes_both_arms_50x": 70280,
+                "active_triggered_blocks_both_arms_50x": 1336,
+                "days_needed_at_prod_traffic_50x": 632.5,
+                "itt_diluted_mde_pp": 0.0011,
+                "itt_unfeasible_requests_per_arm": 30886175655
+              },
+              {
+                "mde_pp": 3.0,
+                "triggered_quotes_per_arm": 4373,
+                "triggered_quotes_both_arms": 8746,
+                "active_triggered_blocks_both_arms": 8309,
+                "days_needed_at_api_scrape_rate_1x": 3935.7,
+                "triggered_quotes_per_arm_25x": 9881,
+                "triggered_quotes_both_arms_25x": 19762,
+                "active_triggered_blocks_both_arms_25x": 751,
+                "days_needed_at_prod_traffic_25x": 355.7,
+                "triggered_quotes_per_arm_50x": 15618,
+                "triggered_quotes_both_arms_50x": 31236,
+                "active_triggered_blocks_both_arms_50x": 594,
+                "days_needed_at_prod_traffic_50x": 281.1,
+                "itt_diluted_mde_pp": 0.0017,
+                "itt_unfeasible_requests_per_arm": 13727189180
+              },
+              {
+                "mde_pp": 5.0,
+                "triggered_quotes_per_arm": 1574,
+                "triggered_quotes_both_arms": 3148,
+                "active_triggered_blocks_both_arms": 2991,
+                "days_needed_at_api_scrape_rate_1x": 1416.6,
+                "triggered_quotes_per_arm_25x": 3557,
+                "triggered_quotes_both_arms_25x": 7114,
+                "active_triggered_blocks_both_arms_25x": 271,
+                "days_needed_at_prod_traffic_25x": 128.1,
+                "triggered_quotes_per_arm_50x": 5623,
+                "triggered_quotes_both_arms_50x": 11246,
+                "active_triggered_blocks_both_arms_50x": 214,
+                "days_needed_at_prod_traffic_50x": 101.2,
+                "itt_diluted_mde_pp": 0.0028,
+                "itt_unfeasible_requests_per_arm": 4941788105
+              }
+            ]
+          }
+        },
+        "top5_hotspot_districts": {
+          "cap_1.75x": {
+            "scope": "top5_hotspot_districts",
+            "cap_threshold": 1.75,
+            "n_lyft_quotes_with_ts": 29472,
+            "empirical_trigger_rate_pct": 1.466,
+            "observed_triggered_quotes_with_ts": 432,
+            "share_of_citywide_triggered_pct": 80.3,
+            "total_lyft_loc_hr_blocks": 1647,
+            "active_triggered_loc_hr_blocks": 318,
+            "mean_triggered_per_all_loc_hr": 0.2623,
+            "mean_triggered_per_active_loc_hr": 1.36,
+            "deff_on_active_blocks_icc005": 1.018,
+            "deff_1x": 1.018,
+            "deff_25x": 2.648,
+            "deff_50x": 4.346,
+            "m_active_25x": 33.96,
+            "m_active_50x": 67.92,
+            "observed_triggered_per_day_scrape": 24.0,
+            "mde_scenarios": [
+              {
+                "mde_pp": 2.0,
+                "triggered_quotes_per_arm": 9988,
+                "triggered_quotes_both_arms": 19976,
+                "active_triggered_blocks_both_arms": 14705,
+                "days_needed_at_api_scrape_rate_1x": 832.3,
+                "triggered_quotes_per_arm_25x": 25982,
+                "triggered_quotes_both_arms_25x": 51964,
+                "active_triggered_blocks_both_arms_25x": 1531,
+                "days_needed_at_prod_traffic_25x": 86.6,
+                "triggered_quotes_per_arm_50x": 42642,
+                "triggered_quotes_both_arms_50x": 85284,
+                "active_triggered_blocks_both_arms_50x": 1256,
+                "days_needed_at_prod_traffic_50x": 71.1,
+                "itt_diluted_mde_pp": 0.0293,
+                "itt_unfeasible_requests_per_arm": 45664005
+              },
+              {
+                "mde_pp": 3.0,
+                "triggered_quotes_per_arm": 4439,
+                "triggered_quotes_both_arms": 8878,
+                "active_triggered_blocks_both_arms": 6536,
+                "days_needed_at_api_scrape_rate_1x": 369.9,
+                "triggered_quotes_per_arm_25x": 11548,
+                "triggered_quotes_both_arms_25x": 23096,
+                "active_triggered_blocks_both_arms_25x": 681,
+                "days_needed_at_prod_traffic_25x": 38.5,
+                "triggered_quotes_per_arm_50x": 18952,
+                "triggered_quotes_both_arms_50x": 37904,
+                "active_triggered_blocks_both_arms_50x": 559,
+                "days_needed_at_prod_traffic_50x": 31.6,
+                "itt_diluted_mde_pp": 0.044,
+                "itt_unfeasible_requests_per_arm": 20295114
+              },
+              {
+                "mde_pp": 5.0,
+                "triggered_quotes_per_arm": 1598,
+                "triggered_quotes_both_arms": 3196,
+                "active_triggered_blocks_both_arms": 2353,
+                "days_needed_at_api_scrape_rate_1x": 133.2,
+                "triggered_quotes_per_arm_25x": 4157,
+                "triggered_quotes_both_arms_25x": 8314,
+                "active_triggered_blocks_both_arms_25x": 245,
+                "days_needed_at_prod_traffic_25x": 13.9,
+                "triggered_quotes_per_arm_50x": 6823,
+                "triggered_quotes_both_arms_50x": 13646,
+                "active_triggered_blocks_both_arms_50x": 201,
+                "days_needed_at_prod_traffic_50x": 11.4,
+                "itt_diluted_mde_pp": 0.0733,
+                "itt_unfeasible_requests_per_arm": 7306241
+              }
+            ]
+          },
+          "cap_2.00x": {
+            "scope": "top5_hotspot_districts",
+            "cap_threshold": 2.0,
+            "n_lyft_quotes_with_ts": 29472,
+            "empirical_trigger_rate_pct": 0.122,
+            "observed_triggered_quotes_with_ts": 36,
+            "share_of_citywide_triggered_pct": 90.0,
+            "total_lyft_loc_hr_blocks": 1647,
+            "active_triggered_loc_hr_blocks": 34,
+            "mean_triggered_per_all_loc_hr": 0.0219,
+            "mean_triggered_per_active_loc_hr": 1.06,
+            "deff_on_active_blocks_icc005": 1.003,
+            "deff_1x": 1.003,
+            "deff_25x": 2.274,
+            "deff_50x": 3.597,
+            "m_active_25x": 26.47,
+            "m_active_50x": 52.94,
+            "observed_triggered_per_day_scrape": 2.0,
+            "mde_scenarios": [
+              {
+                "mde_pp": 2.0,
+                "triggered_quotes_per_arm": 9841,
+                "triggered_quotes_both_arms": 19682,
+                "active_triggered_blocks_both_arms": 18589,
+                "days_needed_at_api_scrape_rate_1x": 9841.0,
+                "triggered_quotes_per_arm_25x": 22307,
+                "triggered_quotes_both_arms_25x": 44614,
+                "active_triggered_blocks_both_arms_25x": 1686,
+                "days_needed_at_prod_traffic_25x": 892.3,
+                "triggered_quotes_per_arm_50x": 35292,
+                "triggered_quotes_both_arms_50x": 70584,
+                "active_triggered_blocks_both_arms_50x": 1334,
+                "days_needed_at_prod_traffic_50x": 705.8,
+                "itt_diluted_mde_pp": 0.0024,
+                "itt_unfeasible_requests_per_arm": 6575616643
+              },
+              {
+                "mde_pp": 3.0,
+                "triggered_quotes_per_arm": 4374,
+                "triggered_quotes_both_arms": 8748,
+                "active_triggered_blocks_both_arms": 8262,
+                "days_needed_at_api_scrape_rate_1x": 4374.0,
+                "triggered_quotes_per_arm_25x": 9914,
+                "triggered_quotes_both_arms_25x": 19828,
+                "active_triggered_blocks_both_arms_25x": 750,
+                "days_needed_at_prod_traffic_25x": 396.6,
+                "triggered_quotes_per_arm_50x": 15686,
+                "triggered_quotes_both_arms_50x": 31372,
+                "active_triggered_blocks_both_arms_50x": 593,
+                "days_needed_at_prod_traffic_50x": 313.7,
+                "itt_diluted_mde_pp": 0.0037,
+                "itt_unfeasible_requests_per_arm": 2922496286
+              },
+              {
+                "mde_pp": 5.0,
+                "triggered_quotes_per_arm": 1575,
+                "triggered_quotes_both_arms": 3150,
+                "active_triggered_blocks_both_arms": 2975,
+                "days_needed_at_api_scrape_rate_1x": 1575.0,
+                "triggered_quotes_per_arm_25x": 3569,
+                "triggered_quotes_both_arms_25x": 7138,
+                "active_triggered_blocks_both_arms_25x": 270,
+                "days_needed_at_prod_traffic_25x": 142.8,
+                "triggered_quotes_per_arm_50x": 5647,
+                "triggered_quotes_both_arms_50x": 11294,
+                "active_triggered_blocks_both_arms_50x": 214,
+                "days_needed_at_prod_traffic_50x": 112.9,
+                "itt_diluted_mde_pp": 0.0061,
+                "itt_unfeasible_requests_per_arm": 1052098663
+              }
+            ]
+          }
+        }
+      }
+    },
+    "io_benchmark_fair_same_table": {
+      "same_table_master_benchmark": {
+        "n_rows": 270898,
+        "n_cols": 32,
+        "csv_disk_mb": 64.23,
+        "parquet_disk_mb": 15.97,
+        "disk_compression_ratio": 4.02,
+        "csv_full_median_sec": 0.198,
+        "csv_chunk100k_median_sec": 0.192,
+        "parquet_median_sec": 0.026,
+        "parquet_vs_csv_full_speedup": 7.6,
+        "parquet_vs_csv_chunk_speedup": 7.4,
+        "csv_full_ram_mb": 105.15,
+        "csv_peak_chunk_ram_mb": 38.82,
+        "parquet_ram_mb": 37.46
+      },
+      "raw_cab_streaming_benchmark": {
+        "raw_rows_read": 693071,
+        "chunksize": 100000,
+        "raw_chunk_time_sec": 0.211,
+        "raw_peak_single_chunk_mb": 18.23
+      }
+    }
+  }
+}

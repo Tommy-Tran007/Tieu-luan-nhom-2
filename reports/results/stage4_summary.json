@@ -1,0 +1,442 @@
+{
+  "stage": "Stage 4 - Feature Engineering & Pipeline Preparation",
+  "dataset_overview": {
+    "rows": 270898,
+    "master_cols": 32,
+    "total_cols_after_fe": 41,
+    "valid_modeling_features_count": 27,
+    "valid_modeling_features": [
+      "distance",
+      "surge_multiplier",
+      "temp",
+      "clouds",
+      "pressure",
+      "rain",
+      "humidity",
+      "wind",
+      "hour",
+      "day_of_week",
+      "is_weekend",
+      "is_rush_hour",
+      "is_raining",
+      "cab_type",
+      "name",
+      "source",
+      "destination",
+      "time_of_day",
+      "distance_x_surge",
+      "log_distance",
+      "is_lyft",
+      "lyft_surge_excess",
+      "distance_x_lyft_surge_excess",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos"
+    ],
+    "forbidden_cols_dropped": [
+      "date_hour",
+      "datetime",
+      "day_name",
+      "id",
+      "is_rain_sentinel",
+      "is_surge_original",
+      "is_timestamp_original",
+      "location",
+      "price",
+      "price_per_mile",
+      "product_id",
+      "time_stamp",
+      "weather_matched"
+    ],
+    "date_min": "2018-11-25 22:40:46",
+    "date_max": "2018-12-18 14:15:10",
+    "observed_days": 18,
+    "observed_routes": 72,
+    "observed_tiers": 12
+  },
+  "feature_audit_counts": {
+    "Keep in X": 26,
+    "Drop - Key/ID": 5,
+    "Drop - Audit Flag": 4,
+    "Drop - Redundant": 2,
+    "Keep in X (Conditional)": 1,
+    "Target y": 1,
+    "Drop - Leakage": 1,
+    "Aux Group Only": 1
+  },
+  "r3_scale_recovery_audit": {
+    "total_clean_rows": 270898,
+    "price_unmodified_count": 266889,
+    "price_unmodified_pct": 98.52,
+    "price_scale_recovered_count": 4009,
+    "price_scale_recovered_pct": 1.48,
+    "distance_unmodified_count": 244288,
+    "distance_unmodified_pct": 90.18,
+    "distance_recovered_or_imputed_count": 26610,
+    "distance_recovered_or_imputed_pct": 9.82,
+    "strictly_unmodified_both_count": 240689,
+    "strictly_unmodified_both_pct": 88.85
+  },
+  "vif_analysis": {
+    "uncentered_max_vif": 168.2705,
+    "uncentered_distance_vif": 162.0358,
+    "orthogonal_max_vif": 6.6439,
+    "orthogonal_distance_vif": 1.0176,
+    "weather_max_vif": 4.8134,
+    "table_uncentered": [
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "distance_x_surge",
+        "vif": 168.2705,
+        "tolerance_1_over_vif": 0.0059,
+        "assessment": "Cao (VIF >= 10 - Đa cộng tuyến cấu trúc)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "distance",
+        "vif": 162.0358,
+        "tolerance_1_over_vif": 0.0062,
+        "assessment": "Cao (VIF >= 10 - Đa cộng tuyến cấu trúc)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "surge_multiplier",
+        "vif": 5.9839,
+        "tolerance_1_over_vif": 0.1671,
+        "assessment": "Trung bình (5 <= VIF < 10)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "day_of_week",
+        "vif": 4.0634,
+        "tolerance_1_over_vif": 0.2461,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "is_weekend",
+        "vif": 3.9177,
+        "tolerance_1_over_vif": 0.2552,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "pressure",
+        "vif": 2.4059,
+        "tolerance_1_over_vif": 0.4156,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "humidity",
+        "vif": 2.008,
+        "tolerance_1_over_vif": 0.498,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "wind",
+        "vif": 1.9847,
+        "tolerance_1_over_vif": 0.5039,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "temp",
+        "vif": 1.8255,
+        "tolerance_1_over_vif": 0.5478,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "clouds",
+        "vif": 1.6329,
+        "tolerance_1_over_vif": 0.6124,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "rain",
+        "vif": 1.2664,
+        "tolerance_1_over_vif": 0.7897,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "hour",
+        "vif": 1.2424,
+        "tolerance_1_over_vif": 0.8049,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "A_Uncentered_Raw_Interaction",
+        "feature": "is_rush_hour",
+        "vif": 1.1527,
+        "tolerance_1_over_vif": 0.8675,
+        "assessment": "An toàn (VIF < 5)"
+      }
+    ],
+    "table_orthogonal": [
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "dow_sin",
+        "vif": 6.6439,
+        "tolerance_1_over_vif": 0.1505,
+        "assessment": "Trung bình (5 <= VIF < 10)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "distance_x_lyft_surge_excess",
+        "vif": 6.0135,
+        "tolerance_1_over_vif": 0.1663,
+        "assessment": "Trung bình (5 <= VIF < 10)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "lyft_surge_excess",
+        "vif": 5.9842,
+        "tolerance_1_over_vif": 0.1671,
+        "assessment": "Trung bình (5 <= VIF < 10)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "pressure",
+        "vif": 4.8134,
+        "tolerance_1_over_vif": 0.2078,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "humidity",
+        "vif": 3.2249,
+        "tolerance_1_over_vif": 0.3101,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "is_weekend",
+        "vif": 2.8732,
+        "tolerance_1_over_vif": 0.348,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "temp",
+        "vif": 2.7772,
+        "tolerance_1_over_vif": 0.3601,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "wind",
+        "vif": 2.1352,
+        "tolerance_1_over_vif": 0.4683,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "dow_cos",
+        "vif": 1.9303,
+        "tolerance_1_over_vif": 0.5181,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "clouds",
+        "vif": 1.7836,
+        "tolerance_1_over_vif": 0.5607,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "hour_cos",
+        "vif": 1.6044,
+        "tolerance_1_over_vif": 0.6233,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "hour_sin",
+        "vif": 1.5631,
+        "tolerance_1_over_vif": 0.6398,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "rain",
+        "vif": 1.2578,
+        "tolerance_1_over_vif": 0.795,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "is_rush_hour",
+        "vif": 1.2153,
+        "tolerance_1_over_vif": 0.8229,
+        "assessment": "An toàn (VIF < 5)"
+      },
+      {
+        "config": "B_Centered_Excess_Interaction",
+        "feature": "distance",
+        "vif": 1.0176,
+        "tolerance_1_over_vif": 0.9827,
+        "assessment": "An toàn (VIF < 5)"
+      }
+    ]
+  },
+  "splits_summary": [
+    {
+      "split_strategy": "random_80_20",
+      "n_train": 186288,
+      "n_test": 46573,
+      "train_pct": 80.0,
+      "test_pct": 20.0,
+      "train_price_mean": 16.425,
+      "test_price_mean": 16.4704,
+      "train_price_median": 13.5,
+      "test_price_median": 13.5,
+      "train_price_std": 9.2127,
+      "test_price_std": 9.2251,
+      "ks_statistic": 0.00348,
+      "ks_pvalue": 0.75722,
+      "standardized_mean_diff": 0.00492,
+      "train_routes": 72,
+      "test_routes": 72,
+      "train_start": "2018-11-25 22:40:46",
+      "train_end": "2018-12-18 14:15:10",
+      "test_start": "2018-11-25 22:40:46",
+      "test_end": "2018-12-18 14:15:10"
+    },
+    {
+      "split_strategy": "temporal_split",
+      "n_train": 143023,
+      "n_test": 35756,
+      "train_pct": 80.0,
+      "test_pct": 20.0,
+      "train_price_mean": 16.4409,
+      "test_price_mean": 16.4658,
+      "train_price_median": 13.5,
+      "test_price_median": 13.5,
+      "train_price_std": 9.2101,
+      "test_price_std": 9.2614,
+      "ks_statistic": 0.00385,
+      "ks_pvalue": 0.78825,
+      "standardized_mean_diff": 0.00269,
+      "train_routes": 72,
+      "test_routes": 72,
+      "train_start": "2018-11-25 22:40:46",
+      "train_end": "2018-12-15 12:00:13",
+      "test_start": "2018-12-15 12:00:13",
+      "test_end": "2018-12-18 14:15:10"
+    },
+    {
+      "split_strategy": "route_group_split",
+      "n_train": 184664,
+      "n_test": 48197,
+      "train_pct": 79.3,
+      "test_pct": 20.7,
+      "train_price_mean": 16.5929,
+      "test_price_mean": 15.8256,
+      "train_price_median": 13.5,
+      "test_price_median": 13.5,
+      "train_price_std": 9.3006,
+      "test_price_std": 8.8539,
+      "ks_statistic": 0.04636,
+      "ks_pvalue": 0.0,
+      "standardized_mean_diff": 0.08451,
+      "train_routes": 57,
+      "test_routes": 15,
+      "train_start": "2018-11-25 22:40:46",
+      "train_end": "2018-12-18 14:15:10",
+      "test_start": "2018-11-25 22:40:46",
+      "test_end": "2018-12-18 14:15:10"
+    }
+  ],
+  "pipeline_and_leakage_verification": {
+    "preprocessor_shapes": {
+      "m1_basic_linear": {
+        "train_shape": [
+          186288,
+          49
+        ],
+        "test_shape": [
+          46573,
+          49
+        ],
+        "n_features_out": 49
+      },
+      "m2_m4_interaction_linear": {
+        "train_shape": [
+          186288,
+          82
+        ],
+        "test_shape": [
+          46573,
+          82
+        ],
+        "n_features_out": 82
+      },
+      "m5_m6_tree_ohe": {
+        "train_shape": [
+          186288,
+          65
+        ],
+        "test_shape": [
+          46573,
+          65
+        ],
+        "n_features_out": 65
+      },
+      "m7_hgb_native": {
+        "train_shape": [
+          186288,
+          27
+        ],
+        "test_shape": [
+          46573,
+          27
+        ],
+        "n_features_out": 27
+      }
+    },
+    "m1_basic_ols": {
+      "r2": 0.9255,
+      "rmse": 2.5182,
+      "mae": 1.7488,
+      "mape_pct": 12.81
+    },
+    "m2_interaction_ols": {
+      "r2": 0.9539,
+      "rmse": 1.9802,
+      "mae": 1.2888,
+      "mape_pct": 9.33
+    },
+    "m7_stage4_hgb_preview": {
+      "r2": 0.9625,
+      "rmse": 1.7857,
+      "mae": 1.1377,
+      "mape_pct": 8.23
+    },
+    "leakage_trap_experiment": {
+      "price_per_mile_pearson_r_with_price": 0.4189,
+      "corrupted_ols_additive_with_ppm": {
+        "r2": 0.4949,
+        "rmse": 6.556,
+        "mae": 4.6781,
+        "mape_pct": 32.75
+      },
+      "corrupted_hgb_with_ppm": {
+        "r2": 0.9176,
+        "rmse": 2.6474,
+        "mae": 0.803,
+        "mape_pct": 6.29
+      }
+    }
+  },
+  "figures": [
+    "reports/figures/stage4/fig08_feature_correlation_after_fe.png",
+    "reports/figures/stage4/fig09_split_distribution.png",
+    "reports/figures/stage4/fig10_pipeline_diagram.png"
+  ]
+}

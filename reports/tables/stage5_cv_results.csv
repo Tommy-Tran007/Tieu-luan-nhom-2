@@ -1,0 +1,11 @@
+﻿model_code,model_name,cv_folds,cv_r2_mean,cv_r2_std,cv_rmse_mean,cv_rmse_std,cv_rmse_rel_std_pct,cv_mae_mean,cv_mae_std,cv_mape_mean,cv_mape_std,mean_fold_time_sec
+M0a_Tier_Median_Baseline,M0a: Trung vị theo Gói xe (Baseline 1),5,0.7628,0.004,4.4866,0.0537,1.198,2.9648,0.0144,19.29,0.069,0.046
+M0b_Tier_Route_Lookup_Baseline,M0b: Bảng tra Gói xe x Tuyến (Baseline 2),5,0.9148,0.0037,2.6881,0.0667,2.481,1.3036,0.0166,8.32,0.044,0.194
+M1_Basic_OLS,M1: Hồi quy Tuyến tính OLS Cơ bản,5,0.9254,0.0024,2.516,0.0418,1.663,1.7456,0.0159,12.87,0.115,0.55
+M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,5,0.9539,0.001,1.9785,0.0196,0.992,1.2859,0.0047,9.36,0.028,0.81
+M2_Log_Duan_Smearing_OLS,M2-Log: OLS Tương tác ln(Price) + Duan Smearing,5,0.9511,0.0009,2.0378,0.0167,0.82,1.3033,0.0047,9.29,0.028,0.824
+M3_Ridge_Regression,M3: Hồi quy Ridge (L2 Regularization),5,0.9539,0.001,1.9785,0.0196,0.993,1.286,0.0047,9.36,0.028,0.574
+M4_Lasso_Regression,M4: Hồi quy Lasso (L1 Regularization),5,0.9539,0.001,1.9786,0.0197,0.997,1.2864,0.0048,9.36,0.029,0.585
+M5_Decision_Tree,M5: Cây Quyết định (Decision Tree Tuned),5,0.9585,0.0013,1.876,0.0252,1.345,1.18,0.0058,8.5,0.049,1.648
+M6_Random_Forest,M6: Rừng Ngẫu nhiên (Random Forest Tuned),5,0.9613,0.0014,1.8121,0.0286,1.576,1.1372,0.0036,8.22,0.036,4.849
+M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),5,0.9633,0.0011,1.7656,0.0239,1.356,1.1346,0.0069,8.24,0.023,1.67

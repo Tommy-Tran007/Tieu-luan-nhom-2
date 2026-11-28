@@ -1,0 +1,11 @@
+﻿model_code,model_name,train_r2,train_rmse,test_r2,test_adj_r2,test_rmse,test_mae,test_mape_pct,test_max_error,r2_overfit_gap,train_time_sec,predict_time_ms,meets_smart_r2,meets_smart_mape,meets_both_smart,beats_M0b_baseline,rmse_gain_vs_M0b_pct
+M0a_Tier_Median_Baseline,M0a: Trung vị theo Gói xe (Baseline 1),0.7628,4.4869,0.7605,0.7603,4.5148,2.9772,19.27,59.0,0.0023,0.034,11.95,False,False,False,False,-67.56
+M0b_Tier_Route_Lookup_Baseline,M0b: Bảng tra Gói xe x Tuyến (Baseline 2),0.9152,2.683,0.9147,0.9146,2.6944,1.3075,8.32,46.5,0.0005,0.088,150.77,True,True,True,False,0.0
+M1_Basic_OLS,M1: Hồi quy Tuyến tính OLS Cơ bản,0.9255,2.5152,0.9255,0.9254,2.5182,1.7488,12.81,33.647,0.0,0.623,62.43,True,False,False,True,6.54
+M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,0.9539,1.977,0.9539,0.9539,1.9802,1.2888,9.33,32.0532,0.0,0.944,81.39,True,True,True,True,26.51
+M2_Log_Duan_Smearing_OLS,M2-Log: OLS Tương tác ln(Price) + Duan Smearing,0.9512,2.0353,0.9515,0.9515,2.0318,1.3037,9.25,36.5496,-0.0003,0.957,81.6,True,True,True,True,24.59
+M3_Ridge_Regression,M3: Hồi quy Ridge (L2 Regularization),0.9539,1.977,0.9539,0.9539,1.9802,1.2889,9.33,32.0534,0.0,0.621,83.12,True,True,True,True,26.51
+M4_Lasso_Regression,M4: Hồi quy Lasso (L1 Regularization),0.9539,1.9771,0.9539,0.9539,1.9804,1.2892,9.33,32.0566,0.0,0.637,80.72,True,True,True,True,26.5
+M5_Decision_Tree,M5: Cây Quyết định (Decision Tree Tuned),0.9641,1.7467,0.958,0.958,1.8898,1.1785,8.46,31.1176,0.0061,2.044,70.09,True,True,True,True,29.86
+M6_Random_Forest,M6: Rừng Ngẫu nhiên (Random Forest Tuned),0.9694,1.612,0.9612,0.9612,1.8167,1.1318,8.14,30.405,0.0082,6.417,119.31,True,True,True,True,32.57
+M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),0.9653,1.7163,0.9626,0.9626,1.783,1.1338,8.19,29.9885,0.0027,1.568,121.17,True,True,True,True,33.83

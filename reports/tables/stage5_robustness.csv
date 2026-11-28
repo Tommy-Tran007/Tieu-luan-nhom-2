@@ -1,0 +1,21 @@
+﻿scenario,model_code,model_name,n_train,n_test,r2,rmse,mae,mape_pct
+temporal_split,M0b_Tier_Route_Lookup_Baseline,M0b: Bảng tra Gói xe x Tuyến (Baseline 2),143023,35756,0.9158,2.6874,1.303,8.27
+temporal_split,M1_Basic_OLS,M1: Hồi quy Tuyến tính OLS Cơ bản,143023,35756,0.9271,2.5008,1.7361,12.81
+temporal_split,M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,143023,35756,0.956,1.9421,1.2688,9.22
+temporal_split,M3_Ridge_Regression,M3: Hồi quy Ridge (L2 Regularization),143023,35756,0.956,1.9421,1.2688,9.22
+temporal_split,M6_Random_Forest,M6: Rừng Ngẫu nhiên (Random Forest Tuned),143023,35756,0.9627,1.7877,1.133,8.19
+temporal_split,M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),143023,35756,0.9646,1.7422,1.1296,8.18
+route_group_split,M0b_Tier_Route_Lookup_Baseline,M0b: Bảng tra Gói xe x Tuyến (Baseline 2),184664,48197,0.7581,4.355,3.1085,21.19
+route_group_split,M1_Basic_OLS,M1: Hồi quy Tuyến tính OLS Cơ bản,184664,48197,0.8997,2.8044,2.007,14.47
+route_group_split,M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,184664,48197,0.9312,2.3223,1.5957,12.03
+route_group_split,M3_Ridge_Regression,M3: Hồi quy Ridge (L2 Regularization),184664,48197,0.9312,2.3222,1.5957,12.03
+route_group_split,M6_Random_Forest,M6: Rừng Ngẫu nhiên (Random Forest Tuned),184664,48197,0.9314,2.3183,1.4949,11.09
+route_group_split,M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),184664,48197,0.9253,2.4197,1.5655,11.5
+R3a_Test_Only_Strictly_Unmodified_Raw,M0b_Tier_Route_Lookup_Baseline,M0b: Bảng tra Gói xe x Tuyến (Baseline 2),186288,41376,0.9129,2.7248,1.314,8.35
+R3a_Test_Only_Strictly_Unmodified_Raw,M1_Basic_OLS,M1: Hồi quy Tuyến tính OLS Cơ bản,186288,41376,0.9272,2.4906,1.7393,12.74
+R3a_Test_Only_Strictly_Unmodified_Raw,M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,186288,41376,0.9563,1.9292,1.2732,9.23
+R3a_Test_Only_Strictly_Unmodified_Raw,M3_Ridge_Regression,M3: Hồi quy Ridge (L2 Regularization),186288,41376,0.9563,1.9293,1.2732,9.23
+R3a_Test_Only_Strictly_Unmodified_Raw,M6_Random_Forest,M6: Rừng Ngẫu nhiên (Random Forest Tuned),186288,41376,0.9627,1.7842,1.1187,8.07
+R3a_Test_Only_Strictly_Unmodified_Raw,M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),186288,41376,0.9637,1.7601,1.1243,8.16
+R3b_Train_And_Test_Strictly_Unmodified_Raw,M2_Interaction_OLS,M2: Hồi quy OLS Tương tác Kinh tế lượng,165526,41376,0.9564,1.927,1.2656,9.16
+R3b_Train_And_Test_Strictly_Unmodified_Raw,M7_HistGradientBoosting,M7: HistGradientBoosting (Native Categorical),165526,41376,0.9636,1.7607,1.121,8.12

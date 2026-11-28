@@ -1,0 +1,1256 @@
+{
+  "initial_audit": {
+    "cab_rides": {
+      "shape": {
+        "rows": 693071,
+        "cols": 10
+      },
+      "memory_mb": 105.68,
+      "dtypes": {
+        "distance": "str",
+        "cab_type": "str",
+        "time_stamp": "str",
+        "destination": "str",
+        "source": "str",
+        "price": "str",
+        "surge_multiplier": "str",
+        "id": "str",
+        "product_id": "category",
+        "name": "str"
+      },
+      "raw_nulls": {
+        "distance": 28413,
+        "cab_type": 129294,
+        "time_stamp": 115023,
+        "destination": 97701,
+        "source": 79802,
+        "price": 144638,
+        "surge_multiplier": 99132,
+        "id": 0,
+        "product_id": 0,
+        "name": 108628
+      },
+      "full_row_duplicates": 0,
+      "id_duplicates_raw": 0,
+      "id_duplicates_stripped": 0,
+      "cat_id": {
+        "raw_unique": 693071,
+        "stripped_title_unique": 693071,
+        "whitespace_padded_count": 55134,
+        "sentinel_string_count": 0
+      },
+      "cat_cab_type": {
+        "raw_unique": 11,
+        "stripped_title_unique": 4,
+        "whitespace_padded_count": 86811,
+        "sentinel_string_count": 77586
+      },
+      "cat_name": {
+        "raw_unique": 66,
+        "stripped_title_unique": 13,
+        "whitespace_padded_count": 187298,
+        "sentinel_string_count": 65165
+      },
+      "cat_product_id": {
+        "raw_unique": 13,
+        "stripped_title_unique": 13,
+        "whitespace_padded_count": 0,
+        "sentinel_string_count": 0
+      },
+      "cat_source": {
+        "raw_unique": 62,
+        "stripped_title_unique": 13,
+        "whitespace_padded_count": 117093,
+        "sentinel_string_count": 48414
+      },
+      "cat_destination": {
+        "raw_unique": 62,
+        "stripped_title_unique": 13,
+        "whitespace_padded_count": 158790,
+        "sentinel_string_count": 58659
+      },
+      "truncated_northeastern": {
+        "source": 5118,
+        "destination": 6898
+      },
+      "numeric_probes": {
+        "distance": {
+          "raw_null_count": 28413,
+          "sentinel_str_count": 14144,
+          "unit_suffix_count": 60957,
+          "comma_decimal_count": 24277,
+          "parsed_valid_numeric_count": 650514,
+          "parsed_min": -7.46,
+          "parsed_max": 9999.0,
+          "numeric_sentinel_count": 14141,
+          "negative_sign_inverted_count": 3823,
+          "scale_inflated_count": 11268
+        },
+        "price": {
+          "raw_null_count": 144638,
+          "sentinel_str_count": 61390,
+          "unit_suffix_count": 58187,
+          "comma_decimal_count": 13059,
+          "parsed_valid_numeric_count": 487043,
+          "parsed_min": -100.0,
+          "parsed_max": 100000.0,
+          "numeric_sentinel_count": 57255,
+          "negative_sign_inverted_count": 2137,
+          "scale_inflated_count": 5924
+        },
+        "surge_multiplier": {
+          "raw_null_count": 99132,
+          "sentinel_str_count": 49637,
+          "unit_suffix_count": 39124,
+          "comma_decimal_count": 428,
+          "parsed_valid_numeric_count": 544302,
+          "parsed_min": -2.0,
+          "parsed_max": 9999.0,
+          "numeric_sentinel_count": 52265,
+          "negative_sign_inverted_count": 75,
+          "scale_inflated_count": 7722
+        },
+        "time_stamp": {
+          "raw_null_count": 115023,
+          "sentinel_str_count": 46020,
+          "unit_suffix_count": 0,
+          "comma_decimal_count": 0,
+          "parsed_valid_numeric_count": 532028,
+          "parsed_min": 1543203646318.0,
+          "parsed_max": 1545160510943.0
+        }
+      }
+    },
+    "weather": {
+      "shape": {
+        "rows": 6276,
+        "cols": 8
+      },
+      "memory_mb": 0.64,
+      "dtypes": {
+        "temp": "str",
+        "location": "str",
+        "clouds": "str",
+        "pressure": "str",
+        "rain": "str",
+        "time_stamp": "str",
+        "humidity": "str",
+        "wind": "str"
+      },
+      "raw_nulls": {
+        "temp": 439,
+        "location": 273,
+        "clouds": 637,
+        "pressure": 1104,
+        "rain": 4307,
+        "time_stamp": 597,
+        "humidity": 403,
+        "wind": 512
+      },
+      "full_row_duplicates": 0,
+      "cat_location": {
+        "raw_unique": 62,
+        "whitespace_padded_count": 567,
+        "sentinel_string_count": 164,
+        "truncated_northeastern": 28
+      },
+      "numeric_probes": {
+        "temp": {
+          "raw_null_count": 439,
+          "sentinel_str_count": 223,
+          "unit_suffix_count": 252,
+          "comma_decimal_count": 109,
+          "parsed_valid_numeric_count": 5614,
+          "parsed_min": -53.0,
+          "parsed_max": 45470.0,
+          "numeric_sentinel_count": 213,
+          "negative_sign_inverted_count": 9,
+          "scale_inflated_count": 47
+        },
+        "clouds": {
+          "raw_null_count": 637,
+          "sentinel_str_count": 331,
+          "unit_suffix_count": 420,
+          "comma_decimal_count": 126,
+          "parsed_valid_numeric_count": 5308,
+          "parsed_min": -1.0,
+          "parsed_max": 9999.0,
+          "numeric_sentinel_count": 359,
+          "negative_sign_inverted_count": 16,
+          "scale_inflated_count": 60
+        },
+        "pressure": {
+          "raw_null_count": 1104,
+          "sentinel_str_count": 526,
+          "unit_suffix_count": 541,
+          "comma_decimal_count": 206,
+          "parsed_valid_numeric_count": 4646,
+          "parsed_min": -1034.67,
+          "parsed_max": 1034710.0,
+          "numeric_sentinel_count": 522,
+          "negative_sign_inverted_count": 30,
+          "scale_inflated_count": 75
+        },
+        "rain": {
+          "raw_null_count": 4307,
+          "sentinel_str_count": 732,
+          "unit_suffix_count": 41,
+          "comma_decimal_count": 16,
+          "parsed_valid_numeric_count": 1237,
+          "parsed_min": -100.0,
+          "parsed_max": 100000.0,
+          "numeric_sentinel_count": 599,
+          "negative_sign_inverted_count": 4,
+          "scale_inflated_count": 8
+        },
+        "humidity": {
+          "raw_null_count": 403,
+          "sentinel_str_count": 190,
+          "unit_suffix_count": 292,
+          "comma_decimal_count": 128,
+          "parsed_valid_numeric_count": 5683,
+          "parsed_min": -1.0,
+          "parsed_max": 9999.0,
+          "numeric_sentinel_count": 190,
+          "negative_sign_inverted_count": 24,
+          "scale_inflated_count": 64
+        },
+        "wind": {
+          "raw_null_count": 512,
+          "sentinel_str_count": 264,
+          "unit_suffix_count": 428,
+          "comma_decimal_count": 169,
+          "parsed_valid_numeric_count": 5500,
+          "parsed_min": -18.11,
+          "parsed_max": 14720.0,
+          "numeric_sentinel_count": 259,
+          "negative_sign_inverted_count": 29,
+          "scale_inflated_count": 95
+        },
+        "time_stamp": {
+          "raw_null_count": 597,
+          "sentinel_str_count": 241,
+          "unit_suffix_count": 0,
+          "comma_decimal_count": 0,
+          "parsed_valid_numeric_count": 5438,
+          "parsed_min": 1543203644.0,
+          "parsed_max": 1545158702.0,
+          "numeric_sentinel_count": 0,
+          "negative_sign_inverted_count": 0,
+          "scale_inflated_count": 0
+        }
+      }
+    },
+    "cross_table": {
+      "raw_source_unique_count": 62,
+      "raw_weather_loc_unique_count": 62,
+      "raw_exact_overlap_count": 62
+    }
+  },
+  "cleaning_log": {
+    "cab_rides": {
+      "initial_rows_loaded": 693071,
+      "duplicate_ids_dropped": 0,
+      "valid_product_id_count": 693071,
+      "restored_cab_type_records": 466242,
+      "restored_name_records": 548168,
+      "missing_source_after_std": 128216,
+      "missing_destination_after_std": 156360,
+      "taxi_mnar_total_rows": 55095,
+      "taxi_sentinel_injected_rows": 5226,
+      "price_numeric_sentinels_to_nan": 52243,
+      "price_neg_fixed": 2137,
+      "distance_numeric_sentinels_to_nan": 14159,
+      "distance_neg_fixed": 3823,
+      "surge_numeric_sentinels_to_nan": 52265,
+      "surge_neg_fixed": 75,
+      "surge_scale_fixed": 7722,
+      "distance_scale_fixed": 11262,
+      "price_scale_fixed": 6337,
+      "missing_price_total": 263497,
+      "missing_price_uber_taxi_mnar": 55095,
+      "missing_price_other_corrupted": 208402,
+      "rows_after_target_route_filter": 270898,
+      "rows_removed_total": 422173,
+      "surge_filled_1_0": 0,
+      "surge_original_valid_total": 232861,
+      "lyft_surge_original_count": 92384,
+      "lyft_surge_missing_kept_nan_count": 38037,
+      "distance_missing_kept_nan_for_pipeline": 22262,
+      "distance_imputed_by_route_median": 0,
+      "timestamp_original_valid_count": 208034,
+      "timestamp_missing_not_imputed_count": 62864,
+      "timestamp_imputed_count": 0,
+      "remaining_iqr_outliers_price": {
+        "q1": 9.0,
+        "q3": 22.5,
+        "iqr": 13.5,
+        "lower_fence": 0.0,
+        "upper_fence": 42.75,
+        "count": 2459,
+        "pct": 0.91
+      },
+      "remaining_iqr_outliers_distance": {
+        "q1": 1.28,
+        "q3": 2.94,
+        "iqr": 1.66,
+        "lower_fence": 0.0,
+        "upper_fence": 5.43,
+        "count": 2760,
+        "pct": 1.11
+      },
+      "remaining_iqr_outliers_surge_multiplier": {
+        "q1": 1.0,
+        "q3": 1.0,
+        "iqr": 0.0,
+        "lower_fence": 1.0,
+        "upper_fence": 1.0,
+        "count": 6280,
+        "pct": 2.7
+      }
+    },
+    "weather": {
+      "initial_rows": 6276,
+      "rain_str_sentinels": 732,
+      "rain_num_sentinels": 599,
+      "rain_sentinels_to_nan": 1331,
+      "temp_sentinels_to_nan": 213,
+      "temp_neg_fixed": 9,
+      "temp_scale_fixed": 47,
+      "clouds_sentinels_to_nan": 359,
+      "clouds_neg_fixed": 16,
+      "clouds_scale_fixed": 61,
+      "pressure_sentinels_to_nan": 522,
+      "pressure_neg_fixed": 30,
+      "pressure_scale_fixed": 75,
+      "humidity_sentinels_to_nan": 190,
+      "humidity_neg_fixed": 24,
+      "humidity_scale_fixed": 64,
+      "wind_sentinels_to_nan": 259,
+      "wind_neg_fixed": 29,
+      "wind_scale_fixed": 97,
+      "rain_scale_fixed": 8,
+      "rain_natural_dry_filled_zero_count": 4307,
+      "rain_sentinel_kept_nan_count": 1331,
+      "exact_duplicates_dropped": 0,
+      "missing_key_rows_dropped": 1223,
+      "temp_imputed_same_hour_median": 695,
+      "temp_imputed_fallback_day_or_station": 0,
+      "clouds_imputed_same_hour_median": 1069,
+      "clouds_imputed_fallback_day_or_station": 0,
+      "pressure_imputed_same_hour_median": 1769,
+      "pressure_imputed_fallback_day_or_station": 0,
+      "humidity_imputed_same_hour_median": 625,
+      "humidity_imputed_fallback_day_or_station": 0,
+      "wind_imputed_same_hour_median": 814,
+      "wind_imputed_fallback_day_or_station": 0,
+      "rows_after_cleaning": 5053,
+      "total_rows_removed": 1223
+    }
+  },
+  "eda_results": {
+    "merge_audit": {
+      "timezone": "America/New_York (EST = UTC-5)",
+      "weather_rows_cleaned": 5053,
+      "weather_duplicate_loc_hour_before_agg": 1688,
+      "weather_unique_loc_hour_after_agg": 3365,
+      "cab_rows_before_join": 270898,
+      "master_rows_after_join": 270898,
+      "fan_out_extra_rows": 0,
+      "valid_original_timestamp_rows": 208034,
+      "valid_original_timestamp_pct": 76.79,
+      "missing_timestamp_rows": 62864,
+      "missing_timestamp_pct": 23.21,
+      "direct_matched_weather_rows": 179280,
+      "direct_matched_pct": 66.18,
+      "direct_matched_among_valid_ts_pct": 86.18,
+      "unmatched_weather_among_valid_ts_rows": 28754,
+      "unmatched_weather_total_rows": 91618,
+      "fallback_imputed_weather_rows": 0,
+      "is_raining_on_unmatched_count": 0,
+      "memory_mb_before_downcast": 60.23,
+      "memory_mb_after_downcast": 37.49,
+      "memory_saved_pct": 37.75
+    },
+    "data_anomalies_and_gaps": {
+      "short_gps_trips_le_0_05_miles": 119,
+      "observed_local_dates_count": 18,
+      "date_range_est": [
+        "2018-11-25",
+        "2018-12-18"
+      ],
+      "missing_collection_dates_est": [
+        "2018-12-05",
+        "2018-12-06",
+        "2018-12-07",
+        "2018-12-08",
+        "2018-12-10",
+        "2018-12-11"
+      ],
+      "zero_count_dow_hour_cells_est": [
+        "Tuesday 21h-23h EST",
+        "Wednesday 00h-01h EST"
+      ]
+    },
+    "numerical_stats": {
+      "price": {
+        "count": 270898,
+        "mean": 16.5762,
+        "median": 13.5,
+        "std": 9.3458,
+        "variance": 87.3435,
+        "min": 2.5,
+        "q1": 9.0,
+        "q3": 22.5,
+        "iqr": 13.5,
+        "max": 92.0,
+        "skewness": 1.0517,
+        "kurtosis": 1.2621
+      },
+      "distance": {
+        "count": 248636,
+        "mean": 2.1968,
+        "median": 2.17,
+        "std": 1.1406,
+        "variance": 1.3011,
+        "min": 0.02,
+        "q1": 1.28,
+        "q3": 2.94,
+        "iqr": 1.66,
+        "max": 7.86,
+        "skewness": 0.8244,
+        "kurtosis": 1.1394
+      },
+      "surge_multiplier": {
+        "count": 232861,
+        "mean": 1.0123,
+        "median": 1.0,
+        "std": 0.0863,
+        "variance": 0.0075,
+        "min": 1.0,
+        "q1": 1.0,
+        "q3": 1.0,
+        "iqr": 0.0,
+        "max": 3.0,
+        "skewness": 8.8143,
+        "kurtosis": 90.0472
+      },
+      "temp": {
+        "count": 179280,
+        "mean": 39.2121,
+        "median": 40.21,
+        "std": 6.5168,
+        "variance": 42.4682,
+        "min": 19.62,
+        "q1": 36.285,
+        "q3": 43.67,
+        "iqr": 7.385,
+        "max": 55.41,
+        "skewness": -0.6629,
+        "kurtosis": 0.6991
+      },
+      "clouds": {
+        "count": 179280,
+        "mean": 0.6733,
+        "median": 0.77,
+        "std": 0.3128,
+        "variance": 0.0979,
+        "min": 0.0,
+        "q1": 0.43,
+        "q3": 0.965,
+        "iqr": 0.535,
+        "max": 1.0,
+        "skewness": -0.6278,
+        "kurtosis": -0.9207
+      },
+      "pressure": {
+        "count": 179280,
+        "mean": 1009.5509,
+        "median": 1008.1325,
+        "std": 13.4952,
+        "variance": 182.1214,
+        "min": 988.25,
+        "q1": 998.675,
+        "q3": 1021.64,
+        "iqr": 22.965,
+        "max": 1035.12,
+        "skewness": 0.1949,
+        "kurtosis": -1.1021
+      },
+      "rain": {
+        "count": 152043,
+        "mean": 0.0069,
+        "median": 0.0,
+        "std": 0.0343,
+        "variance": 0.0012,
+        "min": 0.0,
+        "q1": 0.0,
+        "q3": 0.0,
+        "iqr": 0.0,
+        "max": 0.5469,
+        "skewness": 8.2708,
+        "kurtosis": 88.2257
+      },
+      "humidity": {
+        "count": 179280,
+        "mean": 0.7501,
+        "median": 0.73,
+        "std": 0.1288,
+        "variance": 0.0166,
+        "min": 0.45,
+        "q1": 0.65,
+        "q3": 0.88,
+        "iqr": 0.23,
+        "max": 0.99,
+        "skewness": -0.0714,
+        "kurtosis": -1.0083
+      },
+      "wind": {
+        "count": 179280,
+        "mean": 7.0347,
+        "median": 6.86,
+        "std": 3.6416,
+        "variance": 13.261,
+        "min": 0.3,
+        "q1": 3.73,
+        "q3": 9.95,
+        "iqr": 6.22,
+        "max": 18.16,
+        "skewness": 0.2294,
+        "kurtosis": -0.7332
+      }
+    },
+    "categorical_stats": {
+      "cab_type": {
+        "unique_count": 2,
+        "mode": "Uber",
+        "mode_freq": 140477,
+        "mode_pct": 51.86,
+        "top_distribution": {
+          "Uber": {
+            "freq": 140477,
+            "pct": 51.86
+          },
+          "Lyft": {
+            "freq": 130421,
+            "pct": 48.14
+          }
+        }
+      },
+      "name": {
+        "unique_count": 12,
+        "mode": "Black",
+        "mode_freq": 23632,
+        "mode_pct": 8.72,
+        "top_distribution": {
+          "Black": {
+            "freq": 23632,
+            "pct": 8.72
+          },
+          "UberX": {
+            "freq": 23544,
+            "pct": 8.69
+          },
+          "Black SUV": {
+            "freq": 23487,
+            "pct": 8.67
+          },
+          "UberXL": {
+            "freq": 23334,
+            "pct": 8.61
+          },
+          "WAV": {
+            "freq": 23280,
+            "pct": 8.59
+          },
+          "UberPool": {
+            "freq": 23200,
+            "pct": 8.56
+          },
+          "Lux Black XL": {
+            "freq": 21875,
+            "pct": 8.07
+          },
+          "Lux Black": {
+            "freq": 21816,
+            "pct": 8.05
+          },
+          "Lyft": {
+            "freq": 21726,
+            "pct": 8.02
+          },
+          "Lyft XL": {
+            "freq": 21710,
+            "pct": 8.01
+          },
+          "Shared": {
+            "freq": 21652,
+            "pct": 7.99
+          },
+          "Lux": {
+            "freq": 21642,
+            "pct": 7.99
+          }
+        }
+      },
+      "source": {
+        "unique_count": 12,
+        "mode": "Financial District",
+        "mode_freq": 23153,
+        "mode_pct": 8.55,
+        "top_distribution": {
+          "Financial District": {
+            "freq": 23153,
+            "pct": 8.55
+          },
+          "Boston University": {
+            "freq": 22682,
+            "pct": 8.37
+          },
+          "North End": {
+            "freq": 22657,
+            "pct": 8.36
+          },
+          "South Station": {
+            "freq": 22600,
+            "pct": 8.34
+          },
+          "Theatre District": {
+            "freq": 22551,
+            "pct": 8.32
+          },
+          "Haymarket Square": {
+            "freq": 22528,
+            "pct": 8.32
+          },
+          "Back Bay": {
+            "freq": 22526,
+            "pct": 8.32
+          },
+          "Fenway": {
+            "freq": 22517,
+            "pct": 8.31
+          },
+          "Northeastern University": {
+            "freq": 22498,
+            "pct": 8.3
+          },
+          "Beacon Hill": {
+            "freq": 22412,
+            "pct": 8.27
+          },
+          "North Station": {
+            "freq": 22411,
+            "pct": 8.27
+          },
+          "West End": {
+            "freq": 22363,
+            "pct": 8.26
+          }
+        }
+      },
+      "destination": {
+        "unique_count": 12,
+        "mode": "Financial District",
+        "mode_freq": 23051,
+        "mode_pct": 8.51,
+        "top_distribution": {
+          "Financial District": {
+            "freq": 23051,
+            "pct": 8.51
+          },
+          "West End": {
+            "freq": 22661,
+            "pct": 8.37
+          },
+          "Fenway": {
+            "freq": 22640,
+            "pct": 8.36
+          },
+          "Back Bay": {
+            "freq": 22621,
+            "pct": 8.35
+          },
+          "Northeastern University": {
+            "freq": 22617,
+            "pct": 8.35
+          },
+          "South Station": {
+            "freq": 22617,
+            "pct": 8.35
+          },
+          "North End": {
+            "freq": 22540,
+            "pct": 8.32
+          },
+          "Boston University": {
+            "freq": 22528,
+            "pct": 8.32
+          },
+          "Haymarket Square": {
+            "freq": 22474,
+            "pct": 8.3
+          },
+          "Theatre District": {
+            "freq": 22458,
+            "pct": 8.29
+          },
+          "Beacon Hill": {
+            "freq": 22351,
+            "pct": 8.25
+          },
+          "North Station": {
+            "freq": 22340,
+            "pct": 8.25
+          }
+        }
+      },
+      "time_of_day": {
+        "unique_count": 5,
+        "mode": "Morning",
+        "mode_freq": 64115,
+        "mode_pct": 23.67,
+        "top_distribution": {
+          "Morning": {
+            "freq": 64115,
+            "pct": 23.67
+          },
+          "Unknown": {
+            "freq": 62864,
+            "pct": 23.21
+          },
+          "Night": {
+            "freq": 56048,
+            "pct": 20.69
+          },
+          "Evening": {
+            "freq": 45082,
+            "pct": 16.64
+          },
+          "Afternoon": {
+            "freq": 42789,
+            "pct": 15.8
+          }
+        }
+      }
+    },
+    "correlations": {
+      "pearson_with_price": {
+        "price": 1.0,
+        "distance": 0.3406,
+        "surge_multiplier": 0.2252,
+        "distance_x_surge": 0.3739,
+        "temp": -0.0023,
+        "rain": 0.0001,
+        "humidity": 0.0024,
+        "wind": 0.0003,
+        "clouds": 0.0047,
+        "pressure": 0.0016
+      },
+      "spearman_with_price": {
+        "price": 1.0,
+        "distance": 0.3313,
+        "surge_multiplier": 0.1522,
+        "distance_x_surge": 0.3465,
+        "temp": -0.0025,
+        "rain": 0.0008,
+        "humidity": 0.0023,
+        "wind": 0.0011,
+        "clouds": 0.0031,
+        "pressure": 0.0003
+      },
+      "pearson_with_surge": {
+        "price": 0.2252,
+        "distance": 0.022,
+        "surge_multiplier": 1.0,
+        "distance_x_surge": 0.1965,
+        "temp": -0.0022,
+        "rain": -0.0032,
+        "humidity": -0.0029,
+        "wind": 0.0014,
+        "clouds": 0.0001,
+        "pressure": 0.0004
+      }
+    },
+    "crosstab_cab_surge": {
+      "Uber": {
+        "no_surge": 140477,
+        "has_surge": 0
+      },
+      "Lyft": {
+        "no_surge": 86104,
+        "has_surge": 6280,
+        "missing_surge_kept_nan": 38037
+      }
+    },
+    "service_tier_summary": {
+      "Shared": {
+        "count": 21652,
+        "mean_price": 6.04,
+        "median_price": 7.0,
+        "std_price": 2.11,
+        "mean_distance": 2.19,
+        "mean_surge": 1.0
+      },
+      "UberPool": {
+        "count": 23200,
+        "mean_price": 8.77,
+        "median_price": 8.5,
+        "std_price": 2.12,
+        "mean_distance": 2.2,
+        "mean_surge": 1.0
+      },
+      "Lyft": {
+        "count": 21726,
+        "mean_price": 9.62,
+        "median_price": 9.0,
+        "std_price": 2.53,
+        "mean_distance": 2.2,
+        "mean_surge": 1.037
+      },
+      "UberX": {
+        "count": 23544,
+        "mean_price": 9.77,
+        "median_price": 9.5,
+        "std_price": 2.48,
+        "mean_distance": 2.2,
+        "mean_surge": 1.0
+      },
+      "WAV": {
+        "count": 23280,
+        "mean_price": 9.78,
+        "median_price": 9.5,
+        "std_price": 2.47,
+        "mean_distance": 2.21,
+        "mean_surge": 1.0
+      },
+      "Lyft XL": {
+        "count": 21710,
+        "mean_price": 15.3,
+        "median_price": 13.5,
+        "std_price": 4.53,
+        "mean_distance": 2.19,
+        "mean_surge": 1.037
+      },
+      "UberXL": {
+        "count": 23334,
+        "mean_price": 15.69,
+        "median_price": 15.0,
+        "std_price": 4.6,
+        "mean_distance": 2.19,
+        "mean_surge": 1.0
+      },
+      "Lux": {
+        "count": 21642,
+        "mean_price": 17.76,
+        "median_price": 16.5,
+        "std_price": 5.33,
+        "mean_distance": 2.19,
+        "mean_surge": 1.037
+      },
+      "Black": {
+        "count": 23632,
+        "mean_price": 20.53,
+        "median_price": 19.5,
+        "std_price": 4.97,
+        "mean_distance": 2.2,
+        "mean_surge": 1.0
+      },
+      "Lux Black": {
+        "count": 21816,
+        "mean_price": 23.02,
+        "median_price": 22.5,
+        "std_price": 6.52,
+        "mean_distance": 2.18,
+        "mean_surge": 1.037
+      },
+      "Black SUV": {
+        "count": 23487,
+        "mean_price": 30.28,
+        "median_price": 28.5,
+        "std_price": 4.81,
+        "mean_distance": 2.2,
+        "mean_surge": 1.0
+      },
+      "Lux Black XL": {
+        "count": 21875,
+        "mean_price": 32.4,
+        "median_price": 30.0,
+        "std_price": 7.23,
+        "mean_distance": 2.2,
+        "mean_surge": 1.038
+      }
+    }
+  },
+  "business_questions": {
+    "RQ1_weather_and_time": {
+      "weather_matched_n": 152043,
+      "valid_timestamp_est_n": 178779,
+      "rain_count": 24495,
+      "dry_count": 127548,
+      "rain_mean_price": 16.5859,
+      "dry_mean_price": 16.5948,
+      "rain_median_price": 13.5,
+      "dry_median_price": 13.5,
+      "diff_usd": -0.0089,
+      "diff_pct": -0.054,
+      "welch_t_stat": -0.1365,
+      "welch_p_value": 0.8914533072709003,
+      "cohens_d": -0.00095,
+      "anova_all_f_stat": 0.4668,
+      "anova_all_p_value": 0.7054613986324276,
+      "anova_all_eta_squared": 8e-06,
+      "anova_lyft_f_stat": 0.76,
+      "anova_lyft_p_value": 0.516382586197216,
+      "anova_lyft_eta_squared": 3.2e-05,
+      "time_of_day_means": {
+        "Morning": {
+          "count": 55039,
+          "mean_price": 16.422,
+          "mean_surge_all": 1.0127,
+          "mean_surge_lyft": 1.0321
+        },
+        "Afternoon": {
+          "count": 36701,
+          "mean_price": 16.444,
+          "mean_surge_all": 1.0121,
+          "mean_surge_lyft": 1.0303
+        },
+        "Evening": {
+          "count": 38704,
+          "mean_price": 16.41,
+          "mean_surge_all": 1.0121,
+          "mean_surge_lyft": 1.0305
+        },
+        "Night": {
+          "count": 48335,
+          "mean_price": 16.503,
+          "mean_surge_all": 1.0122,
+          "mean_surge_lyft": 1.0307
+        }
+      }
+    },
+    "RQ2_pricing_structure_by_tier": {
+      "Black": {
+        "cab_type": "Uber",
+        "count": 21722,
+        "base_fare_unadjusted": 12.19,
+        "rate_per_mile_unadjusted": 3.79,
+        "r2_unadjusted": 0.8184,
+        "base_fare_surge_adj": 12.19,
+        "rate_per_mile_surge_adj": 3.79,
+        "r2_surge_adj": 0.8184,
+        "mean_price": 20.53,
+        "median_price": 19.5
+      },
+      "Black SUV": {
+        "cab_type": "Uber",
+        "count": 21582,
+        "base_fare_unadjusted": 22.64,
+        "rate_per_mile_unadjusted": 3.46,
+        "r2_unadjusted": 0.7201,
+        "base_fare_surge_adj": 22.64,
+        "rate_per_mile_surge_adj": 3.46,
+        "r2_surge_adj": 0.7201,
+        "mean_price": 30.26,
+        "median_price": 28.5
+      },
+      "Lux": {
+        "cab_type": "Lyft",
+        "count": 13994,
+        "base_fare_unadjusted": 9.05,
+        "rate_per_mile_unadjusted": 3.98,
+        "r2_unadjusted": 0.6693,
+        "base_fare_surge_adj": 8.51,
+        "rate_per_mile_surge_adj": 4.06,
+        "r2_surge_adj": 0.8526,
+        "mean_price": 17.79,
+        "median_price": 16.5
+      },
+      "Lux Black": {
+        "cab_type": "Lyft",
+        "count": 14170,
+        "base_fare_unadjusted": 12.53,
+        "rate_per_mile_unadjusted": 4.81,
+        "r2_unadjusted": 0.64,
+        "base_fare_surge_adj": 11.73,
+        "rate_per_mile_surge_adj": 4.97,
+        "r2_surge_adj": 0.85,
+        "mean_price": 23.01,
+        "median_price": 22.5
+      },
+      "Lux Black XL": {
+        "cab_type": "Lyft",
+        "count": 14131,
+        "base_fare_unadjusted": 22.43,
+        "rate_per_mile_unadjusted": 4.53,
+        "r2_unadjusted": 0.4741,
+        "base_fare_surge_adj": 20.77,
+        "rate_per_mile_surge_adj": 5.07,
+        "r2_surge_adj": 0.7209,
+        "mean_price": 32.42,
+        "median_price": 30.0
+      },
+      "Lyft": {
+        "cab_type": "Lyft",
+        "count": 14183,
+        "base_fare_unadjusted": 5.7,
+        "rate_per_mile_unadjusted": 1.78,
+        "r2_unadjusted": 0.5956,
+        "base_fare_surge_adj": 5.37,
+        "rate_per_mile_surge_adj": 1.85,
+        "r2_surge_adj": 0.7912,
+        "mean_price": 9.61,
+        "median_price": 9.0
+      },
+      "Lyft XL": {
+        "cab_type": "Lyft",
+        "count": 14135,
+        "base_fare_unadjusted": 8.03,
+        "rate_per_mile_unadjusted": 3.3,
+        "r2_unadjusted": 0.6433,
+        "base_fare_surge_adj": 7.49,
+        "rate_per_mile_surge_adj": 3.41,
+        "r2_surge_adj": 0.8331,
+        "mean_price": 15.28,
+        "median_price": 13.5
+      },
+      "Shared": {
+        "cab_type": "Lyft",
+        "count": 14148,
+        "base_fare_unadjusted": 3.34,
+        "rate_per_mile_unadjusted": 1.24,
+        "r2_unadjusted": 0.4087,
+        "base_fare_surge_adj": 3.34,
+        "rate_per_mile_surge_adj": 1.24,
+        "r2_surge_adj": 0.4087,
+        "mean_price": 6.06,
+        "median_price": 7.0
+      },
+      "UberPool": {
+        "cab_type": "Uber",
+        "count": 21344,
+        "base_fare_unadjusted": 6.16,
+        "rate_per_mile_unadjusted": 1.18,
+        "r2_unadjusted": 0.4433,
+        "base_fare_surge_adj": 6.16,
+        "rate_per_mile_surge_adj": 1.18,
+        "r2_surge_adj": 0.4433,
+        "mean_price": 8.76,
+        "median_price": 8.5
+      },
+      "UberX": {
+        "cab_type": "Uber",
+        "count": 21559,
+        "base_fare_unadjusted": 6.45,
+        "rate_per_mile_unadjusted": 1.51,
+        "r2_unadjusted": 0.5116,
+        "base_fare_surge_adj": 6.45,
+        "rate_per_mile_surge_adj": 1.51,
+        "r2_surge_adj": 0.5116,
+        "mean_price": 9.78,
+        "median_price": 9.5
+      },
+      "UberXL": {
+        "cab_type": "Uber",
+        "count": 21430,
+        "base_fare_unadjusted": 9.18,
+        "rate_per_mile_unadjusted": 2.97,
+        "r2_unadjusted": 0.5783,
+        "base_fare_surge_adj": 9.18,
+        "rate_per_mile_surge_adj": 2.97,
+        "r2_surge_adj": 0.5783,
+        "mean_price": 15.7,
+        "median_price": 15.0
+      },
+      "WAV": {
+        "cab_type": "Uber",
+        "count": 21337,
+        "base_fare_unadjusted": 6.44,
+        "rate_per_mile_unadjusted": 1.51,
+        "r2_unadjusted": 0.5226,
+        "base_fare_surge_adj": 6.44,
+        "rate_per_mile_surge_adj": 1.51,
+        "r2_surge_adj": 0.5226,
+        "mean_price": 9.78,
+        "median_price": 9.5
+      }
+    },
+    "RQ2_head_to_head_pairs": [
+      {
+        "segment": "Tiết kiệm đi ghép (Pool/Shared)",
+        "uber_tier": "UberPool",
+        "lyft_tier": "Shared",
+        "uber_mean_price": 8.76,
+        "lyft_mean_price": 6.06,
+        "uber_base_fare": 6.16,
+        "lyft_base_fare": 3.34,
+        "uber_rate_per_mile": 1.18,
+        "lyft_rate_per_mile": 1.24,
+        "price_diff_lyft_minus_uber": -2.7
+      },
+      {
+        "segment": "Phổ thông 4 chỗ (Standard)",
+        "uber_tier": "UberX",
+        "lyft_tier": "Lyft",
+        "uber_mean_price": 9.78,
+        "lyft_mean_price": 9.61,
+        "uber_base_fare": 6.45,
+        "lyft_base_fare": 5.37,
+        "uber_rate_per_mile": 1.51,
+        "lyft_rate_per_mile": 1.85,
+        "price_diff_lyft_minus_uber": -0.17
+      },
+      {
+        "segment": "Phổ thông 6 chỗ (XL)",
+        "uber_tier": "UberXL",
+        "lyft_tier": "Lyft XL",
+        "uber_mean_price": 15.7,
+        "lyft_mean_price": 15.28,
+        "uber_base_fare": 9.18,
+        "lyft_base_fare": 7.49,
+        "uber_rate_per_mile": 2.97,
+        "lyft_rate_per_mile": 3.41,
+        "price_diff_lyft_minus_uber": -0.42
+      },
+      {
+        "segment": "Hạng sang Sedan (Luxury Black)",
+        "uber_tier": "Black",
+        "lyft_tier": "Lux Black",
+        "uber_mean_price": 20.53,
+        "lyft_mean_price": 23.01,
+        "uber_base_fare": 12.19,
+        "lyft_base_fare": 11.73,
+        "uber_rate_per_mile": 3.79,
+        "lyft_rate_per_mile": 4.97,
+        "price_diff_lyft_minus_uber": 2.48
+      },
+      {
+        "segment": "Hạng sang SUV (Luxury SUV)",
+        "uber_tier": "Black SUV",
+        "lyft_tier": "Lux Black XL",
+        "uber_mean_price": 30.26,
+        "lyft_mean_price": 32.42,
+        "uber_base_fare": 22.64,
+        "lyft_base_fare": 20.77,
+        "uber_rate_per_mile": 3.46,
+        "lyft_rate_per_mile": 5.07,
+        "price_diff_lyft_minus_uber": 2.16
+      }
+    ],
+    "RQ2_standalone_tiers": {
+      "WAV": {
+        "cab_type": "Uber",
+        "count": 21337,
+        "base_fare_unadjusted": 6.44,
+        "rate_per_mile_unadjusted": 1.51,
+        "r2_unadjusted": 0.5226,
+        "base_fare_surge_adj": 6.44,
+        "rate_per_mile_surge_adj": 1.51,
+        "r2_surge_adj": 0.5226,
+        "mean_price": 9.78,
+        "median_price": 9.5
+      },
+      "Lux": {
+        "cab_type": "Lyft",
+        "count": 13994,
+        "base_fare_unadjusted": 9.05,
+        "rate_per_mile_unadjusted": 3.98,
+        "r2_unadjusted": 0.6693,
+        "base_fare_surge_adj": 8.51,
+        "rate_per_mile_surge_adj": 4.06,
+        "r2_surge_adj": 0.8526,
+        "mean_price": 17.79,
+        "median_price": 16.5
+      }
+    },
+    "RQ3_model_evaluation": {
+      "OLS_LinearRegression": {
+        "train_rows": 186288,
+        "test_rows": 46573,
+        "R2": 0.9162,
+        "RMSE": 2.6703,
+        "MAE": 1.8542,
+        "MAPE_pct": 13.52
+      },
+      "Ridge_L2_alpha1": {
+        "train_rows": 186288,
+        "test_rows": 46573,
+        "R2": 0.9162,
+        "RMSE": 2.6703,
+        "MAE": 1.8542,
+        "MAPE_pct": 13.52
+      },
+      "HistGradientBoosting": {
+        "train_rows": 186288,
+        "test_rows": 46573,
+        "R2": 0.9581,
+        "RMSE": 1.8882,
+        "MAE": 1.2067,
+        "MAPE_pct": 8.66
+      }
+    },
+    "RQ3_top_drivers_standardized_ols": [
+      {
+        "feature": "num__distance_x_surge",
+        "coef": 4.2009,
+        "raw_coef": 4.2009
+      },
+      {
+        "feature": "cat__name_Lux Black XL",
+        "coef": 3.5686,
+        "raw_coef": 14.3913
+      },
+      {
+        "feature": "cat__name_UberPool",
+        "coef": -3.5223,
+        "raw_coef": -11.768
+      },
+      {
+        "feature": "cat__name_UberX",
+        "coef": -3.2453,
+        "raw_coef": -10.7407
+      },
+      {
+        "feature": "cat__name_WAV",
+        "coef": -3.2279,
+        "raw_coef": -10.7567
+      },
+      {
+        "feature": "cat__name_Black SUV",
+        "coef": 2.9354,
+        "raw_coef": 9.7492
+      },
+      {
+        "feature": "cat__name_Shared",
+        "coef": -2.8058,
+        "raw_coef": -11.2706
+      },
+      {
+        "feature": "cat__name_Lyft",
+        "coef": -2.0907,
+        "raw_coef": -8.3991
+      },
+      {
+        "feature": "cat__cab_type_Uber",
+        "coef": 1.5628,
+        "raw_coef": 3.1941
+      },
+      {
+        "feature": "cat__name_UberXL",
+        "coef": -1.4456,
+        "raw_coef": -4.8294
+      },
+      {
+        "feature": "num__distance",
+        "coef": -1.2881,
+        "raw_coef": -1.2881
+      },
+      {
+        "feature": "cat__name_Lux Black",
+        "coef": 1.2599,
+        "raw_coef": 5.0511
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+﻿split_strategy,n_train,n_test,train_pct,test_pct,train_price_mean,test_price_mean,train_price_median,test_price_median,train_price_std,test_price_std,ks_statistic,ks_pvalue,standardized_mean_diff,train_routes,test_routes,train_start,train_end,test_start,test_end
+random_80_20,186288,46573,80.0,20.0,16.425,16.4704,13.5,13.5,9.2127,9.2251,0.00348,0.75722,0.00492,72,72,2018-11-25 22:40:46,2018-12-18 14:15:10,2018-11-25 22:40:46,2018-12-18 14:15:10
+temporal_split,143023,35756,80.0,20.0,16.4409,16.4658,13.5,13.5,9.2101,9.2614,0.00385,0.78825,0.00269,72,72,2018-11-25 22:40:46,2018-12-15 12:00:13,2018-12-15 12:00:13,2018-12-18 14:15:10
+route_group_split,184664,48197,79.3,20.7,16.5929,15.8256,13.5,13.5,9.3006,8.8539,0.04636,0.0,0.08451,57,15,2018-11-25 22:40:46,2018-12-18 14:15:10,2018-11-25 22:40:46,2018-12-18 14:15:10

@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 79
+target-version = "py311"
+extend-exclude = ["archive", "scratch", "audit_v4", "dashboard/demo_v2"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"

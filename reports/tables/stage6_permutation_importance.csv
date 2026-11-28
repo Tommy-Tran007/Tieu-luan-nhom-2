@@ -1,0 +1,15 @@
+﻿feature_group,domain_family,permuted_columns,m7_delta_rmse_mean_usd,m7_delta_rmse_std_usd,m7_delta_r2_mean,m7_delta_r2_std,m2_delta_rmse_mean_usd,m2_delta_rmse_std_usd,m2_delta_r2_mean,m2_delta_r2_std,m7_importance_share_pct
+name (Phân khúc dịch vụ),1. Dịch vụ & Hãng xe,name,10.0207,0.0498,1.56337,0.01352,9.8826,0.053,1.57887,0.01449,69.1
+distance × surge (Tương tác cự ly–surge),3. Định giá Động & Tương tác,"distance_x_surge, distance_x_lyft_surge_excess",3.2669,0.0055,0.25559,0.00064,0.3357,0.011,0.01672,0.00059,22.53
+source & destination (Điểm đón & trả),2. Khoảng cách & Không gian,"source, destination",0.7311,0.0161,0.03585,0.00093,0.0568,0.0029,0.00265,0.00013,5.04
+surge_multiplier & lyft_excess (Hệ số surge),3. Định giá Động & Tương tác,"surge_multiplier, lyft_surge_excess",0.3154,0.0172,0.01396,0.00082,0.2668,0.0106,0.01308,0.00055,2.17
+distance & log_distance (Quãng đường gốc),2. Khoảng cách & Không gian,"distance, log_distance",0.1493,0.0055,0.00632,0.00024,3.2292,0.0211,0.26848,0.00253,1.03
+cab_type & is_lyft (Hãng xe Uber/Lyft),1. Dịch vụ & Hãng xe,"cab_type, is_lyft",0.0139,0.001,0.00057,4e-05,0.0,0.0,0.0,0.0,0.1
+hour & time_of_day (Khung giờ EST),4. Thời tiết & Khung giờ,"hour, hour_sin, hour_cos, time_of_day, is_rush_hour",0.0013,0.0009,5e-05,4e-05,0.0001,0.0001,0.0,0.0,0.01
+pressure (Áp suất khí quyển),4. Thời tiết & Khung giờ,pressure,0.001,0.0007,4e-05,3e-05,0.0,0.0,0.0,0.0,0.01
+temp (Nhiệt độ),4. Thời tiết & Khung giờ,temp,0.0009,0.0006,4e-05,3e-05,-0.0001,0.0001,-0.0,0.0,0.01
+clouds (Độ che phủ mây),4. Thời tiết & Khung giờ,clouds,0.0008,0.0003,3e-05,1e-05,0.0002,0.0001,1e-05,0.0,0.01
+wind (Tốc độ gió),4. Thời tiết & Khung giờ,wind,0.0005,0.0009,2e-05,3e-05,-0.0,0.0,-0.0,0.0,0.0
+rain & is_raining (Lượng mưa & cờ mưa),4. Thời tiết & Khung giờ,"rain, is_raining",0.0003,0.0002,1e-05,1e-05,-0.0,0.0,-0.0,0.0,0.0
+humidity (Độ ẩm),4. Thời tiết & Khung giờ,humidity,0.0001,0.0005,0.0,2e-05,-0.0,0.0,-0.0,0.0,0.0
+day_of_week & is_weekend (Thứ EST),4. Thời tiết & Khung giờ,"day_of_week, dow_sin, dow_cos, is_weekend",-0.0002,0.0004,-1e-05,2e-05,0.0001,0.0001,0.0,1e-05,0.0
