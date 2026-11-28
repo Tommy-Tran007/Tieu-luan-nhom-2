@@ -134,6 +134,7 @@ KEYWORDS_TEXT: str = (
 
 
 def _appendix_a_intro(wm: dict[str, Any]) -> str:
+    sid = wm.get("student_id", DEFAULT_STUDENT_ID)
     return (
         "Toàn bộ 100% mã nguồn Python chuẩn PEP 8 (ruff check 0 lỗi ở "
         "ngưỡng ≤ 79 ký tự trên toàn bộ "
@@ -144,7 +145,7 @@ def _appendix_a_intro(wm: dict[str, Any]) -> str:
         f"{wm['n_script_files']} script xuất bản–kiểm chứng scripts/, kèm "
         "Dashboard 5 Tab và "
         f"{wm['n_test_files']} tệp pytest) được bàn giao nguyên vẹn trong "
-        "gói nộp bài TieuLuan_PRJ-EXT-01_Nhom02/. Để tuân thủ chặt giới hạn "
+        f"gói nộp bài {sid}_Nhom02_TieuLuan/. Để tuân thủ chặt giới hạn "
         "tối đa 45 trang nội dung ngoài 2 trang bìa (bao gồm mở đầu, 5 "
         "chương chính, TLTK và Phụ lục A–B), Phụ lục A trình bày "
         "sơ đồ kiến trúc đầy đủ, bảng chỉ mục toàn bộ module kèm số dòng đo "
@@ -156,15 +157,17 @@ def _appendix_a_intro(wm: dict[str, Any]) -> str:
 
 def _appendix_b_intro(wm: dict[str, Any]) -> str:
     n_sess = int(wm["sessions_count"])
-    n_joint = max(1, n_sess - 22)
+    n_huy = int(wm["n_huy"])
+    n_thang = int(wm["n_thang"])
+    n_joint = int(wm["n_joint"])
     return (
         f"Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận {n_sess} "
         "phiên P-D-M-V "
         f"({wm['lines']:,} dòng, {wm['words']:,} từ) từ 01/10/2026 đến 28/"
         "11/2026 với phân công tổng thể 50/50 "
-        "(11 phiên độc lập Trần Thanh Huy, 11 phiên độc lập Lê Huy Thắng "
-        f"và {n_joint} phiên đồng nghiệm thu; xem quy chiếu mã kiểm toán tại "
-        "Bảng B.1 và tóm tắt tiến độ tại Bảng B.2)."
+        f"({n_huy} phiên độc lập Trần Thanh Huy, {n_thang} phiên độc lập "
+        f"Lê Huy Thắng và {n_joint} phiên đồng thực hiện; xem quy chiếu mã "
+        "kiểm toán tại Bảng B.1 và tóm tắt tiến độ tại Bảng B.2)."
     )
 
 
@@ -2801,7 +2804,7 @@ def build_final_thesis(
     qmd_out = ROOT_DIR / "reports" / f"{student_id}_Nhom02_TieuLuan.qmd"
 
     data = load_verified_data()
-    content = build_thesis_structure(data)
+    content = build_thesis_structure(data, student_id=student_id)
 
     export_thesis_qmd(content, qmd_out)
     if qmd_only:

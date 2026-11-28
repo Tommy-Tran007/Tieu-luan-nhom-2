@@ -650,7 +650,7 @@ Sau khi khử mã lính canh (-1, -100, 9999, 100000) và dấu âm (2,137 price
 
 ## 3.4. Phân tích thống kê mô tả
 
-Trên 270,898 lượt báo giá sạch, cơ cấu mẫu gồm Uber 140,477 dòng (51.86%, TB \$15.83, trung vị \$12.50) và Lyft 130,421 dòng (48.14%, TB \$17.38, trung vị \$16.50) — phản ánh thiết kế truy vấn API phân tầng đều chứ không phải thị phần thực. Giá báo toàn mẫu đạt trung bình \$16.58, trung vị \$13.50 (SD = \$9.35, IQR = \$13.50, Skewness = +1.0517); quãng đường trung bình 2.20 dặm (trung vị 2.17, miền [0.02, 7.86] dặm). Trên mẫu quan sát surge thực (n = 232,861), toàn bộ 6,280 lượt surge > 1.0x xuất hiện trên API Lyft, tương ứng tỷ lệ Surge thực của Lyft là 6.80% (6,280 / 92,384; 7 bậc từ 1.25x đến 3.00x) — cao hơn hẳn con số bị pha loãng 4.82% nếu điền mù NaN thành 1.0x. Lượng mưa trên 152,043 dòng không lỗi cảm biến chủ yếu ở mức nhẹ–vừa (Q3 = 0.00, tối đa 0.55 inch/h). Các ngoại lai hợp lệ (2,459 price > \$42.75; 2,760 distance > 5.43 mi) được giữ nguyên (Bảng 3.4).
+Trên 270,898 lượt sạch, mẫu phân bổ gần đều giữa Uber (140,477 dòng; 51.86%; TB \$15.83; trung vị \$12.50) và Lyft (130,421 dòng; 48.14%; TB \$17.38; trung vị \$16.50), phản ánh thiết kế truy vấn API chứ không phải thị phần thực. Toàn mẫu có giá báo lệch phải (TB \$16.58, trung vị \$13.50, IQR = \$13.50, Skewness = +1.0517) và cự ly trong miền [0.02, 7.86] dặm (TB 2.20, trung vị 2.17; Bảng 3.4). Trên tập surge thực (n = 232,861), cả 6,280 lượt surge > 1.0x thuộc API Lyft, tương ứng tỷ lệ 6.80% (6,280/92,384; 6 bậc 1.25x–3.00x) — cao hơn hẳn mức pha loãng 4.82% nếu điền mù 1.0x. Lượng mưa sạch sentinel (n = 152,043) chủ yếu nhẹ–vừa (Q3 = 0.00, tối đa 0.55 in/h); các ngoại lai hợp lệ (2,459 price > \$42.75; 2,760 distance > 5.43 mi) được giữ nguyên.
 
 ```{=typst}
 #block(breakable: false)[
@@ -679,27 +679,27 @@ Trên 270,898 lượt báo giá sạch, cơ cấu mẫu gồm Uber 140,477 dòng
 
 ## 3.5. Trực quan hóa dữ liệu và Phát hiện Insight kinh doanh
 
-Từ bộ 21 biểu đồ pipeline (và 17 biểu đồ 300 DPI chuẩn hóa đưa vào tiểu luận, đồng bộ số liệu với Dashboard 5 Tab), nhóm rút ra bốn phát hiện khám phá trọng tâm:
+Từ 21 biểu đồ pipeline (17 hình 300 DPI trong tiểu luận, đồng bộ Dashboard 5 Tab), nhóm rút ra bốn phát hiện trọng tâm:
 
 ![Hình 3.2: Cơ cấu số lượng quan sát báo giá API theo hai nền tảng Uber – Lyft và 12 gói dịch vụ tại Boston](figures/thesis/thesis_fig_3_1_market_overview.png){#fig-3-2 width=91% fig-align="center"}
 
-Nhận định 3.1 (Mẫu phân tầng đều 12 gói và phân hóa giá 4 bậc): Hình 3.2 và Hình 3.3 cho thấy mẫu API truy vấn tương đối đều cho từng gói (\~22,000 lượt/gói) và tách thành 4 tầng giá rõ rệt: Đi ghép (Shared trung vị \$7.00; UberPool \$8.50), Phổ thông 4 chỗ (Lyft \$9.00; UberX & WAV \$9.50), Gia đình 6 chỗ (Lyft XL \$13.50; UberXL \$15.00) và Hạng sang (Lux \$16.50 đến Lux Black XL \$30.00). Do tỷ trọng hạng sang trong mẫu cao hơn tiêu dùng đường phố, mọi phân tích suy luận đều kiểm soát theo phân khúc.
+Nhận định 3.1 (Mẫu phân tầng đều 12 gói & 4 bậc giá): Hình 3.2–3.3 cho thấy API truy vấn đều (\~22,000 lượt/gói) và phân hóa 4 tầng giá (trung vị): Đi ghép (Shared \$7.00; UberPool \$8.50), Phổ thông 4 chỗ (Lyft \$9.00; UberX & WAV \$9.50), Gia đình 6 chỗ (Lyft XL \$13.50; UberXL \$15.00) và Hạng sang (Lux \$16.50 đến Lux Black XL \$30.00). Vì hạng sang chiếm tỷ trọng cao hơn tiêu dùng đường phố, mọi suy luận đều kiểm soát theo phân khúc.
 
 ![Hình 3.3: Phân phối mật độ xác suất và biểu đồ hộp ngoại lai của giá báo API (price) và quãng đường (distance)](figures/thesis/thesis_fig_3_2_distributions.png){#fig-3-3 width=91% fig-align="center"}
 
-Nhận định 3.2 (Phân bố thu thập API và tính phẳng của giá theo 24 giờ EST): Trên 208,034 bản ghi có timestamp gốc (Hình 3.4), số lượt báo giá ghi nhận chạm đáy quanh 03:00 và cao nhất lúc 18:00–19:00 EST — phản ánh mật độ truy vấn API trong mẫu. Trên thang trục tung trung thực [12, 21] USD, đường giá báo trung bình gần như nằm ngang xuyên suốt 24 giờ trên cả Lyft (\~\$17.4) lẫn Uber (\~\$15.8).
+Nhận định 3.2 (Lưu lượng API & giá phẳng theo 24 giờ EST): Trên 208,034 bản ghi có timestamp gốc (Hình 3.4), mật độ truy vấn API chạm đáy quanh 03:00 và đạt đỉnh 18:00–19:00 EST. Trên thang trục tung [12, 21] USD, giá báo trung bình gần như phẳng suốt 24 giờ ở cả Lyft (\~\$17.4) lẫn Uber (\~\$15.8).
 
 ![Hình 3.4: Lưu lượng quan sát báo giá API và giá báo trung bình theo 24 giờ địa phương Boston EST (n = 208,034)](figures/thesis/thesis_fig_3_3_temporal_est.png){#fig-3-4 width=91% fig-align="center"}
 
-Nhận định 3.3 (Giá báo trùng khít giữa mưa nhẹ–vừa và trời tạnh trên tập sạch sentinel): Hình 3.5 đối chiếu bản đồ nhiệt Surge Lyft trên tập quan sát thực có timestamp gốc (n = 70,971; 5 ô xám khuyết thu thập đêm Thứ Ba – rạng sáng Thứ Tư EST) và giá báo Mưa vs. Không mưa trên 152,043 dòng không lỗi cảm biến mưa: giá trung bình gần trùng khít ở cả Uber (\$15.84 vs. \$15.83) và Lyft (\$17.39 vs. \$17.41).
+Nhận định 3.3 (Giá báo trùng khít giữa mưa nhẹ–vừa và trời tạnh): Hình 3.5 đối chiếu bản đồ nhiệt Surge Lyft thực có timestamp gốc (n = 70,971; 5 ô xám khuyết thu thập đêm Thứ Ba – rạng sáng Thứ Tư EST) và giá báo trên 152,043 dòng sạch sentinel: trung bình Mưa vs. Tạnh gần trùng khít ở cả Uber (\$15.84 vs. \$15.83) lẫn Lyft (\$17.39 vs. \$17.41).
 
-Nhận định 3.4 (Bất cân xứng không gian gấp 8.4 lần và tính tụ cụm của Surge Lyft): Trên đúng 92,384 lượt báo giá Lyft quan sát surge thực (tỷ lệ toàn thành phố 6.80%), sự phân hóa địa lý lộ diện mạnh hơn rõ rệt so với bản bị pha loãng: năm quận đại học – thương mại dẫn đầu gồm Back Bay (11.17%, 856 lượt), Fenway (10.57%, 812 lượt), Northeastern University (10.10%, 771 lượt), Theatre District (9.58%, 739 lượt) và Boston University (9.57%, 739 lượt) — cao gấp 8.4 lần so với North End (1.33%, 102 lượt). Trong 2,233 ô (quận × giờ) có surge (56.36%), bình quân có 2.16 lượt surge tụ cụm cùng giờ (tối đa 11 lượt), củng cố bản chất cục bộ theo điểm nóng của surge.
+Nhận định 3.4 (Bất cân xứng không gian & tính tụ cụm Surge Lyft): Trên 92,384 lượt Lyft surge thực (toàn TP 6.80%), năm quận đại học – thương mại dẫn đầu gồm Back Bay (11.17%, 856), Fenway (10.57%, 812), Northeastern University (10.10%, 771), Theatre District (9.58%, 739) và Boston University (9.57%, 739) — gấp 8.4 lần North End (1.33%, 102). Trong 2,233 ô quận × giờ có surge (56.36%), bình quân có 2.16 lượt tụ cụm/giờ (tối đa 11), khẳng định bản chất cục bộ theo điểm nóng.
 
 ![Hình 3.5: Bản đồ nhiệt Surge Lyft theo Thứ × Giờ EST (n = 70,971 surge thực) và giá báo Mưa vs. Tạnh (n = 152,043)](figures/thesis/thesis_fig_3_4_weather_surge_est.png){#fig-3-5 width=91% fig-align="center"}
 
 ## 3.6. Kiểm định giả thuyết thống kê, Suy luận cụm và Kiểm định tương đương TOST
 
-Bảng 3.5 trình bày trọn bộ 13 kiểm định giả thuyết (H1a–H4c) trên bộ dữ liệu sạch chuẩn hóa kèm hiệu chỉnh đa kiểm định Holm–Bonferroni (kiểm soát FWER) và Benjamini–Hochberg (BH-FDR). Lưu ý kỹ thuật quan trọng: trong kiểm định đa biến H4c (n\_train = 95,925), việc loại đúng biến giả dư thừa của thành phần lưỡng phân K₆,₆ thứ hai (destination\_Boston University) đưa ma trận thiết kế về hạng đầy đủ 100% (0 cảnh báo suy biến). Bảng 3.6 và Hình 3.6A bổ sung kiểm định sai số chuẩn cụm hai cấp, kiểm định cụm cho H3b, độ nhạy loại trừ tuyệt đối mọi ô từng chứa sentinel mưa và Exact WCR Wild Cluster Bootstrap (B = 1,999).
+Bảng 3.5 tổng hợp 13 kiểm định giả thuyết (H1a–H4c) kèm hiệu chỉnh Holm–Bonferroni (FWER) và BH-FDR; trong H4c đa biến (n\_train = 95,925), việc bỏ biến giả dư của thành phần lưỡng phân K₆,₆ thứ hai (destination\_Boston University) đưa ma trận thiết kế về hạng đầy đủ 100% (0 suy biến). Bảng 3.6 và Hình 3.6A bổ sung sai số chuẩn cụm hai cấp, H3b cụm, độ nhạy loại mọi ô chứa sentinel mưa và Exact WCR Bootstrap (B = 1,999).
 
 | Mã | Phạm vi kiểm định | Phép kiểm định | p gốc | p\_Holm / q\_BH | p đối chứng | Hiệu ứng | Kết luận (α=5%) |
 | :--- | :--- | :--- | ---: | ---: | ---: | :--- | :--- |
@@ -755,10 +755,10 @@ Bảng 3.5 trình bày trọn bộ 13 kiểm định giả thuyết (H1a–H4c) 
 
 ![Hình 3.6: Kiểm định Cluster-Robust, độ nhạy Sentinel mưa & TOST (A) và điểm cắt UberX–Lyft trên X\_train (B)](figures/thesis/thesis_fig_3_5_hypotheses_clean.png){#fig-3-6 width=91% fig-align="center"}
 
-- **Thời tiết (H1a–c, H3b, H4c và Bảng 3.6):** Khi kiểm soát gói xe, cự ly, surge thực và 72 tuyến cố định (n = 119,903), hệ số mưa là +0.0021 USD với p\_cl = 0.9119 (2,793 cụm quận × giờ) và p\_hr = 0.9036 (329 giờ toàn Boston, 95% CI [-0.0324, +0.0367]). Kiểm tra trên 139,555 lượt có cự ly hợp lệ (2,794 cụm quận × giờ / 329 giờ; không dùng biến surge) cũng cho p\_hr = 0.0622, và loại triệt để mọi ô từng chứa dù chỉ 1 bản tin sentinel mưa (n = 87,733) cho p\_hr = 0.7277. Trên mọi cấu trúc, TOST xác nhận chênh lệch nằm chặt trong biên ±\$0.10 (p\_TOST < 0.0001). Riêng H3b (xác suất Surge Lyft khi mưa: 6.22% vs. tạnh 6.94%), dù kiểm định iid ngây thơ báo p = 0.0162 (ngược chiều giả thuyết mưa làm tăng surge, Cramér's V = 0.0104), sai số chuẩn cụm đưa p lên 0.0688 (quận × giờ) và 0.0793 (giờ Boston) — đồng thời không vượt qua cả Holm lẫn BH-FDR. Lát cắt mưa lớn ≥ 0.10 in/h trên toàn mẫu hồi quy N = 103,608 (2,455 cụm / 320 giờ; nhóm treated mưa lớn gồm 3,021 lượt / 47 cụm / 8 giờ, lưu ý few treated clusters với 2⁸ = 256 tổ hợp dấu Rademacher) qua Exact WCR (B = 1,999) cho p\_wild = 0.8590 / 0.8850 (kết quả thăm dò công suất thấp).
-- **Khung giờ EST (H2a–c, H3c–d):** Sau hiệu chỉnh Holm (p\_Holm = 1.0000) và Wald F cụm (3,980 cụm EST, F\_cl = 0.2829, p\_cl = 0.8378, chênh tối đa \$0.0753), chưa đủ bằng chứng bác bỏ đồng nhất giá hay Surge giữa bốn buổi cố định.
-- **Bất đối xứng công bố Surge trên API (H3a):** Bác bỏ mạnh H0 sau hiệu chỉnh Holm (p\_Holm < 0.0001, V = 0.2053: Lyft thực 6.80% vs. Uber 0.00%). Kết quả phản ánh bất đối xứng cơ chế công bố API (Uber tích hợp phụ phí động ẩn trong Upfront Pricing), không kết luận Uber thiếu surge.
-- **Biểu giá cắt nhau (H4a–b):** Wald HC3 bác bỏ mạnh H0 trên cặp chủ lực UberX vs. Lyft (H4a: p\_Holm < 0.0001), còn UberPool vs. Shared (H4b: p = 0.0172, p\_Holm = 0.1897) không cắt trong miền; độ nhạy giữa Đặc tả A (3.21 dặm) và Đặc tả B thuần 1.0x (5.17 dặm, Hình 3.6B) được phân tích đủ 5 cặp tại Mục 4.5.
+- **Thời tiết (H1a–c, H3b, H4c & Bảng 3.6):** Kiểm soát gói xe, cự ly, surge và 72 tuyến (n = 119,903), hệ số mưa chỉ +0.0021 USD (p\_hr = 0.9036, 95% CI [-0.0324, +0.0367]), bền vững khi bỏ surge (n = 139,555) lẫn khi loại mọi ô chứa sentinel (n = 87,733); TOST đều tương đương chặt trong ±\$0.10 (p ≤ 0.0004). Với H3b (Surge Lyft mưa 6.22% vs. tạnh 6.94%), sai số cụm đẩy p lên 0.0688 / 0.0793 (không vượt Holm/BH-FDR); mưa lớn ≥ 0.10 in/h (Exact WCR, B = 1,999) đạt p\_wild = 0.8590 / 0.8850 (thăm dò, 8 giờ).
+- **Khung giờ EST (H2a–c, H3c–d):** Sau Holm (p\_Holm = 1.0000) và Wald F cụm (3,980 cụm, F\_cl = 0.2829, p\_cl = 0.8378, chênh ≤ \$0.0753), chưa đủ bằng chứng bác bỏ đồng nhất giá/Surge giữa 4 buổi.
+- **Bất đối xứng API (H3a):** Bác bỏ mạnh H0 (p\_Holm < 0.0001, V = 0.2053: Lyft 6.80% vs. Uber 0.00%), phản ánh Uber ẩn phụ phí động trong Upfront Pricing, không hàm ý Uber thiếu surge.
+- **Biểu giá cắt nhau (H4a–b):** Wald HC3 bác bỏ H0 trên UberX–Lyft (H4a: p\_Holm < 0.0001), còn UberPool–Shared (H4b: p\_Holm = 0.1897) không cắt; độ nhạy Đặc tả A (3.21 mi) vs. B 1.0x (5.17 mi, Hình 3.6B) mở rộng đủ 5 cặp tại Mục 4.5.
 
 {{< pagebreak >}}
 
@@ -1247,19 +1247,19 @@ Seabold, S., & Perktold, J. (2010). Statsmodels: Econometric and statistical mod
 
 # PHỤ LỤC A: MÃ NGUỒN PYTHON CHUẨN PEP 8 VÀ KIẾN TRÚC HỆ THỐNG {.unnumbered}
 
-Toàn bộ 100% mã nguồn Python chuẩn PEP 8 (ruff check 0 lỗi ở ngưỡng ≤ 79 ký tự trên toàn bộ 46 tệp .py và 4 notebook .ipynb; gồm 11,159 dòng lõi pipeline main.py + 11 module src/, tách độc lập 13,441 dòng ở 5 script xuất bản–kiểm chứng scripts/, kèm Dashboard 5 Tab và 9 tệp pytest) được bàn giao nguyên vẹn trong gói nộp bài TieuLuan\_PRJ-EXT-01\_Nhom02/. Để tuân thủ chặt giới hạn tối đa 45 trang nội dung ngoài 2 trang bìa (bao gồm mở đầu, 5 chương chính, TLTK và Phụ lục A–B), Phụ lục A trình bày sơ đồ kiến trúc đầy đủ, bảng chỉ mục toàn bộ module kèm số dòng đo động, toàn văn nguyên bản main.py & src/config.py và bốn trích đoạn thuật toán lõi đối soát trực tiếp với mã nguồn thực thi.
+Toàn bộ 100% mã nguồn Python chuẩn PEP 8 (ruff check 0 lỗi ở ngưỡng ≤ 79 ký tự trên toàn bộ 46 tệp .py và 4 notebook .ipynb; gồm 11,159 dòng lõi pipeline main.py + 11 module src/, tách độc lập 13,401 dòng ở 5 script xuất bản–kiểm chứng scripts/, kèm Dashboard 5 Tab và 9 tệp pytest) được bàn giao nguyên vẹn trong gói nộp bài 2521001060\_Nhom02\_TieuLuan/. Để tuân thủ chặt giới hạn tối đa 45 trang nội dung ngoài 2 trang bìa (bao gồm mở đầu, 5 chương chính, TLTK và Phụ lục A–B), Phụ lục A trình bày sơ đồ kiến trúc đầy đủ, bảng chỉ mục toàn bộ module kèm số dòng đo động, toàn văn nguyên bản main.py & src/config.py và bốn trích đoạn thuật toán lõi đối soát trực tiếp với mã nguồn thực thi.
 
 ## A.1. Sơ đồ kiến trúc kho mã nguồn và sản phẩm bàn giao {.unnumbered .unlisted}
 
 ```text
-TieuLuan_PRJ-EXT-01_Nhom02/
+2521001060_Nhom02_TieuLuan/
 ├── main.py                # CLI toàn trình --stage clean..evaluate (143 dòng)
 ├── pyproject.toml         # Cấu hình ruff PEP 8 nghiêm ngặt (<= 79 ký tự, gồm notebooks/)
 ├── requirements.txt       # Python >=3.11 (kiểm chứng 3.11.9 & 3.14.4) + pillow + pymupdf
-├── nhật ký làm việc.md    # Nhật ký P-D-M-V nhóm (24 phiên: 11 + 11 + 2)
+├── nhật ký làm việc.md    # Nhật ký P-D-M-V nhóm (24 phiên: 10 + 11 + 3)
 ├── data/                  # raw/ (read-only SHA-256) & processed/ (15.97 MiB Parquet)
 ├── src/                   # 11 module lõi pipeline ML/EDA thuần (11,016 dòng, Bảng A.1)
-├── scripts/               # 5 script xuất bản, biểu đồ & kiểm toán (13,441 dòng)
+├── scripts/               # 5 script xuất bản, biểu đồ & kiểm toán (13,401 dòng)
 ├── dashboard/             # Dashboard 5 Tab (Streamlit + Offline HTML, 18/18, 9 tệp pytest)
 ├── models/                # best_model.joblib (M7), m2_interaction_ols.joblib
 ├── notebooks/             # 4 Notebook chạy sống PASS (03 -> 06, 0 lỗi ruff PEP 8)
@@ -1282,7 +1282,7 @@ TieuLuan_PRJ-EXT-01_Nhom02/
 | src/stage6\_evaluation.py (1,603 dòng) | Tổng hợp GĐ6, vẽ fig15–fig21 và xuất stage6\_summary.json. |
 | scripts/thesis\_v5\_verification.py (2,571 dòng) | Kiểm chứng hợp nhất: Cluster SE, TOST, Exact WCR, Split-CQR, Train-Only, Switchback & I/O. |
 | scripts/prepare\_thesis\_figures.py (1,708 dòng) | Xuất đồng bộ 17 biểu đồ 300 DPI chuẩn tiểu luận từ JSON/CSV kết quả. |
-| scripts/thesis\_content.py & build\_final\_thesis.py (8,429 dòng) | Nạp số liệu động, dựng .qmd chuẩn UFM, xuất PDF trực tiếp qua Quarto/Typst & đồng bộ .docx. |
+| scripts/thesis\_content.py & build\_final\_thesis.py (8,389 dòng) | Nạp số liệu động, dựng .qmd chuẩn UFM, xuất PDF trực tiếp qua Quarto/Typst & đồng bộ .docx. |
 | scripts/check\_thesis\_audit.py (733 dòng) | Cổng kiểm toán tự động PDF/QMD động theo JSON (bố cục, giãn đoạn 6pt, nguồn Quarto, APA 7th). |
 | dashboard/\* & notebooks/\* | Dashboard 5 Tab + HTML offline + kiểm toán 18/18 + 40 ca pytest + 4 notebook PEP 8. |
 
@@ -1684,7 +1684,7 @@ cqr_hi = np.where(raw_cqr_lo <= raw_cqr_hi, raw_cqr_hi, mid)
 
 # PHỤ LỤC B: HỒ SƠ KIỂM TOÁN VÀ NHẬT KÝ P-D-M-V {.unnumbered}
 
-Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận 24 phiên P-D-M-V (669 dòng, 17,178 từ) từ 01/10/2026 đến 28/11/2026 với phân công tổng thể 50/50 (11 phiên độc lập Trần Thanh Huy, 11 phiên độc lập Lê Huy Thắng và 2 phiên đồng nghiệm thu; xem quy chiếu mã kiểm toán tại Bảng B.1 và tóm tắt tiến độ tại Bảng B.2).
+Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận 24 phiên P-D-M-V (669 dòng, 17,186 từ) từ 01/10/2026 đến 28/11/2026 với phân công tổng thể 50/50 (10 phiên độc lập Trần Thanh Huy, 11 phiên độc lập Lê Huy Thắng và 3 phiên đồng thực hiện; xem quy chiếu mã kiểm toán tại Bảng B.1 và tóm tắt tiến độ tại Bảng B.2).
 
 ```{=typst}
 #block(breakable: false)[

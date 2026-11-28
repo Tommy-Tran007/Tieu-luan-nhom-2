@@ -165,6 +165,20 @@ def load_verified_data() -> dict[str, Any]:
     worklog_sessions = re.findall(
         r"^## \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] - (.+)$", worklog_text, re.M
     )
+    worklog_owners = re.findall(
+        r"^- \*\*Thành viên phụ trách chính:\*\*\s*(.+)$", worklog_text, re.M
+    )
+    n_joint_sessions = sum(1 for o in worklog_owners if "Đồng thực hiện" in o)
+    n_huy_sessions = sum(
+        1
+        for o in worklog_owners
+        if "Trần Thanh Huy" in o and "Đồng thực hiện" not in o
+    )
+    n_thang_sessions = sum(
+        1
+        for o in worklog_owners
+        if "Lê Huy Thắng" in o and "Đồng thực hiện" not in o
+    )
     src_files = sorted(p.name for p in (ROOT_DIR / "src").glob("*.py"))
     all_script_py_files = sorted(
         p.name for p in (ROOT_DIR / "scripts").glob("*.py")
@@ -199,6 +213,9 @@ def load_verified_data() -> dict[str, Any]:
             len(ln.split()) for ln in worklog_text.splitlines()
         ),
         "worklog_sessions": worklog_sessions,
+        "n_huy_sessions": n_huy_sessions,
+        "n_thang_sessions": n_thang_sessions,
+        "n_joint_sessions": n_joint_sessions,
     }
 
 
@@ -636,7 +653,9 @@ REFERENCES_APA7: list[list[tuple[str, bool]]] = [
 # =============================================================================
 # 5. XÂY DỰNG TOÀN VĂN TIỂU LUẬN (100% ĐỘNG TỪ V5 — ZERO MONKEY-PATCH)
 # =============================================================================
-def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
+def build_thesis_structure(
+    data: dict[str, Any], student_id: str = "2521001060"
+) -> dict[str, Any]:
     s3, s4, s5, s6, v5 = (
         data["s3"],
         data["s4"],
@@ -795,6 +814,11 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
     wcr_hr = hv["exact_wcr_citywide_hour_B1999"]
     h3b_cl = st_ext["h3b_lyft_surge_rain_cluster"]
     ws_any = st_ext["weather_sentinel_strict_sensitivity"]
+    max_tost_010_p = max(
+        w_ct_hr["tost_010"]["p_tost"],
+        w_ns_hr["tost_010"]["p_tost"],
+        ws_any["p_tost_010_hour"],
+    )
     tod_cl = st_ext["time_of_day_cluster_f_test"]
 
     ux_pair, xl_pair, bl_pair, bs_pair = (
@@ -2839,44 +2863,37 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                         (
                             "p",
                             (
-                                f"Trên {total_n:,} lượt báo giá sạch, cơ "
-                                f"cấu mẫu gồm Uber {uber_n:,} dòng (51.86%, "
-                                "TB $15.83, trung vị "
-                                f"$12.50) và Lyft {lyft_tot_n:,} dòng "
-                                "(48.14%, TB $17.38, trung vị $16.50) — "
-                                "phản ánh thiết kế truy vấn "
-                                "API phân tầng đều chứ không phải thị phần "
-                                "thực. Giá báo toàn mẫu đạt trung bình "
-                                f"${num['price']['mean']:.2f}, "
-                                f"trung vị ${num['price']['median']:.2f} "
-                                f"(SD = ${num['price']['std']:.2f}, IQR = "
-                                f"${num['price']['iqr']:.2f}, "
-                                "Skewness = "
-                                f"+{num['price']['skewness']:.4f}); quãng "
-                                "đường trung bình "
-                                f"{num['distance']['mean']:.2f} dặm "
-                                f"(trung vị {num['distance']['median']:.2f},"
-                                " miền [0.02, 7.86] dặm). Trên mẫu quan "
-                                "sát surge thực "
-                                f"(n = {obs_surge_n:,}), toàn bộ "
-                                f"{lyft_surge_cnt:,} lượt surge > 1.0x xuất "
-                                "hiện trên API Lyft, tương ứng "
-                                "tỷ lệ Surge thực của Lyft là "
+                                f"Trên {total_n:,} lượt sạch, mẫu phân bổ "
+                                f"gần đều giữa Uber ({uber_n:,} dòng; "
+                                "51.86%; TB $15.83; trung vị $12.50) và "
+                                f"Lyft ({lyft_tot_n:,} dòng; 48.14%; TB "
+                                "$17.38; trung vị $16.50), phản ánh thiết "
+                                "kế truy vấn API chứ không phải thị phần "
+                                "thực. Toàn mẫu có giá báo lệch phải (TB "
+                                f"${num['price']['mean']:.2f}, trung vị "
+                                f"${num['price']['median']:.2f}, IQR = "
+                                f"${num['price']['iqr']:.2f}, Skewness = "
+                                f"+{num['price']['skewness']:.4f}) và cự "
+                                "ly trong miền [0.02, 7.86] dặm (TB "
+                                f"{num['distance']['mean']:.2f}, trung vị "
+                                f"{num['distance']['median']:.2f}; Bảng "
+                                "3.4). Trên tập surge thực "
+                                f"(n = {obs_surge_n:,}), cả "
+                                f"{lyft_surge_cnt:,} lượt surge > 1.0x "
+                                "thuộc API Lyft, tương ứng tỷ lệ "
                                 f"{lyft_surge_rate:.2f}% "
-                                f"({lyft_surge_cnt:,} / {lyft_obs_n:,}; 7 "
-                                "bậc từ "
-                                "1.25x đến 3.00x) — cao hơn hẳn con số bị "
-                                "pha loãng 4.82% nếu điền mù NaN thành "
-                                "1.0x. Lượng mưa trên "
-                                f"{prov['weather_valid_rain_obs']:,} dòng "
-                                "không lỗi cảm biến chủ yếu ở mức nhẹ–vừa "
-                                "(Q3 = 0.00, tối đa "
-                                "0.55 inch/h). Các ngoại lai hợp lệ ("
-                                f"{iqr_p['count']:,} price > "
+                                f"({lyft_surge_cnt:,}/{lyft_obs_n:,}; 6 "
+                                "bậc 1.25x–3.00x) — cao hơn hẳn mức pha "
+                                "loãng 4.82% nếu điền mù 1.0x. Lượng mưa "
+                                "sạch sentinel "
+                                f"(n = {prov['weather_valid_rain_obs']:,}) "
+                                "chủ yếu nhẹ–vừa (Q3 = 0.00, tối đa 0.55 "
+                                "in/h); các ngoại lai hợp lệ "
+                                f"({iqr_p['count']:,} price > "
                                 f"${iqr_p['upper_fence']:.2f}; "
                                 f"{iqr_d['count']:,} distance > "
-                                f"{iqr_d['upper_fence']:.2f} "
-                                "mi) được giữ nguyên (Bảng 3.4)."
+                                f"{iqr_d['upper_fence']:.2f} mi) được giữ "
+                                "nguyên."
                             ),
                         ),
                         (
@@ -2941,11 +2958,10 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                         (
                             "p",
                             (
-                                "Từ bộ 21 biểu đồ pipeline (và 17 biểu đồ "
-                                "300 DPI chuẩn hóa đưa vào tiểu luận, đồng "
-                                "bộ số liệu với "
-                                "Dashboard 5 Tab), nhóm rút ra bốn phát "
-                                "hiện khám phá trọng tâm:"
+                                "Từ 21 biểu đồ pipeline (17 hình 300 DPI "
+                                "trong tiểu luận, đồng bộ Dashboard 5 "
+                                "Tab), nhóm rút ra bốn phát hiện trọng "
+                                "tâm:"
                             ),
                         ),
                         (
@@ -2965,21 +2981,18 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                         (
                             "p",
                             (
-                                "Nhận định 3.1 (Mẫu phân tầng đều 12 gói và "
-                                "phân hóa giá 4 bậc): Hình 3.2 và Hình 3.3 "
-                                "cho thấy mẫu API "
-                                "truy vấn tương đối đều cho từng gói (~22,"
-                                "000 lượt/gói) và tách thành 4 tầng giá rõ "
-                                "rệt: Đi ghép "
-                                "(Shared trung vị $7.00; UberPool $8.50), "
-                                "Phổ thông 4 chỗ (Lyft $9.00; UberX & WAV "
-                                "$9.50), Gia đình 6 chỗ "
-                                "(Lyft XL $13.50; UberXL $15.00) và Hạng "
-                                "sang (Lux $16.50 đến Lux Black XL $30.00). "
-                                "Do tỷ trọng hạng sang "
-                                "trong mẫu cao hơn tiêu dùng đường phố, mọi "
-                                "phân tích suy luận đều kiểm soát theo phân "
-                                "khúc."
+                                "Nhận định 3.1 (Mẫu phân tầng đều 12 gói "
+                                "& 4 bậc giá): Hình 3.2–3.3 cho thấy API "
+                                "truy vấn đều (~22,000 lượt/gói) và phân "
+                                "hóa 4 tầng giá (trung vị): Đi ghép "
+                                "(Shared $7.00; UberPool $8.50), Phổ "
+                                "thông 4 chỗ (Lyft $9.00; UberX & WAV "
+                                "$9.50), Gia đình 6 chỗ (Lyft XL $13.50; "
+                                "UberXL $15.00) và Hạng sang (Lux $16.50 "
+                                "đến Lux Black XL $30.00). Vì hạng sang "
+                                "chiếm tỷ trọng cao hơn tiêu dùng đường "
+                                "phố, mọi suy luận đều kiểm soát theo "
+                                "phân khúc."
                             ),
                         ),
                         (
@@ -2999,17 +3012,14 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                         (
                             "p",
                             (
-                                "Nhận định 3.2 (Phân bố thu thập API và "
-                                "tính phẳng của giá theo 24 giờ EST): Trên "
+                                "Nhận định 3.2 (Lưu lượng API & giá phẳng "
+                                "theo 24 giờ EST): Trên "
                                 f"{prov['is_timestamp_original_1']:,} "
-                                "bản ghi có timestamp gốc (Hình 3.4), số "
-                                "lượt báo giá ghi nhận chạm đáy quanh 03:"
-                                "00 và cao nhất lúc "
-                                "18:00–19:00 EST — phản ánh mật độ truy "
-                                "vấn API trong mẫu. Trên thang trục tung "
-                                "trung thực [12, 21] USD, "
-                                "đường giá báo trung bình gần như nằm "
-                                "ngang xuyên suốt 24 giờ trên cả Lyft "
+                                "bản ghi có timestamp gốc (Hình 3.4), mật "
+                                "độ truy vấn API chạm đáy quanh 03:00 và "
+                                "đạt đỉnh 18:00–19:00 EST. Trên thang "
+                                "trục tung [12, 21] USD, giá báo trung "
+                                "bình gần như phẳng suốt 24 giờ ở cả Lyft "
                                 "(~$17.4) lẫn Uber (~$15.8)."
                             ),
                         ),
@@ -3032,69 +3042,56 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                             "p",
                             (
                                 "Nhận định 3.3 (Giá báo trùng khít giữa "
-                                "mưa nhẹ–vừa và trời tạnh trên tập sạch "
-                                "sentinel): Hình 3.5 đối "
-                                "chiếu bản đồ nhiệt Surge Lyft trên tập "
-                                "quan sát thực có timestamp gốc (n = 70,"
-                                "971; 5 ô xám khuyết thu "
-                                "thập đêm Thứ Ba – rạng sáng Thứ Tư EST) "
-                                "và giá báo Mưa vs. Không mưa trên "
-                                f"{prov['weather_valid_rain_obs']:,} "
-                                "dòng không lỗi cảm biến mưa: giá trung "
-                                "bình gần trùng khít ở cả Uber ($15.84 vs. "
-                                "$15.83) và Lyft ($17.39 vs. $17.41)."
+                                "mưa nhẹ–vừa và trời tạnh): Hình 3.5 đối "
+                                "chiếu bản đồ nhiệt Surge Lyft thực có "
+                                "timestamp gốc (n = 70,971; 5 ô xám "
+                                "khuyết thu thập đêm Thứ Ba – rạng sáng "
+                                "Thứ Tư EST) và giá báo trên "
+                                f"{prov['weather_valid_rain_obs']:,} dòng "
+                                "sạch sentinel: trung bình Mưa vs. Tạnh "
+                                "gần trùng khít ở cả Uber ($15.84 vs. "
+                                "$15.83) lẫn Lyft ($17.39 vs. $17.41)."
                             ),
                         ),
                         (
                             "p",
                             (
-                                "Nhận định 3.4 (Bất cân xứng không gian "
-                                "gấp "
-                                + "{:.1f}".format(
-                                    top12[0]["surge_rate_pct"]
-                                    / top12[-1]["surge_rate_pct"]
-                                )
-                                + " "
-                                "lần và tính tụ cụm của Surge Lyft): Trên "
-                                f"đúng {lyft_obs_n:,} lượt báo giá Lyft "
-                                "quan sát surge thực (tỷ "
-                                f"lệ toàn thành phố {lyft_surge_rate:.2f}%),"
-                                " sự phân hóa địa lý lộ diện mạnh hơn rõ "
-                                "rệt so với bản bị "
-                                "pha loãng: năm quận đại học – thương mại "
-                                f"dẫn đầu gồm {top12[0]['source']} "
+                                "Nhận định 3.4 (Bất cân xứng không gian & "
+                                "tính tụ cụm Surge Lyft): Trên "
+                                f"{lyft_obs_n:,} lượt Lyft surge thực "
+                                f"(toàn TP {lyft_surge_rate:.2f}%), năm "
+                                "quận đại học – thương mại dẫn đầu gồm "
+                                f"{top12[0]['source']} "
                                 f"({top12[0]['surge_rate_pct']:.2f}%, "
-                                f"{top12[0]['surge_count']} lượt), "
+                                f"{top12[0]['surge_count']}), "
                                 f"{top12[1]['source']} "
                                 f"({top12[1]['surge_rate_pct']:.2f}%, "
-                                f"{top12[1]['surge_count']} lượt), "
+                                f"{top12[1]['surge_count']}), "
                                 f"{top12[2]['source']} "
                                 f"({top12[2]['surge_rate_pct']:.2f}%, "
-                                f"{top12[2]['surge_count']} lượt), "
+                                f"{top12[2]['surge_count']}), "
                                 f"{top12[3]['source']} "
                                 f"({top12[3]['surge_rate_pct']:.2f}%, "
-                                f"{top12[3]['surge_count']} lượt) và "
+                                f"{top12[3]['surge_count']}) và "
                                 f"{top12[4]['source']} "
                                 f"({top12[4]['surge_rate_pct']:.2f}%, "
-                                f"{top12[4]['surge_count']} lượt) — cao gấp "
+                                f"{top12[4]['surge_count']}) — gấp "
                                 + "{:.1f}".format(
                                     top12[0]["surge_rate_pct"]
                                     / top12[-1]["surge_rate_pct"]
                                 )
-                                + " "
-                                f"lần so với {top12[-1]['source']} "
+                                + f" lần {top12[-1]['source']} "
                                 f"({top12[-1]['surge_rate_pct']:.2f}%, "
-                                f"{top12[-1]['surge_count']} lượt). "
-                                f"Trong {cl_s['active_surge_loc_hours']:,} "
-                                "ô (quận × giờ) có surge "
+                                f"{top12[-1]['surge_count']}). Trong "
+                                f"{cl_s['active_surge_loc_hours']:,} ô "
+                                "quận × giờ có surge "
                                 f"({cl_s['pct_loc_hours_with_surge']:.2f}%),"
-                                " "
-                                "bình quân có "
+                                " bình quân có "
                                 f"{cl_s['mean_surge_quotes_per_active_loc_hour']:.2f}"
-                                " lượt surge tụ cụm cùng giờ (tối đa "
+                                " lượt tụ cụm/giờ (tối đa "
                                 f"{cl_s['max_surge_quotes_in_single_loc_hour']}"
-                                " lượt), củng cố bản chất cục bộ theo điểm "
-                                "nóng của surge."
+                                "), khẳng định bản chất cục bộ theo điểm "
+                                "nóng."
                             ),
                         ),
                         (
@@ -3123,13 +3120,10 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                         (
                             "p",
                             (
-                                "Bảng 3.5 trình bày trọn bộ 13 kiểm định "
-                                "giả thuyết (H1a–H4c) trên bộ dữ liệu sạch "
-                                "chuẩn hóa kèm hiệu chỉnh đa "
-                                "kiểm định Holm–Bonferroni (kiểm soát "
-                                "FWER) và Benjamini–Hochberg (BH-FDR). Lưu "
-                                "ý kỹ thuật quan trọng: "
-                                "trong kiểm định đa biến H4c (n_train = "
+                                "Bảng 3.5 tổng hợp 13 kiểm định giả thuyết "
+                                "(H1a–H4c) kèm hiệu chỉnh Holm–Bonferroni "
+                                "(FWER) và BH-FDR; trong H4c đa biến "
+                                "(n_train = "
                                 + "{:,}".format(
                                     int(
                                         _row(
@@ -3139,18 +3133,14 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                                         )["n_group1"]
                                     )
                                 )
-                                + "), "
-                                "việc loại đúng biến giả dư thừa của thành "
-                                "phần lưỡng phân K_{6,6} thứ hai "
-                                "(destination_Boston University) "
-                                "đưa ma trận thiết kế về hạng đầy đủ 100% "
-                                "(0 cảnh báo suy biến). Bảng 3.6 và Hình "
-                                "3.6A bổ sung kiểm định "
-                                "sai số chuẩn cụm hai cấp, kiểm định cụm "
-                                "cho H3b, độ nhạy loại trừ tuyệt đối mọi ô "
-                                "từng chứa sentinel mưa "
-                                "và Exact WCR Wild Cluster Bootstrap (B = "
-                                "1,999)."
+                                + "), việc bỏ biến giả dư của thành phần "
+                                "lưỡng phân K_{6,6} thứ hai "
+                                "(destination_Boston University) đưa ma "
+                                "trận thiết kế về hạng đầy đủ 100% (0 suy "
+                                "biến). Bảng 3.6 và Hình 3.6A bổ sung sai "
+                                "số chuẩn cụm hai cấp, H3b cụm, độ nhạy "
+                                "loại mọi ô chứa sentinel mưa và Exact "
+                                "WCR Bootstrap (B = 1,999)."
                             ),
                         ),
                         (
@@ -3255,109 +3245,71 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
                             "bullets",
                             [
                                 (
-                                    "Thời tiết (H1a–c, H3b, H4c và Bảng "
-                                    "3.6): Khi kiểm soát gói xe, cự ly, "
-                                    "surge thực và 72 tuyến cố định "
-                                    "(n = "
+                                    "Thời tiết (H1a–c, H3b, H4c & Bảng "
+                                    "3.6): Kiểm soát gói xe, cự ly, surge "
+                                    "và 72 tuyến (n = "
                                     f"{st_ext['n_valid_rain_and_surge_dist_obs']:,}"
-                                    "), hệ số mưa là "
-                                    f"{w_ct_hr['beta_usd']:+.4f} USD với "
-                                    f"p_cl = {w_ct_loc['p_value']:.4f} "
-                                    f"({st_ext['n_loc_hr_clusters_obs']:,} "
-                                    "cụm quận × giờ) và "
-                                    f"p_hr = {w_ct_hr['p_value']:.4f} "
-                                    "("
-                                    f"{st_ext['n_citywide_hour_clusters_obs']}"
-                                    " giờ toàn Boston, 95% CI "
+                                    "), hệ số mưa chỉ "
+                                    f"{w_ct_hr['beta_usd']:+.4f} USD "
+                                    f"(p_hr = {w_ct_hr['p_value']:.4f}, "
+                                    "95% CI "
                                     f"[{w_ct_hr['ci95'][0]:+.4f}, "
-                                    f"{w_ct_hr['ci95'][1]:+.4f}]). Kiểm tra "
-                                    f"trên {st_ext['n_valid_rain_dist_obs']:,}"
-                                    " lượt có cự ly hợp lệ ("
-                                    f"{st_ext['n_loc_hr_clusters_dist']:,} "
-                                    "cụm quận × giờ / "
-                                    f"{st_ext['n_citywide_hour_clusters_dist']}"
-                                    " giờ; không dùng biến surge) cũng cho "
-                                    f"p_hr = {w_ns_hr['p_value']:.4f}, và "
-                                    "loại triệt để mọi ô từng "
-                                    "chứa dù chỉ 1 bản tin sentinel mưa (n "
-                                    "= "
+                                    f"{w_ct_hr['ci95'][1]:+.4f}]), bền "
+                                    "vững khi bỏ surge (n = "
+                                    f"{st_ext['n_valid_rain_dist_obs']:,}"
+                                    ") lẫn khi loại mọi ô chứa sentinel "
+                                    "(n = "
                                     f"{ws_any['n_obs_excl_any_sentinel_cell']:,}"
-                                    ") cho p_hr = "
-                                    f"{ws_any['p_hour']:.4f}. Trên mọi cấu "
-                                    "trúc, TOST xác nhận chênh lệch nằm "
-                                    "chặt trong biên ±$0.10 "
-                                    "(p_TOST < 0.0001). Riêng H3b (xác "
-                                    "suất Surge Lyft khi mưa: "
-                                    f"{h3b_cl['surge_rate_rain_pct']:.2f}% "
-                                    "vs. "
-                                    "tạnh "
-                                    f"{h3b_cl['surge_rate_dry_pct']:.2f}%), "
-                                    "dù kiểm định iid ngây thơ báo p = "
-                                    f"{h3b_cl['p_naive_iid']:.4f} "
-                                    "(ngược chiều giả thuyết mưa làm tăng "
-                                    "surge, Cramér's V = 0.0104), sai số "
-                                    "chuẩn cụm đưa p lên "
-                                    f"{h3b_cl['p_loc_hr_cluster']:.4f} "
-                                    "(quận × giờ) và "
-                                    f"{h3b_cl['p_hour_cluster']:.4f} (giờ "
-                                    "Boston) — đồng "
-                                    "thời không vượt qua cả Holm lẫn BH-"
-                                    "FDR. Lát cắt mưa lớn ≥ 0.10 in/h trên "
-                                    "toàn mẫu hồi quy "
-                                    f"N = {wcr_loc['n_obs']:,} "
-                                    f"({wcr_loc['n_total_clusters']:,} cụm /"
-                                    f" {wcr_hr['n_total_clusters']} giờ; "
-                                    "nhóm treated mưa lớn gồm "
-                                    f"{hv['n_heavy_obs']:,} lượt / "
-                                    f"{hv['n_heavy_loc_hr_clusters']} cụm / "
-                                    f"{hv['n_heavy_citywide_hours']} giờ, "
-                                    "lưu ý few treated clusters với 2⁸ = "
-                                    "256 tổ hợp dấu Rademacher) "
-                                    "qua Exact WCR (B = 1,999) cho p_wild "
-                                    f"= {wcr_loc['p_wild']:.4f} / "
-                                    f"{wcr_hr['p_wild']:.4f} (kết quả thăm "
-                                    "dò công suất thấp)."
+                                    "); TOST đều tương đương chặt trong "
+                                    f"±$0.10 (p ≤ {max_tost_010_p:.4f}). "
+                                    "Với H3b (Surge "
+                                    "Lyft mưa "
+                                    f"{h3b_cl['surge_rate_rain_pct']:.2f}%"
+                                    " vs. tạnh "
+                                    f"{h3b_cl['surge_rate_dry_pct']:.2f}%)"
+                                    ", sai số cụm đẩy p lên "
+                                    f"{h3b_cl['p_loc_hr_cluster']:.4f} / "
+                                    f"{h3b_cl['p_hour_cluster']:.4f} "
+                                    "(không vượt Holm/BH-FDR); mưa lớn "
+                                    "≥ 0.10 in/h (Exact WCR, B = 1,999) "
+                                    "đạt p_wild = "
+                                    f"{wcr_loc['p_wild']:.4f} / "
+                                    f"{wcr_hr['p_wild']:.4f} (thăm dò, "
+                                    f"{hv['n_heavy_citywide_hours']} giờ)."
                                 ),
                                 (
                                     "Khung giờ EST (H2a–c, H3c–d): Sau "
-                                    "hiệu chỉnh Holm (p_Holm = 1.0000) và "
-                                    "Wald F cụm "
-                                    f"({tod_cl['n_clusters']:,} cụm EST, "
-                                    f"F_cl = {tod_cl['f_stat_cluster']:.4f},"
-                                    " p_cl = "
-                                    f"{tod_cl['p_cluster']:.4f}, chênh tối "
-                                    f"đa ${tod_cl['max_min_gap_usd']:.4f}), "
-                                    "chưa đủ bằng chứng bác bỏ "
-                                    "đồng nhất giá hay Surge giữa bốn buổi "
-                                    "cố định."
+                                    "Holm (p_Holm = 1.0000) và Wald F cụm "
+                                    f"({tod_cl['n_clusters']:,} cụm, "
+                                    f"F_cl = {tod_cl['f_stat_cluster']:.4f}"
+                                    f", p_cl = {tod_cl['p_cluster']:.4f}, "
+                                    "chênh ≤ "
+                                    f"${tod_cl['max_min_gap_usd']:.4f}), "
+                                    "chưa đủ bằng chứng bác bỏ đồng nhất "
+                                    "giá/Surge giữa 4 buổi."
                                 ),
                                 (
-                                    "Bất đối xứng công bố Surge trên API "
-                                    "(H3a): Bác bỏ mạnh H0 sau hiệu chỉnh "
-                                    "Holm (p_Holm < 0.0001, "
-                                    "V = 0.2053: Lyft thực "
-                                    f"{lyft_surge_rate:.2f}% vs. Uber "
-                                    "0.00%). Kết quả phản ánh bất đối xứng "
-                                    "cơ chế "
-                                    "công bố API (Uber tích hợp phụ phí "
-                                    "động ẩn trong Upfront Pricing), không "
-                                    "kết luận Uber thiếu surge."
+                                    "Bất đối xứng API (H3a): Bác bỏ mạnh "
+                                    "H0 (p_Holm < 0.0001, V = 0.2053: "
+                                    f"Lyft {lyft_surge_rate:.2f}% vs. "
+                                    "Uber 0.00%), phản ánh Uber ẩn phụ "
+                                    "phí động trong Upfront Pricing, "
+                                    "không hàm ý Uber thiếu surge."
                                 ),
                                 (
                                     "Biểu giá cắt nhau (H4a–b): Wald HC3 "
-                                    "bác bỏ mạnh H0 trên cặp chủ lực UberX "
-                                    "vs. Lyft (H4a: p_Holm < 0.0001), còn "
-                                    "UberPool vs. Shared (H4b: p = "
-                                    f"{h4b_mt['raw_p']:.4f}, p_Holm = "
-                                    f"{h4b_mt['p_holm']:.4f}) không cắt "
-                                    "trong miền; độ nhạy giữa Đặc tả A "
+                                    "bác bỏ H0 trên UberX–Lyft (H4a: "
+                                    "p_Holm < 0.0001), còn UberPool–Shared"
+                                    " (H4b: p_Holm = "
+                                    f"{h4b_mt['p_holm']:.4f}) không cắt; "
+                                    "độ nhạy Đặc tả A "
                                     "("
                                     f"{ux_pair['spec_a_train80']['hc3']['d_star']:.2f}"
-                                    " dặm) và Đặc tả B thuần 1.0x "
+                                    " mi) vs. B 1.0x "
                                     "("
                                     f"{ux_pair['spec_b_train80_nonsurge']['hc3']['d_star']:.2f}"
-                                    " dặm, Hình 3.6B) được phân tích đủ 5 "
-                                    "cặp tại Mục 4.5."
+                                    " mi, Hình 3.6B) mở rộng đủ 5 cặp tại "
+                                    "Mục 4.5."
                                 ),
                             ],
                         ),
@@ -5246,7 +5198,7 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
     )
 
     appendix_a_tree = (
-        "TieuLuan_PRJ-EXT-01_Nhom02/\n"
+        f"{student_id}_Nhom02_TieuLuan/\n"
         "├── main.py                # CLI toàn trình --stage "
         f"clean..evaluate ({main_loc:,} dòng)\n"
         "├── pyproject.toml         # Cấu hình ruff PEP 8 nghiêm ngặt (<= "
@@ -5254,8 +5206,9 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
         "├── requirements.txt       # Python >=3.11 (kiểm chứng 3.11.9 & "
         "3.14.4) + pillow + pymupdf\n"
         "├── nhật ký làm việc.md    # Nhật ký P-D-M-V nhóm "
-        f"({len(data['worklog_sessions'])} phiên: 11 + 11 + "
-        f"{len(data['worklog_sessions']) - 22})\n"
+        f"({len(data['worklog_sessions'])} phiên: "
+        f"{data['n_huy_sessions']} + {data['n_thang_sessions']} + "
+        f"{data['n_joint_sessions']})\n"
         "├── data/                  # raw/ (read-only SHA-256) & processed/"
         f" ({io_same['parquet_disk_mb']:.2f} MiB Parquet)\n"
         f"├── src/                   # {n_src} module lõi pipeline ML/EDA "
@@ -5548,6 +5501,9 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
         "appendix_b_verbatim": appendix_b_verbatim_excerpt,
         "worklog_meta": {
             "sessions_count": len(data["worklog_sessions"]),
+            "n_huy": int(data["n_huy_sessions"]),
+            "n_thang": int(data["n_thang_sessions"]),
+            "n_joint": int(data["n_joint_sessions"]),
             "lines": data["worklog_lines"],
             "words": data["worklog_words"],
             "n_src_files": n_src,
@@ -5557,5 +5513,6 @@ def build_thesis_structure(data: dict[str, Any]) -> dict[str, Any]:
             "scripts_only_loc": scripts_only_loc,
             "total_src_loc": total_src_loc,
             "n_test_files": n_test_files,
+            "student_id": student_id,
         },
     }

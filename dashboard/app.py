@@ -13,7 +13,7 @@ Kiến trúc tách lớp nghiêm ngặt:
 - Visualization   : dashboard/charts.py (dùng chung với export_static_html.py)
 - UI Components   : dashboard/components/{styles, sidebar, kpi_cards, tab_*.py}
 
-Lệnh chạy chuẩn (từ thư mục gốc dự án TieuLuan_PRJ-EXT-01_Nhom02/):
+Lệnh chạy chuẩn (từ thư mục gốc dự án 2521001060_Nhom02_TieuLuan/):
     streamlit run dashboard/app.py
 """
 

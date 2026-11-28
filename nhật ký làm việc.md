@@ -3,7 +3,7 @@
 Tệp này tự động lưu vết toàn bộ các phiên làm việc của **Nhóm 02** trong Antigravity IDE theo chuẩn P-D-M-V (*Prompt & Produce – Deconstruct & Read – Mutate & Break – Validate & Refine*).  
 - **Tên đề tài:** `PRJ-EXT-01` — Phân tích Biểu hiện Định giá Động (*Dynamic Surge Pricing*) và Dự báo Giá báo API trên Nền tảng Gọi xe Công nghệ (Uber & Lyft Boston, MA)  
 - **Nhóm sinh viên thực hiện:** Nhóm 02 — **Trần Thanh Huy** (MSSV: `2521001060`, STT `1`) & **Lê Huy Thắng** (MSSV: `2521001092`, STT `2`) — Lớp `25DDS01`  
-- **Phân công & Hệ số đóng góp (Mục 5.4):** Đồng đều **50% / 50%** (`24` phiên `2026-10-01` → `2026-11-28`: **Trần Thanh Huy** `11` phiên độc lập `1, 3, 5, 7, 9, 12, 13, 15, 17, 19, 23`, **Lê Huy Thắng** `11` phiên độc lập `2, 4, 6, 8, 10, 11, 14, 16, 18, 20, 22`, và `2` phiên đồng nghiệm thu `21, 24`; $\alpha_1 = 1.00$, $\alpha_2 = 1.00$; $\sum \alpha_i = 2.00$).
+- **Phân công & Hệ số đóng góp (Mục 5.4):** Đồng đều **50% / 50%** (`24` phiên `2026-10-01` → `2026-11-28`: **Trần Thanh Huy** `10` phiên độc lập `1, 3, 5, 7, 9, 12, 13, 15, 17, 19`, **Lê Huy Thắng** `11` phiên độc lập `2, 4, 6, 8, 10, 11, 14, 16, 18, 20, 22`, và `3` phiên đồng thực hiện `21, 23, 24`; $\alpha_1 = 1.00$, $\alpha_2 = 1.00$; $\sum \alpha_i = 2.00$).
 
 ---
 
@@ -40,7 +40,7 @@ Tệp này tự động lưu vết toàn bộ các phiên làm việc của **Nh
 
 ## [2026-11-28 02:35] - Phiên 23: Khử Triệt Để Rò Rỉ `distance` (`RouteDistanceImputer`), Chuẩn Hóa Mục Tiêu SMART (`T` & `≥ 50%` RAM), Khóa Giới Hạn `≤ 45` Trang Ngoài Bìa & Tái Lập Chốt Gói Nộp
 
-- **Thành viên phụ trách chính:** **Trần Thanh Huy** (MSSV: `2521001060`)
+- **Thành viên phụ trách chính:** **Đồng thực hiện — Trần Thanh Huy (`2521001060`) & Lê Huy Thắng (`2521001092`)**
 - **Giai đoạn:** Khắc phục phản biện rò rỉ dữ liệu & chuẩn hóa báo cáo/hồ sơ nghiệm thu (`GĐ8`; sau khi rà soát chéo toàn bộ kết quả Phiên 22).
 - **Môi trường:** Windows 64-bit | `Python 3.11.9` (`pandas 3.1.1`, `pyarrow 26.0.1`, `numpy 2.4.6`, `scipy 1.17.1`, `statsmodels 0.15.0`, `scikit-learn 1.9.1`, `joblib 1.6.0`, `matplotlib 3.11.2`, `seaborn 0.13.2`, `pytest 9.2.0`, `ruff 0.17.6`) | `Quarto 1.10.19` (`Pandoc 3.10.0`, `Typst 0.15.1`)
 - **Mục tiêu phiên:**

@@ -21,7 +21,7 @@
 
 ## 2. Hướng dẫn Cài đặt & Chạy trên Môi trường Sạch
 
-Chạy toàn bộ các lệnh dưới đây từ **thư mục gốc dự án (`TieuLuan_PRJ-EXT-01_Nhom02/`)**:
+Chạy toàn bộ các lệnh dưới đây từ **thư mục gốc dự án (`2521001060_Nhom02_TieuLuan/`)**:
 
 ```bash
 # 1. (Khuyên dùng) Tạo và kích hoạt môi trường ảo sạch

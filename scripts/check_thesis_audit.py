@@ -45,7 +45,7 @@ def run_audit(student_id: str = DEFAULT_STUDENT_ID) -> int:
     assert pdf_path.exists(), f"Thiếu tệp PDF: {pdf_path}"
 
     data = load_verified_data()
-    content = build_thesis_structure(data)
+    content = build_thesis_structure(data, student_id=student_id)
     v5 = data["v5"]
     s5 = data["s5"]
     tb = data["tables"]
