@@ -3,7 +3,34 @@
 Tệp này tự động lưu vết toàn bộ các phiên làm việc của **Nhóm 02** trong Antigravity IDE theo chuẩn P-D-M-V (*Prompt & Produce – Deconstruct & Read – Mutate & Break – Validate & Refine*).  
 - **Tên đề tài:** `PRJ-EXT-01` — Phân tích Biểu hiện Định giá Động (*Dynamic Surge Pricing*) và Dự báo Giá báo API trên Nền tảng Gọi xe Công nghệ (Uber & Lyft Boston, MA)  
 - **Nhóm sinh viên thực hiện:** Nhóm 02 — **Trần Thanh Huy** (MSSV: `2521001060`, STT `1`) & **Lê Huy Thắng** (MSSV: `2521001092`, STT `2`) — Lớp `25DDS01`  
-- **Phân công & Hệ số đóng góp (Mục 5.4):** Đồng đều **50% / 50%** (`24` phiên `2026-10-01` → `2026-11-28`: **Trần Thanh Huy** `10` phiên độc lập `1, 3, 5, 7, 9, 12, 13, 15, 17, 19`, **Lê Huy Thắng** `11` phiên độc lập `2, 4, 6, 8, 10, 11, 14, 16, 18, 20, 22`, và `3` phiên đồng thực hiện `21, 23, 24`; $\alpha_1 = 1.00$, $\alpha_2 = 1.00$; $\sum \alpha_i = 2.00$).
+- **Phân công & Hệ số đóng góp (Mục 5.4):** Đồng đều **50% / 50%** (`25` phiên `2026-10-01` → `2026-11-28`: **Trần Thanh Huy** `10` phiên độc lập `1, 3, 5, 7, 9, 12, 13, 15, 17, 19`, **Lê Huy Thắng** `11` phiên độc lập `2, 4, 6, 8, 10, 11, 14, 16, 18, 20, 22`, và `4` phiên đồng thực hiện `21, 23, 24, 25`; $\alpha_1 = 1.00$, $\alpha_2 = 1.00$; $\sum \alpha_i = 2.00$).
+
+---
+
+## [2026-11-28 10:55] - Phiên 25: Tinh Gọn Tiểu Luận Về Đúng `45` Trang (Giữ Nguyên Định Dạng), Chuẩn Hóa Cấu Trúc Nộp `25210010XX_Nhom02_TieuLuan/` & Chốt Đồng Bộ Hồ Sơ
+
+- **Thành viên phụ trách chính:** **Đồng thực hiện — Trần Thanh Huy (`2521001060`) & Lê Huy Thắng (`2521001092`)**
+- **Giai đoạn:** Hoàn thiện ấn phẩm cuối & chuẩn hóa đóng gói bàn giao (`GĐ8`; khung thực thi sáng `2026-11-28 09:35 → 10:55`).
+- **Môi trường:** Windows 64-bit | `Python 3.11.9` (`pandas 3.1.1`, `pyarrow 26.0.1`, `numpy 2.4.6`, `scipy 1.17.1`, `statsmodels 0.15.0`, `scikit-learn 1.9.1`, `pytest 9.2.0`, `ruff 0.17.6`, `pymupdf`) | `Quarto 1.10.19` (`Pandoc 3.10.0`, `Typst 0.15.1`)
+- **Mục tiêu phiên:**
+  - Rút gọn diễn đạt câu chữ có chọn lọc tại nguồn sinh Tiểu luận để giảm tổng độ dài bản PDF từ **`46` trang xuống đúng `45` trang** (`43/45` nội dung ngoài 2 trang bìa, `27` trang Chương 1–5) mà **tuyệt đối không thay đổi định dạng** (khổ A4, lề `2-2-3-2 cm`, font `Times New Roman`/`Consolas`, cỡ chữ, giãn dòng, bảng biểu, biểu đồ, mục lục) và bảo toàn nguyên vẹn toàn bộ số liệu, phát hiện cốt lõi.
+  - Chuẩn hóa tên thư mục gốc theo đúng định dạng nộp bài `25210010XX_Nhom02_TieuLuan/`, cập nhật thống nhất trạng thái đồng thực hiện của `Phiên 23`, đồng bộ `README.md` và tái xuất trọn bộ hai hồ sơ `2521001060` & `2521001092` (PDF rời, thư mục làm việc chuẩn `128` tệp và tệp nén `.zip`).
+- **Nội dung đã hoàn thành:**
+  - **1. Tinh gọn văn bản về đúng `45` trang & khóa đối soát Chương 3:**
+    + [scripts/thesis_content.py](scripts/thesis_content.py): Cô đọng các câu diễn đạt dài/trùng lặp tại `Mục 3.4–3.6` (không xóa bảng, hình hay số liệu) kéo tổng số trang PDF từ `46` xuống đúng **`45` trang**; đồng thời hiệu chỉnh chính xác số bậc surge thực tế trên `1.0x` tại `Mục 3.4` (`6 bậc 1.25x–3.00x`, khớp 6 mức `{1.25, 1.50, 1.75, 2.00, 2.50, 3.00}` trong `master_rideshare.parquet`) và đọc động `max_tost_010_p` tại `Mục 3.6` (`TOST ±$0.10: p ≤ 0.0004`, khớp `Bảng 3.6` ngay phía trên).
+    + [scripts/thesis_content.py](scripts/thesis_content.py), [scripts/build_final_thesis.py](scripts/build_final_thesis.py) & [scripts/check_thesis_audit.py](scripts/check_thesis_audit.py): Tham số hóa `student_id` cho sơ đồ thư mục và phần giới thiệu Phụ lục A (`25210010XX_Nhom02_TieuLuan/`), đồng thời chuyển sang đếm động số phiên độc lập/đồng thực hiện từ `nhật ký làm việc.md` (`10 + 11 + 4`) cho Phụ lục A và Phụ lục B.
+  - **2. Đồng bộ tài liệu dự án & nhật ký:**
+    + [README.md](README.md), [dashboard/README.md](dashboard/README.md), [dashboard/app.py](dashboard/app.py): Chuẩn hóa tên thư mục gốc dự án sang `25210010XX_Nhom02_TieuLuan/`, cập nhật thông số ấn phẩm (`45` trang tổng / `43/45` ngoài bìa / `27` Ch.1–5; `187.1 KiB` QMD → `9.35 MiB` PDF / `8.59 MiB` DOCX), đồng nhất làm tròn điểm cắt Hạng sang SUV (`0.85 mi`, `0.605 mi < 1.0`) khớp `Bảng 4.8` & `Hình 4.8`, và đồng bộ phân công `25` phiên (`10 + 11 + 4`).
+    + Cập nhật thống nhất `Phiên 23` thành đồng thực hiện và bổ sung `Phiên 25` nguyên văn trên cả 3 tệp nhật ký (`nhật ký làm việc.md`, bản cá nhân Trần Thanh Huy và bản cá nhân Lê Huy Thắng).
+  - **3. Tái xuất bản & Đóng gói chuẩn nộp bài (`2521001060` & `2521001092`):**
+    + Biên dịch nguyên bản từ Quarto/Typst sang `2521001060_Nhom02_TieuLuan.pdf` và `2521001092_Nhom02_TieuLuan.pdf` (đều đúng **`45` trang**, chỉ khác nhau duy nhất tại trang `39` ở tên thư mục gốc MSSV), đồng bộ bản dự phòng `.docx`, build đầy đủ hai thư mục chuẩn `2521001060_Nhom02_TieuLuan/` & `2521001092_Nhom02_TieuLuan/` (`128` tệp sạch, bảo toàn EOL CRLF, `0` cache, `0` liên kết gãy) cùng hai gói `2521001060_Nhom02_MaNguon.zip` & `2521001092_Nhom02_MaNguon.zip` trùng khớp SHA-256 100%.
+- **Tương tác Prompt & Quyết định kỹ thuật:**
+  - *Prompt chiến lược đã thực thi:* "Rút gọn diễn đạt câu chữ ở nguồn tạo tiểu luận để giảm tổng số trang từ 46 xuống đúng 45 trang mà tuyệt đối không thay đổi định dạng, giữ nguyên nội dung/số liệu và liên kết giữa toàn bộ tệp nộp, cập nhật Phiên 23 đồng thực hiện và build lại trọn bộ định dạng chuẩn 25210010XX_Nhom02_TieuLuan/."
+  - *Kinh nghiệm bóc tách code & Mutate/Break:* Khi rút gọn câu chữ Chương 3, rà soát phát hiện và chặn kịp hai sai lệch ngữ nghĩa phát sinh từ việc gộp câu (`7` vs `6` bậc surge trên `1.0x` và gộp `p < 0.0001` trái với `p = 0.0004` tại `Bảng 3.6` Hàng 4) bằng cách tính động `max_tost_010_p`; đồng thời phát hiện và xóa tệp cache ẩn `reports/.quarto/typst/available-fonts.json` sau khi render bản `1092` để giữ đúng `128` tệp sạch cho cả hai gói.
+  - *Xác minh tự động:* `check_thesis_audit.py` **100% PASS** trên cả `2521001060` và `2521001092` (`45` trang, `27` trang Ch.1–5, `17/17` hình `≥ 300 DPI`, `23/23` APA 7th, `0` lỗi TOC/font/trang thưa); `ruff check` & `ruff format --check` **0 lỗi (`60/60` tệp)**; `dashboard.validation` **18/18 PASS**; `pytest dashboard/tests` **40/40 PASS**; đối soát SHA-256 `100%` giữa PDF rời, thư mục nộp và `.zip`.
+  - *Quyết định kiến trúc:* Giữ bất biến hoàn toàn tham số dàn trang Typst/Quarto (chỉ tối ưu câu chữ ở nguồn nội dung `thesis_content.py`), đọc động toàn bộ thống kê phiên làm việc từ `nhật ký làm việc.md` và giữ quy trình đóng gói nhị phân bảo toàn nguyên vẹn định dạng dòng (`CRLF`) cho cả hai mã số sinh viên.
+- **Tồn đọng & Bước tiếp theo:**
+  - Hoàn tất toàn bộ bộ sản phẩm nộp bài chuẩn `45` trang cho cả hai thành viên (`2521001060` và `2521001092`), không còn tồn đọng kỹ thuật.
 
 ---
 

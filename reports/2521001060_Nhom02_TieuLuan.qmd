@@ -235,11 +235,11 @@ pre code { font-size: 0.78rem; line-height: 1.35; }
 : {tbl-colwidths="[6,18,14,14,35,13]"}
 
 ```{=typst}
-#block(above: 0.16em, below: 0.72em)[#set par(justify: false, leading: 0.50em); #text(size: 9.4pt, style: "italic", fill: rgb("#475569"))[Ghi chú: Cột 'Tỷ lệ hoàn thành phần việc được giao' thể hiện mức độ hoàn tất nhiệm vụ phân công (không phải tỷ trọng chia điểm); hệ số đóng góp cá nhân theo Mục 5.4 đề cương là α₁ = 1.00, α₂ = 1.00 (∑αᵢ = 2.00; phân công 50/50 qua 24 phiên P-D-M-V).]]
+#block(above: 0.16em, below: 0.72em)[#set par(justify: false, leading: 0.50em); #text(size: 9.4pt, style: "italic", fill: rgb("#475569"))[Ghi chú: Cột 'Tỷ lệ hoàn thành phần việc được giao' thể hiện mức độ hoàn tất nhiệm vụ phân công (không phải tỷ trọng chia điểm); hệ số đóng góp cá nhân theo Mục 5.4 đề cương là α₁ = 1.00, α₂ = 1.00 (∑αᵢ = 2.00; phân công 50/50 qua 25 phiên P-D-M-V).]]
 ```
 
 ::: {.content-visible unless-format="typst"}
-*Ghi chú: Cột 'Tỷ lệ hoàn thành phần việc được giao' thể hiện mức độ hoàn tất nhiệm vụ phân công (không phải tỷ trọng chia điểm); hệ số đóng góp cá nhân theo Mục 5.4 đề cương là α₁ = 1.00, α₂ = 1.00 (∑αᵢ = 2.00; phân công 50/50 qua 24 phiên P-D-M-V).*
+*Ghi chú: Cột 'Tỷ lệ hoàn thành phần việc được giao' thể hiện mức độ hoàn tất nhiệm vụ phân công (không phải tỷ trọng chia điểm); hệ số đóng góp cá nhân theo Mục 5.4 đề cương là α₁ = 1.00, α₂ = 1.00 (∑αᵢ = 2.00; phân công 50/50 qua 25 phiên P-D-M-V).*
 :::
 
 ```{=typst}
@@ -251,7 +251,7 @@ pre code { font-size: 0.78rem; line-height: 1.35; }
 
 - Mã nguồn Python PEP 8 (≤ 79 ký tự): main.py, 11 module lõi ./src/, 5 script xuất bản–kiểm chứng ./scripts/ và 4 notebook ./notebooks/
 - Dashboard tương tác 5 Tab: dashboard/app.py (Streamlit) & reports/dashboard\_interactive.html
-- Nhật ký làm việc P-D-M-V nhóm (24 phiên, phân công 50/50): ./nhật ký làm việc.md
+- Nhật ký làm việc P-D-M-V nhóm (25 phiên, phân công 50/50): ./nhật ký làm việc.md
 
 ```{=typst}
 ]
@@ -1256,7 +1256,7 @@ Toàn bộ 100% mã nguồn Python chuẩn PEP 8 (ruff check 0 lỗi ở ngưỡ
 ├── main.py                # CLI toàn trình --stage clean..evaluate (143 dòng)
 ├── pyproject.toml         # Cấu hình ruff PEP 8 nghiêm ngặt (<= 79 ký tự, gồm notebooks/)
 ├── requirements.txt       # Python >=3.11 (kiểm chứng 3.11.9 & 3.14.4) + pillow + pymupdf
-├── nhật ký làm việc.md    # Nhật ký P-D-M-V nhóm (24 phiên: 10 + 11 + 3)
+├── nhật ký làm việc.md    # Nhật ký P-D-M-V nhóm (25 phiên: 10 + 11 + 4)
 ├── data/                  # raw/ (read-only SHA-256) & processed/ (15.97 MiB Parquet)
 ├── src/                   # 11 module lõi pipeline ML/EDA thuần (11,016 dòng, Bảng A.1)
 ├── scripts/               # 5 script xuất bản, biểu đồ & kiểm toán (13,401 dòng)
@@ -1684,7 +1684,7 @@ cqr_hi = np.where(raw_cqr_lo <= raw_cqr_hi, raw_cqr_hi, mid)
 
 # PHỤ LỤC B: HỒ SƠ KIỂM TOÁN VÀ NHẬT KÝ P-D-M-V {.unnumbered}
 
-Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận 24 phiên P-D-M-V (669 dòng, 17,186 từ) từ 01/10/2026 đến 28/11/2026 với phân công tổng thể 50/50 (10 phiên độc lập Trần Thanh Huy, 11 phiên độc lập Lê Huy Thắng và 3 phiên đồng thực hiện; xem quy chiếu mã kiểm toán tại Bảng B.1 và tóm tắt tiến độ tại Bảng B.2).
+Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận 25 phiên P-D-M-V (696 dòng, 18,106 từ) từ 01/10/2026 đến 28/11/2026 với phân công tổng thể 50/50 (10 phiên độc lập Trần Thanh Huy, 11 phiên độc lập Lê Huy Thắng và 4 phiên đồng thực hiện; xem quy chiếu mã kiểm toán tại Bảng B.1 và tóm tắt tiến độ tại Bảng B.2).
 
 ```{=typst}
 #block(breakable: false)[
@@ -1720,7 +1720,7 @@ Nhật ký làm việc nhóm tại ./nhật ký làm việc.md ghi nhận 24 phi
 | Phiên 1–7 | 01/10–22/10/2026 | Xác lập PRJ-EXT-01, thử nghiệm Epoch 1, phát hiện 7 tầng nhiễu và quy hoạch tái lập. |
 | Phiên 8–12 | 08/11–19/11/2026 | Pipeline GĐ3–GĐ6, xử lý CRIT-01/02 & HIGH-01..03, kiểm chứng 4/4 Notebook PASS. |
 | Phiên 13–16 | 21/11–22/11/2026 | Dashboard 5 Tab + HTML Offline, kiểm thử pytest, xuất bản bản đầu Word/PDF (Cluster SE, WCR, TOST, CQR). |
-| Phiên 17–24 | 23/11–28/11/2026 | Chuẩn hóa dữ liệu & kiểm chứng hợp nhất (CRIT-03/H4, Ex-Ante, Q\_realized, 17 hình 300 DPI), tách scripts/, PEP 8 ≤ 79, khắc phục triệt để rò rỉ distance trong Pipeline (RouteDistanceImputer), SMART & ≤ 45 trang ngoài bìa, kiểm toán toàn diện theo rubric projects.pdf & tái lập đóng gói. |
+| Phiên 17–25 | 23/11–28/11/2026 | Chuẩn hóa dữ liệu & kiểm chứng hợp nhất (CRIT-03/H4, Ex-Ante, Q\_realized, 17 hình 300 DPI), tách scripts/, PEP 8 ≤ 79, khắc phục triệt để rò rỉ distance trong Pipeline (RouteDistanceImputer), SMART & ≤ 45 trang ngoài bìa, kiểm toán toàn diện theo rubric projects.pdf & tái lập đóng gói. |
 
 : Bảng B.2: Tóm tắt tiến độ các nhóm phiên làm việc P-D-M-V (01/10/2026 – 28/11/2026) {#tbl-b-2 tbl-colwidths="[14,19,67]"}
 
